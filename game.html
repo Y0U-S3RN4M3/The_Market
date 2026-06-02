@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The Market</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/png" href="images/marketing.png">
+    </head>
+<body>
+    <div id="gameContainer">
+    <h1 class="header" style="padding: 80px;">THE MARKET</h1>
+    <a href="index.html" style="text-decoration: none;">
+        <button class="btn" style="display: flex; justify-self: center;">Back</button>
+    </a><br>
+    <button onclick="perkIncrease()" class="btn">Add To Perks</button>
+    <h2 id="cash">You have 10 penties</h2>
+    <h2 id="multiplier">Multiplier: 0</h2>
+    <h2 id="payPercent">Pay Percent: 100%</h2>
+    <h2 id="countDown">There is 10m 00s left...</h2>
+    <div id="grid">
+        <div id="apples" class="item">
+            <h4>Apples</h4>
+            <h5>10 Penties</h5>
+            <h5 id="appleStock">Stock: 10</h5>
+            <img src="https://cdn.britannica.com/22/187222-050-07B17FB6/apples-on-a-tree-branch.jpg">
+        </div>
+        <div id="bananas" class="item">
+            <h4>Bananas</h4>
+            <h5>15 Penties</h5>
+            <h5 id="bananaStock">Stock: 10</h5>
+            <img src="https://www.popoptiq.com/wp-content/uploads/2019/01/4-28-1-1.jpg">
+        </div>
+        <div id="oranges" class="item">
+            <h4>Oranges</h4>
+            <h5>20 Penties</h5>
+            <h5 id="orangeStock">Stock: 10</h5>
+            <img src="https://www.tastingtable.com/img/gallery/are-oranges-named-after-the-color/intro-1666984048.jpg">
+        </div>
+        <div id="yougurt" class="item">
+            <h4>Yougurt</h4>
+            <h5>100 Penties</h5>
+            <h5 id="yougurtStock">Stock: 10</h5>
+            <img src="https://static.toiimg.com/photo/75220490.cms">
+        </div>
+        <div id="mango" class="item">
+            <h4>Mango</h4>
+            <h5>200 Penties</h5>
+            <h5 id="mangoStock">Stock: 10</h5>
+            <img src="https://harvesttotable.com/wp-content/uploads/2019/11/Mango-bigstock-Tropical-Mango-Tree-With-Big-R-288199537-scaled.jpg">
+        </div>
+        <div id="bread" class="item">
+            <h4>bread</h4>
+            <h5>500 Penties</h5>
+            <h5 id="breadStock">Stock: 10</h5>
+            <img src="https://images.pexels.com/photos/209206/pexels-photo-209206.jpeg?cs=srgb&dl=baked-bread-buns-209206.jpg&fm=jpg">
+        </div>
+        <div id="frozenAppleSlices" class="item"> 
+            <h4>Frozen Apple Slices</h4>
+            <h5>1k Penties</h5>
+            <h5 id="frozenAppleSlicesStock">Stock: 10</h5>
+            <img src="https://tse2.mm.bing.net/th?id=OIP.lVCSmowSr2zVkNAaEiMsggHaHa&pid=Api&P=0&h=180">
+        </div>
+        <div id="rawBanana" class="item">
+            <h4>Raw Bananas</h4>
+            <h5>1.5k Penties</h5>
+            <h5 id="rawBananaStock">Stock: 10</h5>
+            <img src="https://www.tasteofhome.com/wp-content/uploads/2022/07/GettyImages-1141164080-green-bananas.jpg">
+        </div>
+        <div id="frozenOrange" class="item">
+            <h4>Frozen Oranges</h4>
+            <h5>2.5k Penties</h5>
+            <h5 id="frozenOrangeStock">Stock: 10</h5>
+            <img src="https://thumbs.dreamstime.com/b/frozen-orange-slice-clear-cube-wet-surface-day-encased-ice-sits-blurred-city-background-325620621.jpg">
+        </div>
+        <div id="frozenYougurt" class="item">
+            <h4>Frozen Yougurt</h4>
+            <h5>5k Penties</h5>
+            <h5 id="frozenYougurtStock">Stock: 10</h5>
+            <img src="https://www.biggerbolderbaking.com/wp-content/uploads/2016/01/BBB108-Homemade-Frozen-Yogurt-Thumbnail-FINAL.jpg">
+        </div>
+        <div id="frozenMangoSlices" class="item">
+            <h4>Frozen Mango Slices</h4>
+            <h5>10k Penties</h5>
+            <h5 id="frozenMangoSlicesStock">Stock: 10</h5>
+            <img src="https://tse2.mm.bing.net/th?id=OIP.Y6JSMqwDqUERjPUBx37MvgHaHa&pid=Api&P=0&h=180">
+        </div>
+        <div id="toast" class="item">
+            <h4>Toast</h4>
+            <h5>20k Penties</h5>
+            <h5 id="toastStock">Stock: 10</h5>
+            <img src="https://www.foodrepublic.com/img/gallery/the-quickest-way-to-toast-bread-for-an-intensely-satisfying-crunch/l-intro-1684532933.jpg">
+        </div>
+        <div id="raisinToast" class="item">
+            <h4>Raisin Toast</h4>
+            <h5>100k Penties</h5>
+            <h5 id="raisinToastStock">Stock: 10</h5>
+            <img src="https://thumbs.dreamstime.com/b/raisin-fruit-toast-polyunsaturated-margarine-25114952.jpg">
+        </div>
+    </div>
+    <div id="displayContainer">
+        <!-- Apples -->
+        <div class="sellItem">
+            <h2 id="appleDisplay">Apples: 0</h2>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-apple">Sell</button>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-apples">Sell All</button>
+        </div>
+        <!-- Bananas -->
+        <div class="sellItem">
+            <h2 id="bananaDisplay">Bananas: 0</h2>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-banana">Sell</button>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-bananas">Sell All</button>
+        </div>
+        <!-- Oranges -->
+        <div class="sellItem">
+            <h2 id="orangeDisplay">Oranges: 0</h2>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-orange">Sell</button>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-oranges">Sell All</button>
+        </div>
+        <!-- Yougurt -->
+        <div class="sellItem">
+            <h2 id="yougurtDisplay">Yougurt: 0</h2>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-yougurt">Sell</button>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-yougurts">Sell All</button>
+        </div> 
+        <!-- Mango -->
+        <div class="sellItem">
+            <h2 id="mangoDisplay">Mango: 0</h2>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-mango">Sell</button>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-mangos">Sell All</button>
+        </div>
+        <!-- Bread -->
+        <div class="sellItem">
+            <h2 id="breadDisplay">Bread: 0</h2>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-bread">Sell</button>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-breads">Sell All</button>
+        </div>
+        <!-- Frozen Apple Slices -->
+        <div class="sellItem">
+            <h2 id="frozenAppleSlicesDisplay">Frozen Apple Slices: 0</h2>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-frozen-apple-slices">Sell</button>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-frozen-apple-slices">Sell All</button>
+        </div>
+    
+        <!-- Raw Bananas -->
+        <div class="sellItem">
+            <h2 id="rawBananaDisplay">Raw Bananas: 0</h2>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-raw-banana">Sell</button>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-raw-bananas">Sell All</button>
+        </div>
+        <!-- Frozen Oranges -->
+        <div class="sellItem">
+            <h2 id="frozenOrangeDisplay">Frozen Oranges: 0</h2>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-frozen-orange">Sell</button>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-frozen-oranges">Sell All</button>
+        </div>
+        <!-- Frozen Yougurt -->
+        <div class="sellItem">
+            <h2 id="frozenYougurtDisplay">Frozen Yougurt: 0</h2>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-frozen-yougurt">Sell</button>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-frozen-yougurt">Sell All</button>
+        </div>
+        <!-- Frozen Mango Slices -->
+        <div class="sellItem">
+            <h2 id="frozenMangoSlicesDisplay">Frozen Mango Slices: 0</h2>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-frozen-mango-slices">Sell</button>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-frozen-mango-slices">Sell All</button>
+        </div>
+        <!-- Toast -->
+        <div class="sellItem">
+            <h2 id="toastDisplay">Toast: 0</h2>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-toast">Sell</button>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-toasts">Sell All</button>
+        </div>
+        <!-- Raisin Toast -->
+        <div class="sellItem">
+            <h2 id="raisinToastDisplay">Raisin Toast: 0</h2>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-raisin-toast">Sell</button>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-raisin-toast">Sell All</button>
+        </div>
+    </div>
+    <h1>CRYPTO</h1>
+    <input type="number" id="cryptoInput" placeholder="input a penty amount">
+    <h2 id="BitcoinDisplay">1 BITCOIN: 100000 Penties</h2>
+    <h3 id="Bitcoins">Bitcoins: 0</h3>
+    <button class="btn" onclick="investBitcoin()">INVEST</button>
+    <button class="btn" onclick="sellBitcoin()">SELL</button>
+    <h2 id="LitecoinDisplay">1 LITECOIN: 100 Penties</h2>
+    <h3 id="Litecoins">Litecoins: 0</h3>
+    <button class="btn" onclick="investLitecoin()">INVEST</button>
+    <button class="btn" onclick="sellLitecoin()">SELL</button>
+    <h2 id="DogecoinDisplay">1 DOGECOIN: 0.0001 Penties</h2>
+    <h3 id="Dogecoins">Dogecoins: 0</h3>
+    <button class="btn" onclick="investDogecoin()">INVEST</button>
+    <button class="btn" onclick="sellDogecoin()">SELL</button>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
