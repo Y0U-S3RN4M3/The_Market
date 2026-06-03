@@ -656,4 +656,6 @@ function initiate() {
     initWinSystem();
 }
 
+setInterval(updateUI, 3000)
+
 window.onload = initiate;
