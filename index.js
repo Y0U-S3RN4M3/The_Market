@@ -127,7 +127,7 @@ function stopEvent() {
 // ---------------- TIMER ----------------
 
 function setCountDown() {
-    setInterval(() => {
+    let timeInterval = setInterval(() => {
         timeLeft--;
         localStorage.setItem("timerSave", timeLeft);
 
