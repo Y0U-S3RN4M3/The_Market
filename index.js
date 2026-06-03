@@ -422,6 +422,8 @@ function setupBuyButtons() {
 
 // ---------------- SELL ----------------
 
+const sellableItems = Object.keys(prices);
+
 function getRandomSellMultiplier() {
     let percent = gameState.cashCount >= 100000
         ? Math.floor(Math.random() * 70 - 20)
@@ -437,7 +439,7 @@ function camelToKebab(str) {
 }
 
 function setupSellButtons() {
-    for (const key in gameState) {
+    for (const key in sellableItems) {
         if (key === "cashCount") continue;
 
         const itemName = camelToKebab(key);
@@ -514,7 +516,7 @@ function perkIncrease() {
         gameState.Dogecoin = 0;
         gameState.BitcoinVal = 100000;
         gameState.LitecoinVal = 100;
-        gameState.DogecoinVal = 0.0001;
+        gameState.DogecoinVal = 10000000000;
         saveGame()
         localStorage.removeItem("stock");
 
