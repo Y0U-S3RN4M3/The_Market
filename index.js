@@ -439,7 +439,7 @@ function camelToKebab(str) {
 }
 
 function setupSellButtons() {
-    for (const key in sellableItems) {
+    for (const key of sellableItems) {
         if (key === "cashCount") continue;
 
         const itemName = camelToKebab(key);
@@ -518,7 +518,9 @@ function perkIncrease() {
         gameState.LitecoinVal = 100;
         gameState.DogecoinVal = 10000000000;
         saveGame()
-        localStorage.removeItem("stock");
+        for (let key in stock) {
+            stock[key] = 10;
+        }
 
     }
     else{
