@@ -95,7 +95,7 @@ function loadStock() {
 
 const eventTime = 60;
 const normalTime = 600;
-let timeLeft = parseInt(localStorage.getItem("timerSave")) || 1;
+let timeLeft = parseInt(localStorage.getItem("timerSave")) || 5;
 let eventIsOn = localStorage.getItem("eventSave") === "true";
 
 function callEvent() {
@@ -132,6 +132,7 @@ function setCountDown() {
         localStorage.setItem("timerSave", timeLeft);
 
         if (timeLeft <= 0) {
+            clearInterval(timeInterval);
             if (eventIsOn) {
                 stopEvent();
                 timeLeft = normalTime;
@@ -626,7 +627,7 @@ function restartGame() {
     gameState.LitecoinVal = 100;
     gameState.DogecoinVal = 0.0001;
 
-    timeLeft = 1;
+    timeLeft = 5;
 
     alert("Game has been reset.");
 
