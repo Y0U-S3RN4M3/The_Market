@@ -108,6 +108,8 @@ function callEvent() {
     for (let key in stock) stock[key] = 100;
 
     saveGame();
+
+    JSON.parse(localStorage.getItem("gameSave"))
     window.location.href = "event.html";
 }
 
@@ -116,6 +118,8 @@ function stopEvent() {
     localStorage.setItem("eventSave", "false");
 
     for (let key in stock) stock[key] = 10;
+    timeLeft = normalTime;
+    localStorage.setItem("timerSave", normalTime);
 
     saveGame();
 }
