@@ -516,6 +516,8 @@ function perkIncrease() {
         gameState.LitecoinVal = 100;
         gameState.DogecoinVal = 0.0001;
         saveGame()
+        localStorage.removeItem("stock");
+
     }
     else{
         window.alert("You do not have enough money");
