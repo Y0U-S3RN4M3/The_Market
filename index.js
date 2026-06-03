@@ -223,8 +223,6 @@ function updateCrypto() {
     saveGame()
 }
 
-setInterval(updateCrypto, 1000);
-
 // BITCOIN FUNCTIONS
 
 function investBitcoin(){
@@ -643,6 +641,7 @@ function initiate() {
     setupBuyButtons();
     setupSellButtons();
     setCountDown();
+    setInterval(updateCrypto, 1000);
 
     const cash = document.getElementById("cash");
 
