@@ -167,11 +167,6 @@ function changeTrend() {
     bgup = Math.random() < 0.9;
     lgup = Math.random() < 0.9;
     dgup = Math.random() < 0.9;
-    if(!bgup || !lgup || !dgup){
-        setTimeout(() => {
-            window.alert("CRYPTO IS PLUMMETING!!!")
-        }, 5000)
-    }
     console.log("Trend changed!");
 
     const delay = Math.floor(Math.random() * 60001) + 60000;
@@ -185,7 +180,7 @@ function updateCrypto() {
     let bitcoinMin = -10000;
     let bitcoinMax = 2500;
     if(bgup && gameState.BitcoinVal > 0){
-        bitcoinMin = 0;
+        bitcoinMin = 1000;
     }
     else{
         bitcoinMax = 0;
@@ -198,7 +193,7 @@ function updateCrypto() {
     let litecoinMin = -10;
     let litecoinMax = 2.5;
     if(lgup && gameState.LitecoinVal > 0){
-        litecoinMin = 0;
+        litecoinMin = 1;
     }
     else{
         litecoinMax = 0;
@@ -211,7 +206,7 @@ function updateCrypto() {
     let dogeMin = -1000000000;
     let dogeMax = 250000000;
     if(dgup && gameState.DogecoinVal > 0){
-        dogeMin = 0;
+        dogeMin = 100000000;
     }
     else{
         dogeMax = 0;
