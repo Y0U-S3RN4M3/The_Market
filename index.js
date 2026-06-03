@@ -206,7 +206,7 @@ function updateCrypto() {
     let dogeMin = -1000000000;
     let dogeMax = 250000000;
     if(dgup && gameState.DogecoinVal > 0){
-        dogeMin = 100000000;
+        dogeMin = 10000000;
     }
     else{
         dogeMax = 0;
