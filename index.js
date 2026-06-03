@@ -184,7 +184,7 @@ function updateCrypto() {
 
     let bitcoinMin = -10000;
     let bitcoinMax = 2500;
-    if(bgup){
+    if(bgup && gameState.BitcoinVal > 0){
         bitcoinMin = 0;
     }
     else{
@@ -197,7 +197,7 @@ function updateCrypto() {
 
     let litecoinMin = -10;
     let litecoinMax = 2.5;
-    if(lgup){
+    if(lgup && gameState.LitecoinVal > 0){
         litecoinMin = 0;
     }
     else{
@@ -210,7 +210,7 @@ function updateCrypto() {
 
     let dogeMin = -1000000000;
     let dogeMax = 250000000;
-    if(dgup){
+    if(dgup && gameState.DogecoinVal > 0){
         dogeMin = 0;
     }
     else{
