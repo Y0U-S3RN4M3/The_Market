@@ -137,6 +137,7 @@ function stopEvent() {
 function setCountDown() {
     const timeInterval = setInterval(() => {
         timeLeft--;
+
         console.log("Timer:", timeLeft);
 
         if (timeLeft <= 0) {
@@ -152,16 +153,15 @@ function setCountDown() {
             return;
         }
 
+        // keep storage synced to current run ONLY
         localStorage.setItem("timerSave", timeLeft);
 
         const el = document.getElementById("countDown");
         if (el) {
-            el.textContent =
-                `You have ${timeLeft}s left...`;
+            el.textContent = `You have ${timeLeft}s left...`;
         }
     }, 1000);
 }
-
 // ---------------- CRYPTO SYSTEM ------------
 
 function roundDownToDecimals(value, decimals) {
@@ -645,8 +645,13 @@ function restartGame() {
     gameState.LitecoinVal = 100;
     gameState.DogecoinVal = 0.0001;
 
+    timeLeft = 5;
+    eventIsOn = false;
+    localStorage.setItem("timerSave", normalTime);
+    localStorage.setItem("eventSave", "false");
     timeLeft = normalTime;
     eventIsOn = false;
+
     localStorage.setItem("timerSave", normalTime);
     localStorage.setItem("eventSave", "false");
 
