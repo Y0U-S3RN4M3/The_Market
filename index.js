@@ -135,7 +135,9 @@ function setCountDown() {
         localStorage.setItem("timerSave", timeLeft);
 
         const el = document.getElementById("countDown");
-        if (el) el.textContent = `You have ${timeLeft}s left...`;
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        if (el) el.textContent = `You have ${minutes}m and ${seconds}s left...`;
 
     }, 1000);
 }
