@@ -1,5 +1,9 @@
 console.log("INDEX JS LOADED!");
 
+console.log("FORCING TIMER RESET");
+
+localStorage.removeItem("timerSave");
+
 let gameState = {
     cashCount: 10,
     multiplier: 0,
@@ -98,11 +102,9 @@ function loadStock() {
 const eventTime = 60;
 const normalTime = 5;
 
-// FORCE RESET TIMER ON LOAD (IMPORTANT FIX)
 let timeLeft = normalTime;
-
-// overwrite bad old saves immediately
-localStorage.setItem("timerSave", normalTime);
+let timerRunning = false;
+let timerId = null;
 
 let eventIsOn = localStorage.getItem("eventSave") === "true";
 
@@ -135,30 +137,29 @@ function stopEvent() {
 // ---------------- TIMER ----------------
 
 function setCountDown() {
-    const timeInterval = setInterval(() => {
+    if (timerRunning) return; // prevents double timers
+    timerRunning = true;
+
+    timeLeft = normalTime; // ALWAYS start at 5
+
+    timerId = setInterval(() => {
         timeLeft--;
 
         console.log("Timer:", timeLeft);
 
+        const el = document.getElementById("countDown");
+        if (el) el.textContent = `You have ${timeLeft}s left...`;
+
         if (timeLeft <= 0) {
-            clearInterval(timeInterval);
+            clearInterval(timerId);
+            timerRunning = false;
 
             if (eventIsOn) {
                 stopEvent();
-                localStorage.setItem("timerSave", normalTime);
                 window.location.href = "game.html";
             } else {
                 callEvent();
             }
-            return;
-        }
-
-        // keep storage synced to current run ONLY
-        localStorage.setItem("timerSave", timeLeft);
-
-        const el = document.getElementById("countDown");
-        if (el) {
-            el.textContent = `You have ${timeLeft}s left...`;
         }
     }, 1000);
 }
@@ -668,7 +669,7 @@ function initiate() {
     updateUI();
     setupBuyButtons();
     setupSellButtons();
-    setCountDown();
+    setTimeout(setCountDown, 100);
     setInterval(updateCrypto, 1000);
 
     const cash = document.getElementById("cash");
