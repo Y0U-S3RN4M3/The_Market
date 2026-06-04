@@ -1,4 +1,4 @@
-console.log("INDEX JS LOADED");
+console.log("INDEX JS LOADED!");
 
 let gameState = {
     cashCount: 10,
