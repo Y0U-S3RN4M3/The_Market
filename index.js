@@ -129,7 +129,6 @@ function stopEvent() {
 
     for (let key in stock) stock[key] = 10;
     timeLeft = normalTime;
-    localStorage.setItem("timerSave", normalTime);
 
     saveGame();
 }
@@ -648,12 +647,10 @@ function restartGame() {
 
     timeLeft = 5;
     eventIsOn = false;
-    localStorage.setItem("timerSave", normalTime);
     localStorage.setItem("eventSave", "false");
     timeLeft = normalTime;
     eventIsOn = false;
 
-    localStorage.setItem("timerSave", normalTime);
     localStorage.setItem("eventSave", "false");
 
     alert("Game has been reset.");
