@@ -320,4 +320,7 @@ function initiate() {
     window.cashLoop = setInterval(updateUI, 500);
 }
 
-window.onload = initiate;
+if (!window.__INIT_STARTED__) {
+    window.__INIT_STARTED__ = true;
+    window.onload = initiate;
+}
