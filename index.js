@@ -102,9 +102,11 @@ function loadStock() {
 const eventTime = 60;
 const normalTime = 5;
 
-let timeLeft = normalTime;
-let timerRunning = false;
-let timerId = null;
+let timeLeft = Number(localStorage.getItem("timerSave"));
+
+if (!timeLeft) {
+    timeLeft = normalTime;
+}
 
 let eventIsOn = localStorage.getItem("eventSave") === "true";
 
@@ -118,8 +120,6 @@ function callEvent() {
     for (let key in stock) stock[key] = 100;
 
     saveGame();
-
-    JSON.parse(localStorage.getItem("gameSave"))
     window.location.href = "event.html";
 }
 
@@ -128,7 +128,9 @@ function stopEvent() {
     localStorage.setItem("eventSave", "false");
 
     for (let key in stock) stock[key] = 10;
+
     timeLeft = normalTime;
+    localStorage.setItem("timerSave", timeLeft);
 
     saveGame();
 }
@@ -136,30 +138,31 @@ function stopEvent() {
 // ---------------- TIMER ----------------
 
 function setCountDown() {
-    if (timerRunning) return; // prevents double timers
-    timerRunning = true;
-
-    timeLeft = normalTime; // ALWAYS start at 5
-
-    timerId = setInterval(() => {
+    const timeInterval = setInterval(() => {
         timeLeft--;
 
-        console.log("Timer:", timeLeft);
-
-        const el = document.getElementById("countDown");
-        if (el) el.textContent = `You have ${timeLeft}s left...`;
-
         if (timeLeft <= 0) {
-            clearInterval(timerId);
-            timerRunning = false;
+            clearInterval(timeInterval);
 
             if (eventIsOn) {
                 stopEvent();
-                window.location.href = "game.html";
+                timeLeft = normalTime;
             } else {
                 callEvent();
+                timeLeft = eventTime;
             }
+
+            localStorage.setItem("timerSave", timeLeft);
+            return;
         }
+
+        localStorage.setItem("timerSave", timeLeft);
+
+        const el = document.getElementById("countDown");
+        if (el) {
+            el.textContent = `You have ${timeLeft}s left...`;
+        }
+
     }, 1000);
 }
 // ---------------- CRYPTO SYSTEM ------------
