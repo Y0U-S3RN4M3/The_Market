@@ -104,7 +104,7 @@ function loadStock() {
 
 // ---------------- EVENT SYSTEM ----------------
 
-const eventTime = 60;
+const eventTime = 5;
 const normalTime = 5;
 
 let timeLeft = Number(localStorage.getItem("timerSave"));
