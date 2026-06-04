@@ -8,14 +8,6 @@ if (window.timerRunning) {
 }
 // ---------------- GAME STATE ----------------
 
-// INTERVAL / TIMER STORAGE 
-
-let cryptoInterval = null;
-let uiInterval = null;
-let countdownInterval = null;
-let trendTimeout = null;
-
-// OBJECTS
 let gameState = {
     cashCount: 10,
     multiplier: 0,
