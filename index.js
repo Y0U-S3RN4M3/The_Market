@@ -97,8 +97,13 @@ function loadStock() {
 
 const eventTime = 60;
 const normalTime = 5;
+
+// FORCE RESET TIMER ON LOAD (IMPORTANT FIX)
 let timeLeft = normalTime;
+
+// overwrite bad old saves immediately
 localStorage.setItem("timerSave", normalTime);
+
 let eventIsOn = localStorage.getItem("eventSave") === "true";
 
 function callEvent() {
