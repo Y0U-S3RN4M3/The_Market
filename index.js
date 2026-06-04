@@ -104,11 +104,14 @@ function loadStock() {
 
 // ---------------- EVENT SYSTEM ----------------
 
-const eventTime = 5;
-const normalTime = 5;
+const config = {
+    eventTime: 5,
+    normalTime: 5,
+}
+
 
 let timeLeft = Number(localStorage.getItem("timerSave"));
-if (!timeLeft || isNaN(timeLeft)) timeLeft = normalTime;
+if (!timeLeft || isNaN(timeLeft)) timeLeft = config.normalTime;
 
 let eventIsOn = localStorage.getItem("eventSave") === "true";
 
@@ -122,12 +125,12 @@ function setCountDown() {
             if (eventIsOn) {
                 eventIsOn = false;
                 localStorage.setItem("eventSave", "false");
-                timeLeft = normalTime;
+                timeLeft = config.normalTime;
                 window.location.href = "game.html";
             } else {
                 eventIsOn = true;
                 localStorage.setItem("eventSave", "true");
-                timeLeft = eventTime;
+                timeLeft = config.eventTime;
                 window.location.href = "event.html";
             }
         }
@@ -343,7 +346,7 @@ function restartGame() {
     gameState.Bitcoin = 0;
     gameState.Litecoin = 0;
     gameState.Dogecoin = 0;
-    timeLeft = normalTime;
+    timeLeft = config.normalTime;
     
     // 🧹 CLEAR STORAGE
     localStorage.clear();
