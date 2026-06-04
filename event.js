@@ -7,7 +7,3 @@ for(let i = 0; i < textToShow.length; i++){
         header.textContent += textToShow.charAt(i);
     }, i * 75)
 }
-
-setTimeout(() => {
-    window.location.href = 'game.html';
-}, 6000)
