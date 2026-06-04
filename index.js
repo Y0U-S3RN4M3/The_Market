@@ -302,6 +302,29 @@ function updateUI() {
     if (doge) doge.textContent = `1 DOGECOIN: ${gameState.DogecoinVal}`;
 }
 
+function restartGame() {
+    if (!confirm("Are you sure you want to restart? This will erase all progress.")) {
+        return;
+    }
+
+    // 🔥 STOP ALL RUNNING LOOPS (this is the important part)
+    clearInterval(cryptoInterval);
+    clearInterval(uiInterval);
+    clearInterval(countdownInterval);
+    clearInterval(window.cashLoop);
+
+    cryptoInterval = null;
+    uiInterval = null;
+    countdownInterval = null;
+    window.cashLoop = null;
+
+    // 🧹 CLEAR STORAGE
+    localStorage.clear();
+
+    // 🔄 RESET STATE (minimal safe reset)
+    location.href = "index.html";
+}
+
 // ---------------- INIT ----------------
 
 function initiate() {
