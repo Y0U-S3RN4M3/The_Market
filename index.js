@@ -319,24 +319,26 @@ function restartGame() {
     window.cashLoop = null;
 
     gameState.appleCount: 0;
-    bananaCount = 0;
-    orangeCount = 0;
-    yougurtCount = 0;
-    mangoCount = 0;
-    breadCount = 0;
-    frozenAppleSlicesCount = 0;
-    rawBananaCount = 0;
-    frozenOrangeCount = 0;
-    frozenYougurtCount = 0;
-    frozenMangoSlicesCount = 0;
-    toastCount = 0;
-    raisinToastCount = 0;
+    gameState.bananaCount = 0;
+    gameState.orangeCount = 0;
+    gameState.yougurtCount = 0;
+    gameState.mangoCount = 0;
+    gameState.breadCount = 0;
+    gameState.frozenAppleSlicesCount = 0;
+    gameState.rawBananaCount = 0;
+    gameState.frozenOrangeCount = 0;
+    gameState.frozenYougurtCount = 0;
+    gameState.frozenMangoSlicesCount = 0;
+    gameState.toastCount = 0;
+    gameState.raisinToastCount = 0;
     
     // 🧹 CLEAR STORAGE
     localStorage.clear();
 
     // 🔄 RESET STATE (minimal safe reset)
     location.href = "index.html";
+
+    saveGame()
 }
 
 // ---------------- INIT ----------------
