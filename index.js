@@ -381,7 +381,6 @@ function initiate() {
     uiInterval = setInterval(updateUI, 500);
 
     window.cashLoop = uiInterval;
-}
 
     window.cashLoop = setInterval(updateUI, 500);
 }
