@@ -126,34 +126,6 @@ function stopEvent() {
 
 // ---------------- TIMER ----------------
 
-// function setCountDown() {
-//     let timeInterval = setInterval(() => {
-//         timeLeft--;
-//         localStorage.setItem("timerSave", timeLeft);
-
-//         if (timeLeft <= 0) {
-//             clearInterval(timeInterval);
-//             if (eventIsOn) {
-//                 stopEvent();
-//                 timeLeft = normalTime;
-//                 localStorage.setItem("timerSave", timeLeft);
-//                 window.location.href = "game.html";
-//             } else {
-//                 callEvent();
-//             }
-//             return;
-//         }
-
-//         const m = Math.floor(timeLeft / 60);
-//         const s = timeLeft % 60;
-
-//         const el = document.getElementById("countDown");
-//         if (el) {
-//             el.textContent = `You have ${String(m).padStart(2, "0")}m ${String(s).padStart(2, "0")}s left...`;
-//         }
-//     }, 1000);
-// }
-
 function setCountDown() {
     const timeInterval = setInterval(() => {
         timeLeft--;
@@ -655,6 +627,8 @@ function restartGame() {
     gameState.DogecoinVal = 0.0001;
 
     timeLeft = 5;
+    localStorage.setItem("timerSave", normalTime);
+    localStorage.setItem("eventSave", "false");
 
     alert("Game has been reset.");
 
