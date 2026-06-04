@@ -343,12 +343,14 @@ function restartGame() {
     gameState.Bitcoin = 0;
     gameState.Litecoin = 0;
     gameState.Dogecoin = 0;
+    timeLeft = normalTime;
     
     // 🧹 CLEAR STORAGE
     localStorage.clear();
 
     // 🔄 RESET STATE (minimal safe reset)
     location.href = "index.html";
+    saveGame()
 
     saveGame()
 }
