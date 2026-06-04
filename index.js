@@ -366,6 +366,8 @@ function initiate() {
     setCountDown();
     setInterval(updateCrypto, 1000);
 
+// ---------------- INIT ----------------
+
 function initiate() {
     loadGame();
     loadStock();
@@ -376,11 +378,8 @@ function initiate() {
         setupSellButtons();
     }, 50);
 
-    countdownInterval = setCountDown();   // FIX
-    cryptoInterval = setInterval(updateCrypto, 1000);
-    uiInterval = setInterval(updateUI, 500);
-
-    window.cashLoop = uiInterval;
+    setCountDown();
+    setInterval(updateCrypto, 1000);
 
     window.cashLoop = setInterval(updateUI, 500);
 }
