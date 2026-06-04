@@ -1,4 +1,4 @@
-function stuffToDo(callback){
+function stuffToDo(){
     const header = document.querySelector(".eventHeader");
 
     const textToShow = 'The vortex has arrived, the fabric of the universe has been warped...'
@@ -9,3 +9,4 @@ function stuffToDo(callback){
         }, i * 75)
     }
 }
+stuffToDo();
