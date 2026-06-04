@@ -8,7 +8,4 @@ function stuffToDo(callback){
             header.textContent += textToShow.charAt(i);
         }, i * 75)
     }
-    callback()
 }
-
-stuffToDo(() => window.location.href = 'game.html')
