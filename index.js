@@ -323,16 +323,41 @@ function sellDogecoin(){
 }
 
 // ---------------- UI ----------------
-
-function capitalize(text){
-    return text.charAt(0).toUpperCase() + text.slice(1);
-}
-
 function updateUI() {
-    console.log("UPDATE UI RUNNING");
+
+    // ---------------- CASH ----------------
+    const cash = document.getElementById("cash");
+    if (cash) {
+        cash.textContent = `You have ${gameState.cashCount.toLocaleString()} Penties`;
+    }
+
+    // ---------------- MULTIPLIER ----------------
+    const multiplierEl = document.getElementById("multiplier");
+    if (multiplierEl) {
+        multiplierEl.textContent = `Multiplier: ${gameState.multiplier.toFixed(3)}`;
+    }
+
+    // ---------------- PAY PERCENT ----------------
+    const payPercentEl = document.getElementById("payPercent");
+    if (payPercentEl) {
+        payPercentEl.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
+    }
+
+    // ---------------- BITCOIN ----------------
+    const btcDisplay = document.getElementById("BitcoinDisplay");
+    if (btcDisplay) {
+        btcDisplay.textContent = `1 BITCOIN: ${gameState.BitcoinVal} Penties`;
+    }
+
     const btcEl = document.getElementById("Bitcoins");
     if (btcEl) {
         btcEl.textContent = `Bitcoins: ${gameState.Bitcoin.toFixed(6)}`;
+    }
+
+    // ---------------- LITECOIN ----------------
+    const ltcDisplay = document.getElementById("LitecoinDisplay");
+    if (ltcDisplay) {
+        ltcDisplay.textContent = `1 LITECOIN: ${gameState.LitecoinVal} Penties`;
     }
 
     const ltcEl = document.getElementById("Litecoins");
@@ -340,59 +365,44 @@ function updateUI() {
         ltcEl.textContent = `Litecoins: ${gameState.Litecoin.toFixed(6)}`;
     }
 
+    // ---------------- DOGECOIN ----------------
+    const dogeDisplay = document.getElementById("DogecoinDisplay");
+    if (dogeDisplay) {
+        dogeDisplay.textContent = `1 DOGECOIN: ${gameState.DogecoinVal} Penties`;
+    }
+
     const dogeEl = document.getElementById("Dogecoins");
     if (dogeEl) {
         dogeEl.textContent = `Dogecoins: ${gameState.Dogecoin.toFixed(6)}`;
     }
 
-    document.getElementById("BitcoinDisplay").textContent =
-        `1 BITCOIN: ${gameState.BitcoinVal} Penties`;
-
-    document.getElementById("LitecoinDisplay").textContent =
-        `1 LITECOIN: ${gameState.LitecoinVal} Penties`;
-
-    document.getElementById("DogecoinDisplay").textContent =
-        `1 DOGECOIN: ${gameState.DogecoinVal} Penties`;
-
+    // ---------------- ITEMS ----------------
     for (const key in gameState) {
         if (key === "cashCount") continue;
 
-        const el = document.getElementById(`${key.replace(/Count$/, "")}Display`);
-        if (el) {
-            el.textContent =
-                `${capitalize(key.replace(/Count$/, ""))}: ${gameState[key]}`;
-        }
+        const id = `${key.replace(/Count$/, "")}Display`;
+        const el = document.getElementById(id);
+
+        if (!el) continue;
+
+        el.textContent =
+            `${capitalize(key.replace(/Count$/, ""))}: ${gameState[key]}`;
     }
 
-    const cash = document.getElementById("cash");
-    if (cash) {
-        cash.textContent = `You have ${gameState.cashCount.toLocaleString()} Penties`;
-    }
-
-    const multiplierEl = document.getElementById("multiplier");
-
-    if (multiplierEl) {
-        multiplierEl.textContent = `Multiplier: ${gameState.multiplier.toFixed(3)}`;
-    }
-
-    const payPercentEl = document.getElementById("payPercent");
-
-    if (payPercentEl) {
-        payPercentEl.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
-    }
-    // STOCK DISPLAY
+    // ---------------- STOCK ----------------
     for (const key in stock) {
         const base = key.replace(/Count$/, "");
         const el = document.getElementById(`${base}Stock`);
 
-        if (el) {
-            el.textContent = `Stock: ${stock[key]}`;
-        }
+        if (!el) continue;
+
+        el.textContent = `Stock: ${stock[key]}`;
     }
 
-    if(eventIsOn){
+    // ---------------- EVENT STYLE ----------------
+    if (eventIsOn) {
         document.body.classList.add("event");
-        document.body.style.margin = '0px';
+        document.body.style.margin = "0px";
     }
 }
 // ---------------- BUY ----------------
