@@ -6,6 +6,7 @@ localStorage.removeItem("timerSave");
 if (window.timerRunning) {
     clearInterval(window.timerRunning);
 }
+//!O!O!O!O!
 // ---------------- GAME STATE ----------------
 
 let gameState = {
