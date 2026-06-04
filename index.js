@@ -104,7 +104,7 @@ function loadStock() {
 // ---------------- EVENT SYSTEM ----------------
 
 const eventTime = 60;
-const normalTime = 5;
+const normalTime = 600;
 
 let timeLeft = Number(localStorage.getItem("timerSave"));
 if (!timeLeft || isNaN(timeLeft)) timeLeft = normalTime;
@@ -365,7 +365,7 @@ function initiate() {
     setCountDown();
     setInterval(updateCrypto, 1000);
 
-    function initiate() {
+function initiate() {
     loadGame();
     loadStock();
     updateUI();
