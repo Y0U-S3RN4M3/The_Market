@@ -329,7 +329,7 @@ function capitalize(text){
 }
 
 function updateUI() {
-
+    console.log("UPDATE UI RUNNING");
     const btcEl = document.getElementById("Bitcoins");
     if (btcEl) {
         btcEl.textContent = `Bitcoins: ${gameState.Bitcoin.toFixed(6)}`;
@@ -641,6 +641,7 @@ function restartGame() {
 // ---------------- INIT ----------------
 
 function initiate() {
+    console.log("INITIATE RUNNING");
     loadGame();
     loadStock();
     updateUI();
