@@ -105,7 +105,7 @@ function loadStock() {
 // ---------------- EVENT SYSTEM ----------------
 
 const eventTime = 60;
-const normalTime = 600;
+const normalTime = 5;
 
 let timeLeft = Number(localStorage.getItem("timerSave"));
 if (!timeLeft || isNaN(timeLeft)) timeLeft = normalTime;
