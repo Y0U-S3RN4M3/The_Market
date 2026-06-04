@@ -95,8 +95,7 @@ function loadStock() {
 
 const eventTime = 60;
 const normalTime = 5;
-// let timeLeft = parseInt(localStorage.getItem("timerSave")) || normalTime;
-let timeLeft = normalTime;
+let timeLeft = parseInt(localStorage.getItem("timerSave")) || normalTime;
 let eventIsOn = localStorage.getItem("eventSave") === "true";
 
 function callEvent() {
