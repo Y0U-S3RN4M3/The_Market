@@ -318,6 +318,20 @@ function restartGame() {
     countdownInterval = null;
     window.cashLoop = null;
 
+    gameState.appleCount: 0;
+    bananaCount = 0;
+    orangeCount = 0;
+    yougurtCount = 0;
+    mangoCount = 0;
+    breadCount = 0;
+    frozenAppleSlicesCount = 0;
+    rawBananaCount = 0;
+    frozenOrangeCount = 0;
+    frozenYougurtCount = 0;
+    frozenMangoSlicesCount = 0;
+    toastCount = 0;
+    raisinToastCount = 0;
+    
     // 🧹 CLEAR STORAGE
     localStorage.clear();
 
