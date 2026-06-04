@@ -106,7 +106,7 @@ function loadStock() {
 
 const config = {
     eventTime: 60,
-    normalTime: 600,
+    normalTime: 5,
 }
 
 
