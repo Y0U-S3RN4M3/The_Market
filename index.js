@@ -366,21 +366,6 @@ function initiate() {
     setCountDown();
     setInterval(updateCrypto, 1000);
 
-// ---------------- INIT ----------------
-
-function initiate() {
-    loadGame();
-    loadStock();
-    updateUI();
-
-    setTimeout(() => {
-        setupBuyButtons();
-        setupSellButtons();
-    }, 50);
-
-    setCountDown();
-    setInterval(updateCrypto, 1000);
-
     window.cashLoop = setInterval(updateUI, 500);
 }
 
