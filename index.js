@@ -318,7 +318,10 @@ function restartGame() {
     countdownInterval = null;
     window.cashLoop = null;
 
-    gameState.appleCount: 0;
+    gameState.cashCount = 10;
+    gameState.multiplier = 0;
+    gameState.payPercent = 100;
+    gameState.appleCount = 0;
     gameState.bananaCount = 0;
     gameState.orangeCount = 0;
     gameState.yougurtCount = 0;
@@ -331,6 +334,12 @@ function restartGame() {
     gameState.frozenMangoSlicesCount = 0;
     gameState.toastCount = 0;
     gameState.raisinToastCount = 0;
+    gameState.BitcoinVal = 100000;
+    gameState.LitecoinVal = 100;
+    gameState.DogecoinVal = 10000000000;
+    gameState.Bitcoin = 0;
+    gameState.Litecoin = 0;
+    gameState.Dogecoin = 0;
     
     // 🧹 CLEAR STORAGE
     localStorage.clear();
