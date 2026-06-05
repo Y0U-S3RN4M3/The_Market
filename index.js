@@ -105,7 +105,7 @@ function loadStock() {
 
 const config = {
     eventTime: 60,
-    normalTime: 600,
+    normalTime: 305,
 }
 
 
@@ -131,6 +131,11 @@ function setCountDown() {
                 localStorage.setItem("eventSave", "true");
                 timeLeft = config.eventTime;
                 window.location.href = "event.html";
+            }
+        }
+        else if(timeLeft === 300){
+            for(let key in stock){
+                stock[key] = 10
             }
         }
 
