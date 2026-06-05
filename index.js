@@ -167,6 +167,21 @@ function updateCrypto() {
     gameState.LitecoinVal += roundDownToDecimals(Math.random() * 2 - 1, 2);
     gameState.DogecoinVal += Math.floor(Math.random() * 1000000 - 500000);
 
+    gameState.BitcoinVal = Math.max(
+        1,
+        gameState.BitcoinVal + Math.floor(Math.random() * 3000 - 1000)
+    );
+    
+    gameState.LitecoinVal = Math.max(
+        0.01,
+        gameState.LitecoinVal + roundDownToDecimals(Math.random() * 2 - 1, 2)
+    );
+    
+    gameState.DogecoinVal = Math.max(
+        0.000001,
+        gameState.DogecoinVal + Math.floor(Math.random() * 1000000 - 500000)
+    );
+    
     const btc = document.getElementById("BitcoinDisplay");
     if (btc) btc.textContent = `1 BITCOIN: ${gameState.BitcoinVal} Penties`;
 
