@@ -336,6 +336,9 @@ function perkIncrease() {
         gameState.BitcoinVal = 100000;
         gameState.LitecoinVal = 100;
         gameState.DogecoinVal = 0.0001;
+        for(key in stock){
+            stock[key] = 10;
+        }
         saveGame()
     }
     else{
