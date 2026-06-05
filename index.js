@@ -220,6 +220,22 @@ function setupBuyButtons() {
 
 // ---------------- SELL ----------------
 
+const sellAllIds = {
+    appleCount: "sell-all-apples",
+    bananaCount: "sell-all-bananas",
+    orangeCount: "sell-all-oranges",
+    yougurtCount: "sell-all-yougurts",
+    mangoCount: "sell-all-mangos",
+    breadCount: "sell-all-breads",
+    frozenAppleSlicesCount: "sell-all-frozen-apple-slices",
+    rawBananaCount: "sell-all-raw-bananas",
+    frozenOrangeCount: "sell-all-frozen-oranges",
+    frozenYougurtCount: "sell-all-frozen-yougurts",
+    frozenMangoSlicesCount: "sell-all-frozen-mango-slices",
+    toastCount: "sell-all-toasts",
+    raisinToastCount: "sell-all-raisin-toasts"
+};
+
 const sellableItems = Object.keys(prices);
 
 function getRandomSellMultiplier() {
@@ -237,7 +253,7 @@ function setupSellButtons() {
         const itemName = camelToKebab(key);
 
         const singleBtn = document.getElementById(`sell-${itemName}`);
-        const allBtn = document.getElementById(`sell-all-${itemName}s`);
+        const allBtn = document.getElementById(sellAllIds[key]);
 
         if (singleBtn) {
             singleBtn.onclick = () => {
