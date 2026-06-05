@@ -10,7 +10,7 @@ if (window.timerRunning) {
 
 let gameState = {
     cashCount: 10,
-    multiplier: 0,
+    multiplier: 1,
     payPercent: 100,
 
     appleCount: 0,
@@ -262,7 +262,7 @@ function setupSellButtons() {
                 if (gameState[key] <= 0) return;
 
                 const gain = Math.floor(prices[key] * getRandomSellMultiplier());
-                const total = gain + gain * gameState.multiplier;
+                const total = gain * gameState.multiplier;
 
                 gameState[key]--;
                 gameState.cashCount += total;
@@ -396,7 +396,7 @@ function restartGame() {
     window.cashLoop = null;
 
     gameState.cashCount = 10;
-    gameState.multiplier = 0;
+    gameState.multiplier = 1;
     gameState.payPercent = 100;
     gameState.appleCount = 0;
     gameState.bananaCount = 0;
