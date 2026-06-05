@@ -137,6 +137,7 @@ function setCountDown() {
             for(let key in stock){
                 stock[key] = 10
             }
+            saveGame()
         }
 
         localStorage.setItem("timerSave", timeLeft);
