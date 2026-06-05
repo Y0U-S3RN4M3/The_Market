@@ -306,6 +306,42 @@ function updateUI() {
     const doge = document.getElementById("DogecoinDisplay");
     if (doge) doge.textContent = `1 DOGECOIN: ${gameState.DogecoinVal}`;
 }
+// PERKS
+
+function perkIncrease() {
+    if(gameState.cashCount >= 100000){
+        gameState.multiplier += Math.sqrt(gameState.cashCount) / 10000;
+        const multiplier = document.getElementById("multiplier");
+        multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3)}`;
+        gameState.payPercent -= Math.sqrt(gameState.cashCount) / 1000
+        const payPercent = document.getElementById("payPercent");
+        payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`
+        gameState.cashCount = 10;
+        gameState.appleCount =  0;
+        gameState.bananaCount = 0;
+        gameState.orangeCount = 0;
+        gameState.yougurtCount = 0;
+        gameState.mangoCount = 0;
+        gameState.breadCount = 0;
+        gameState.frozenAppleSlicesCount = 0;
+        gameState.rawBananaCount = 0;
+        gameState.frozenOrangeCount = 0;
+        gameState.frozenYougurtCount = 0;
+        gameState.frozenMangoSlicesCount = 0;
+        gameState.toastCount = 0;
+        gameState.raisinToastCount = 0;
+        gameState.Bitcoin = 0;
+        gameState.Litecoin = 0;
+        gameState.Dogecoin = 0;
+        gameState.BitcoinVal = 100000;
+        gameState.LitecoinVal = 100;
+        gameState.DogecoinVal = 0.0001;
+        saveGame()
+    }
+    else{
+        window.alert("You do not have enough money");
+    }
+}
 
 function restartGame() {
     if (!confirm("Are you sure you want to restart? This will erase all progress.")) {
