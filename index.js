@@ -227,11 +227,11 @@ const sellAllIds = {
     yougurtCount: "sell-all-yougurts",
     mangoCount: "sell-all-mangos",
     breadCount: "sell-all-breads",
-    frozenAppleSlicesCount: "sell-all-frozen-apple-slices",
+    frozenAppleSlicesCount: "sell-all-frozen-apple-slicess",
     rawBananaCount: "sell-all-raw-bananas",
     frozenOrangeCount: "sell-all-frozen-oranges",
     frozenYougurtCount: "sell-all-frozen-yougurts",
-    frozenMangoSlicesCount: "sell-all-frozen-mango-slices",
+    frozenMangoSlicesCount: "sell-all-frozen-mango-slicess",
     toastCount: "sell-all-toasts",
     raisinToastCount: "sell-all-raisin-toasts"
 };
