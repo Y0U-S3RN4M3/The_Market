@@ -1,4 +1,4 @@
-function stuffToDo(){
+function stuffToDo(callback){
     const header = document.querySelector(".eventHeader");
 
     const textToShow = 'The vortex has arrived, the fabric of the universe has been warped...'
@@ -8,5 +8,11 @@ function stuffToDo(){
             header.textContent += textToShow.charAt(i);
         }, i * 75)
     }
+    setTimeout(() => {
+        callback()
+    }, 6000);
+    
 }
-stuffToDo();
+stuffToDo(() => {
+    window.location.href = 'game.html';
+});
