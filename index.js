@@ -268,7 +268,7 @@ function setupSellButtons() {
                 if (gameState[key] <= 0) return;
 
                 const gain = Math.floor(prices[key] * getRandomSellMultiplier());
-                const total = gain * gameState.multiplier;
+                const total = gain + gain * gameState.multiplier;
 
                 gameState[key]--;
                 gameState.cashCount += total;
@@ -351,7 +351,7 @@ function perkIncrease() {
     if(gameState.cashCount >= 100000){
         gameState.multiplier += Math.sqrt(gameState.cashCount) / 10000;
         const multiplier = document.getElementById("multiplier");
-        multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3)}`;
+        multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
         gameState.payPercent -= Math.sqrt(gameState.cashCount) / 1000
         const payPercent = document.getElementById("payPercent");
         payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`
