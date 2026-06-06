@@ -1,8 +1,3 @@
-console.log("INDEX JS LOADED!");
-console.log("FORCING TIMER RESET");
-
-localStorage.removeItem("timerSave");
-
 if (window.timerRunning) {
     clearInterval(window.timerRunning);
 }
@@ -109,7 +104,7 @@ function loadStock() {
 
 const config = {
     eventTime: 60,
-    normalTime: 600,
+    normalTime: 5,
 }
 
 
@@ -118,7 +113,27 @@ if (!timeLeft || isNaN(timeLeft)) timeLeft = config.normalTime;
 
 let eventIsOn = localStorage.getItem("eventSave") === "true";
 
+function callEvent(){
+    eventIsOn = true;
+    window.onload = () => {
+        document.body.style.backgroundColor = "rgb(255, 0, 0, 0.2)"
+    };
+    location.reload();
+    localStorage.setItem("eventSave", eventIsOn);
+    timeLeft = config.eventTime;
+    window.location.href = "event.html";
+}
+
+function stopEvent(){
+    eventIsOn = false;
+    localStorage.setItem("eventSave", eventIsOn);
+    timeLeft = config.normalTime;
+    window.location.href = "game.html";
+}
+
 // ---------------- TIMER ----------------
+
+let stockReset = localStorage.getItem("stockResetDone") === "true";
 
 function setCountDown() {
     setInterval(() => {
@@ -126,20 +141,28 @@ function setCountDown() {
 
         if (timeLeft <= 0) {
             if (eventIsOn) {
-                eventIsOn = false;
-                localStorage.setItem("eventSave", "false");
-                timeLeft = config.normalTime;
-                window.location.href = "game.html";
+                stockReset = false;
+                stopEvent();
+                document.body.classList.remove("event");
+                localStorage.setItem("stockResetDone", "false");
+
             } else {
-                eventIsOn = true;
-                localStorage.setItem("eventSave", "true");
-                timeLeft = config.eventTime;
-                window.location.href = "event.html";
+                stockReset = false;
+                callEvent();
+                document.body.classList.add("event");
+                localStorage.setItem("stockResetDone", "false");
             }
         }
-        else if(timeLeft === 300){
+        else if(timeLeft <= 300 && !stockReset){
+            stockReset = true;
+            localStorage.setItem("stockResetDone", "true");
             for(let key in stock){
-                stock[key] = 10
+                if(eventIsOn){
+                    stock[key] = 100
+                }
+                else{
+                    stock[key] = 10
+                }
             }
             saveGame()
         }
@@ -427,6 +450,9 @@ function restartGame() {
     gameState.Bitcoin = 0;
     gameState.Litecoin = 0;
     gameState.Dogecoin = 0;
+    for(key in stock){
+            stock[key] = 10;
+    }
     timeLeft = config.normalTime;
     
     // 🧹 CLEAR STORAGE
@@ -449,7 +475,7 @@ function initiate() {
     }, 50);
 
     setCountDown();
-    setInterval(updateCrypto, 1000);
+    cryptoInterval = setInterval(updateCrypto, 1000);
 
     window.cashLoop = setInterval(updateUI, 500);
 }
