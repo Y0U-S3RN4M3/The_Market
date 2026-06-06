@@ -111,10 +111,17 @@ const config = {
 let timeLeft = Number(localStorage.getItem("timerSave"));
 let savedTime = Number(localStorage.getItem("timerSave"));
 
+const config = {
+    eventTime: 60,
+    normalTime: 600,
+};
+
+let savedTime = Number(localStorage.getItem("timerSave"));
+
 let timeLeft =
-    !savedTime || isNaN(savedTime)
-        ? config.normalTime
-        : savedTime;
+    Number.isFinite(savedTime) && savedTime > 0
+        ? savedTime
+        : config.normalTime;
 
 let eventIsOn = localStorage.getItem("eventSave") === "true";
 
