@@ -205,10 +205,6 @@ function changeTrend() {
 changeTrend();
 
 function updateCrypto() {
-    gameState.BitcoinVal += Math.floor(Math.random() * 3000 - 1000);
-    gameState.LitecoinVal += roundDownToDecimals(Math.random() * 2 - 1, 2);
-    gameState.DogecoinVal += Math.floor(Math.random() * 1000000 - 500000);
-
     gameState.BitcoinVal = Math.max(
         1,
         gameState.BitcoinVal + Math.floor(Math.random() * 3000 - 1000)
@@ -525,7 +521,7 @@ function perkIncrease() {
         gameState.Dogecoin = 0;
         gameState.BitcoinVal = 100000;
         gameState.LitecoinVal = 100;
-        gameState.DogecoinVal = 0.0001;
+        gameState.DogecoinVal = 10000000000;
         for(key in stock){
             stock[key] = 10;
         }
