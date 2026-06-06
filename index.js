@@ -172,7 +172,7 @@ function setCountDown() {
         const el = document.getElementById("countDown");
         const minutes = Math.floor(timeLeft / 60);
         const seconds = timeLeft % 60;
-        if (el) el.textContent = `You have ${minutes}m and ${seconds}s left...`;
+        if (el) el.textContent = `You have ${minutes.padStart("0", 2)}m and ${seconds.padStart("0", 2)}s left...`;
 
     }, 1000);
 }
