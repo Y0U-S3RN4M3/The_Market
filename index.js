@@ -5,6 +5,7 @@ if (window.timerRunning) {
 let cryptoInterval;
 let uiInterval;
 let countdownInterval;
+
 // ---------------- GAME STATE ----------------
 
 let gameState = {
@@ -105,17 +106,22 @@ function loadStock() {
 const config = {
     eventTime: 60,
     normalTime: 600,
-}
+};
 
-let timeLeft = Number(localStorage.getItem("timerSave")); 
-let savedTime = Number(localStorage.getItem("timerSave")); 
-let timeLeft = !savedTime || isNaN(savedTime) ? config.normalTime : savedTime;
+let timeLeft = Number(localStorage.getItem("timerSave"));
+let savedTime = Number(localStorage.getItem("timerSave"));
+
+let timeLeft =
+    !savedTime || isNaN(savedTime)
+        ? config.normalTime
+        : savedTime;
+
 let eventIsOn = localStorage.getItem("eventSave") === "true";
 
-function callEvent(){
+function callEvent() {
     eventIsOn = true;
     window.onload = () => {
-        document.body.style.backgroundColor = "rgb(255, 0, 0, 0.2)"
+        document.body.style.backgroundColor = "rgb(255, 0, 0, 0.2)";
     };
     location.reload();
     localStorage.setItem("eventSave", eventIsOn);
@@ -123,7 +129,7 @@ function callEvent(){
     window.location.href = "event.html";
 }
 
-function stopEvent(){
+function stopEvent() {
     eventIsOn = false;
     localStorage.setItem("eventSave", eventIsOn);
     timeLeft = config.normalTime;
@@ -144,26 +150,25 @@ function setCountDown() {
                 stopEvent();
                 document.body.classList.remove("event");
                 localStorage.setItem("stockResetDone", "false");
-
             } else {
                 stockReset = false;
                 callEvent();
                 document.body.classList.add("event");
                 localStorage.setItem("stockResetDone", "false");
             }
-        }
-        else if(timeLeft <= 300 && !stockReset){
+        } else if (timeLeft <= 300 && !stockReset) {
             stockReset = true;
             localStorage.setItem("stockResetDone", "true");
-            for(let key in stock){
-                if(eventIsOn){
-                    stock[key] = 100
-                }
-                else{
-                    stock[key] = 10
+
+            for (let key in stock) {
+                if (eventIsOn) {
+                    stock[key] = 100;
+                } else {
+                    stock[key] = 10;
                 }
             }
-            saveGame()
+
+            saveGame();
         }
 
         localStorage.setItem("timerSave", timeLeft);
@@ -171,8 +176,12 @@ function setCountDown() {
         const el = document.getElementById("countDown");
         const minutes = Math.floor(timeLeft / 60);
         const seconds = timeLeft % 60;
-        if (el) el.textContent = `You have ${minutes.padStart("0", 2)}m and ${seconds.padStart("0", 2)}s left...`;
 
+        if (el)
+            el.textContent = `You have ${String(minutes).padStart(
+                2,
+                "0"
+            )}m and ${String(seconds).padStart(2, "0")}s left...`;
     }, 1000);
 }
 
@@ -183,7 +192,9 @@ function roundDownToDecimals(value, decimals) {
     return Math.floor((value + Number.EPSILON) * m) / m;
 }
 
-let bgup = true, lgup = true, dgup = true;
+let bgup = true,
+    lgup = true,
+    dgup = true;
 
 function changeTrend() {
     bgup = Math.random() < 0.9;
@@ -192,6 +203,7 @@ function changeTrend() {
 
     setTimeout(changeTrend, Math.random() * 60000 + 60000);
 }
+
 changeTrend();
 
 function updateCrypto() {
@@ -203,25 +215,29 @@ function updateCrypto() {
         1,
         gameState.BitcoinVal + Math.floor(Math.random() * 3000 - 1000)
     );
-    
+
     gameState.LitecoinVal = Math.max(
         0.01,
         gameState.LitecoinVal + roundDownToDecimals(Math.random() * 2 - 1, 2)
     );
-    
+
     gameState.DogecoinVal = Math.max(
         0.000001,
         gameState.DogecoinVal + Math.floor(Math.random() * 1000000 - 500000)
     );
-    
+
     const btc = document.getElementById("BitcoinDisplay");
     if (btc) btc.textContent = `1 BITCOIN: ${gameState.BitcoinVal} Penties`;
 
     const ltc = document.getElementById("LitecoinDisplay");
-    if (ltc) ltc.textContent = `1 LITECOIN: ${gameState.LitecoinVal.toFixed(2)} Penties`;
+    if (ltc)
+        ltc.textContent = `1 LITECOIN: ${gameState.LitecoinVal.toFixed(2)} Penties`;
 
     const doge = document.getElementById("DogecoinDisplay");
-    if (doge) doge.textContent = `1 DOGECOIN: ${gameState.DogecoinVal.toFixed(6)} Penties`;
+    if (doge)
+        doge.textContent = `1 DOGECOIN: ${gameState.DogecoinVal.toFixed(
+            6
+        )} Penties`;
 
     saveGame();
 }
@@ -259,15 +275,13 @@ const sellAllIds = {
     yougurtCount: "sell-all-yougurts",
     mangoCount: "sell-all-mangos",
     breadCount: "sell-all-breads",
-
     frozenAppleSlicesCount: "sell-all-frozen-apple-slices",
     rawBananaCount: "sell-all-raw-bananas",
     frozenOrangeCount: "sell-all-frozen-oranges",
     frozenYougurtCount: "sell-all-frozen-yougurts",
     frozenMangoSlicesCount: "sell-all-frozen-mango-slices",
-
     toastCount: "sell-all-toasts",
-    raisinToastCount: "sell-all-raisin-toasts"
+    raisinToastCount: "sell-all-raisin-toasts",
 };
 
 const sellableItems = Object.keys(prices);
@@ -277,7 +291,8 @@ function getRandomSellMultiplier() {
 }
 
 function camelToKebab(str) {
-    return str.replace(/Count$/, "")
+    return str
+        .replace(/Count$/, "")
         .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
         .toLowerCase();
 }
@@ -293,7 +308,10 @@ function setupSellButtons() {
             singleBtn.onclick = () => {
                 if (gameState[key] <= 0) return;
 
-                const gain = Math.floor(prices[key] * getRandomSellMultiplier());
+                const gain = Math.floor(
+                    prices[key] * getRandomSellMultiplier()
+                );
+
                 const total = gain + gain * gameState.multiplier;
 
                 gameState[key]--;
@@ -309,11 +327,13 @@ function setupSellButtons() {
                 const count = gameState[key];
                 if (!count) return;
 
-                const totalGain =
-                    Math.floor(prices[key] * getRandomSellMultiplier() * count);
+                const totalGain = Math.floor(
+                    prices[key] * getRandomSellMultiplier() * count
+                );
 
                 gameState[key] = 0;
-                gameState.cashCount += totalGain + totalGain * gameState.multiplier;
+                gameState.cashCount +=
+                    totalGain + totalGain * gameState.multiplier;
 
                 saveGame();
                 updateUI();
@@ -325,22 +345,19 @@ function setupSellButtons() {
 // ---------------- UI (FULL RESTORED) ----------------
 
 function updateUI() {
-
-    // CASH
     const cash = document.getElementById("cash");
     if (cash) {
         cash.textContent = `You have ${gameState.cashCount.toLocaleString()} Penties`;
     }
 
-    // MULTIPLIER
     const mult = document.getElementById("multiplier");
-    if (mult) mult.textContent = `Multiplier: ${gameState.multiplier.toFixed(3)}`;
+    if (mult)
+        mult.textContent = `Multiplier: ${gameState.multiplier.toFixed(3)}`;
 
-    // PAY %
     const pay = document.getElementById("payPercent");
-    if (pay) pay.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
+    if (pay)
+        pay.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
 
-    // ITEMS
     for (const key in gameState) {
         if (!key.endsWith("Count")) continue;
         if (key === "cashCount") continue;
@@ -349,19 +366,16 @@ function updateUI() {
             `${key.replace(/Count$/, "")}Display`
         );
 
-        if (el) {
-            el.textContent =
-                `${key.replace(/Count$/, "")}: ${gameState[key]}`;
-        }
+        if (el) el.textContent = `${key.replace(/Count$/, "")}: ${gameState[key]}`;
     }
 
-    // STOCK
     for (const key in stock) {
-        const el = document.getElementById(`${key.replace(/Count$/, "")}Stock`);
+        const el = document.getElementById(
+            `${key.replace(/Count$/, "")}Stock`
+        );
         if (el) el.textContent = `Stock: ${stock[key]}`;
     }
 
-    // CRYPTO UI
     const btc = document.getElementById("BitcoinDisplay");
     if (btc) btc.textContent = `1 BITCOIN: ${gameState.BitcoinVal}`;
 
@@ -371,18 +385,28 @@ function updateUI() {
     const doge = document.getElementById("DogecoinDisplay");
     if (doge) doge.textContent = `1 DOGECOIN: ${gameState.DogecoinVal}`;
 }
-// PERKS
+
+// ---------------- PERKS ----------------
 
 function perkIncrease() {
-    if(gameState.cashCount >= 100000){
+    if (gameState.cashCount >= 100000) {
         gameState.multiplier += Math.sqrt(gameState.cashCount) / 10000;
+
         const multiplier = document.getElementById("multiplier");
-        multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
-        gameState.payPercent -= Math.sqrt(gameState.cashCount) / 1000
+        multiplier.textContent = `Multiplier: ${
+            gameState.multiplier.toFixed(3) + 1
+        }`;
+
+        gameState.payPercent -= Math.sqrt(gameState.cashCount) / 1000;
+
         const payPercent = document.getElementById("payPercent");
-        payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`
+        payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(
+            1
+        )}%`;
+
         gameState.cashCount = 10;
-        gameState.appleCount =  0;
+
+        gameState.appleCount = 0;
         gameState.bananaCount = 0;
         gameState.orangeCount = 0;
         gameState.yougurtCount = 0;
@@ -395,18 +419,21 @@ function perkIncrease() {
         gameState.frozenMangoSlicesCount = 0;
         gameState.toastCount = 0;
         gameState.raisinToastCount = 0;
+
         gameState.Bitcoin = 0;
         gameState.Litecoin = 0;
         gameState.Dogecoin = 0;
+
         gameState.BitcoinVal = 100000;
         gameState.LitecoinVal = 100;
         gameState.DogecoinVal = 0.0001;
-        for(key in stock){
+
+        for (key in stock) {
             stock[key] = 10;
         }
-        saveGame()
-    }
-    else{
+
+        saveGame();
+    } else {
         window.alert("You do not have enough money");
     }
 }
@@ -416,7 +443,6 @@ function restartGame() {
         return;
     }
 
-    // 🔥 STOP ALL RUNNING LOOPS (this is the important part)
     clearInterval(cryptoInterval);
     clearInterval(uiInterval);
     clearInterval(countdownInterval);
@@ -430,6 +456,7 @@ function restartGame() {
     gameState.cashCount = 10;
     gameState.multiplier = 0;
     gameState.payPercent = 100;
+
     gameState.appleCount = 0;
     gameState.bananaCount = 0;
     gameState.orangeCount = 0;
@@ -443,22 +470,24 @@ function restartGame() {
     gameState.frozenMangoSlicesCount = 0;
     gameState.toastCount = 0;
     gameState.raisinToastCount = 0;
+
     gameState.BitcoinVal = 100000;
     gameState.LitecoinVal = 100;
     gameState.DogecoinVal = 10000000000;
+
     gameState.Bitcoin = 0;
     gameState.Litecoin = 0;
     gameState.Dogecoin = 0;
-    for(key in stock){
-            stock[key] = 10;
+
+    for (key in stock) {
+        stock[key] = 10;
     }
+
     timeLeft = config.normalTime;
-    
-    // 🧹 CLEAR STORAGE
+
     localStorage.clear();
 
-    // 🔄 RESET STATE (minimal safe reset)
-    saveGame()
+    saveGame();
 }
 
 // ---------------- INIT ----------------
@@ -475,7 +504,6 @@ function initiate() {
 
     setCountDown();
     cryptoInterval = setInterval(updateCrypto, 1000);
-
     window.cashLoop = setInterval(updateUI, 500);
 }
 
