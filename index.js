@@ -236,6 +236,123 @@ function updateCrypto() {
     saveGame();
 }
 
+// ---------------- CRYPTO BUY / SELL SYSTEM ----------------
+
+function investBitcoin() {
+    const input = Number(document.getElementById("cryptoInput").value);
+    if (!input || input <= 0) return;
+
+    if (gameState.cashCount >= input) {
+        const amount = input / gameState.BitcoinVal;
+
+        gameState.cashCount -= input;
+        gameState.Bitcoin += amount;
+
+        saveGame();
+        updateUI();
+    } else {
+        alert("Not enough Penties");
+    }
+}
+
+function sellBitcoin() {
+    const input = Number(document.getElementById("cryptoInput").value);
+    if (!input || input <= 0) return;
+
+    if (gameState.Bitcoin >= input) {
+        const gain = input * gameState.BitcoinVal;
+
+        gameState.Bitcoin -= input;
+        gameState.cashCount += gain;
+
+        saveGame();
+        updateUI();
+    } else {
+        alert("Not enough Bitcoin");
+    }
+}
+
+function investLitecoin() {
+    const input = Number(document.getElementById("cryptoInput").value);
+    if (!input || input <= 0) return;
+
+    if (gameState.cashCount >= input) {
+        const amount = input / gameState.LitecoinVal;
+
+        gameState.cashCount -= input;
+        gameState.Litecoin += amount;
+
+        saveGame();
+        updateUI();
+    } else {
+        alert("Not enough Penties");
+    }
+}
+
+function sellLitecoin() {
+    const input = Number(document.getElementById("cryptoInput").value);
+    if (!input || input <= 0) return;
+
+    if (gameState.Litecoin >= input) {
+        const gain = input * gameState.LitecoinVal;
+
+        gameState.Litecoin -= input;
+        gameState.cashCount += gain;
+
+        saveGame();
+        updateUI();
+    } else {
+        alert("Not enough Litecoin");
+    }
+}
+
+function investDogecoin() {
+    const input = Number(document.getElementById("cryptoInput").value);
+    if (!input || input <= 0) return;
+
+    if (gameState.cashCount >= input) {
+        const amount = input / gameState.DogecoinVal;
+
+        gameState.cashCount -= input;
+        gameState.Dogecoin += amount;
+
+        saveGame();
+        updateUI();
+    } else {
+        alert("Not enough Penties");
+    }
+}
+
+function sellDogecoin() {
+    const input = Number(document.getElementById("cryptoInput").value);
+    if (!input || input <= 0) return;
+
+    if (gameState.Dogecoin >= input) {
+        const gain = input * gameState.DogecoinVal;
+
+        gameState.Dogecoin -= input;
+        gameState.cashCount += gain;
+
+        saveGame();
+        updateUI();
+    } else {
+        alert("Not enough Dogecoin");
+    }
+}
+
+// ---------------- CRYPTO UI FIX ----------------
+
+function updateCryptoOwnedUI() {
+    const btc = document.getElementById("Bitcoins");
+    if (btc) btc.textContent = `Bitcoins: ${gameState.Bitcoin.toFixed(6)}`;
+
+    const ltc = document.getElementById("Litecoins");
+    if (ltc) ltc.textContent = `Litecoins: ${gameState.Litecoin.toFixed(6)}`;
+
+    const doge = document.getElementById("Dogecoins");
+    if (doge) doge.textContent = `Dogecoins: ${gameState.Dogecoin.toFixed(6)}`;
+}
+
 // ---------------- BUY ----------------
 
 function setupBuyButtons() {
