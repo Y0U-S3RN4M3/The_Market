@@ -108,14 +108,17 @@ const config = {
 }
 
 
-let timeLeft = Number(localStorage.getItem("timerSave"));
-let savedTime = Number(localStorage.getItem("timerSave"));
+const savedTimeRaw = localStorage.getItem("timerSave");
 
-let timeLeft =
-    !savedTime || isNaN(savedTime)
-        ? config.normalTime
-        : savedTime;
+let timeLeft = config.normalTime;
 
+if (savedTimeRaw !== null) {
+    const parsed = Number(savedTimeRaw);
+
+    if (!isNaN(parsed) && parsed > 0) {
+        timeLeft = parsed;
+    }
+}
 let eventIsOn = localStorage.getItem("eventSave") === "true";
 
 function callEvent(){
