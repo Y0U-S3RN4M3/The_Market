@@ -431,8 +431,6 @@ function restartGame() {
     // 🔄 RESET STATE (minimal safe reset)
     location.href = "index.html";
     saveGame()
-
-    saveGame()
 }
 
 // ---------------- INIT ----------------
