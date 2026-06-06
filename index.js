@@ -243,10 +243,8 @@ function investBitcoin() {
     if (!input || input <= 0) return;
 
     if (gameState.cashCount >= input) {
-        const amount = input / gameState.BitcoinVal;
-
         gameState.cashCount -= input;
-        gameState.Bitcoin += amount;
+        gameState.Bitcoin += input / gameState.BitcoinVal;
 
         saveGame();
         updateUI();
@@ -610,3 +608,12 @@ if (!window.__INIT_STARTED__) {
     window.__INIT_STARTED__ = true;
     window.onload = initiate;
 }
+
+window.investBitcoin = investBitcoin;
+window.sellBitcoin = sellBitcoin;
+
+window.investLitecoin = investLitecoin;
+window.sellLitecoin = sellLitecoin;
+
+window.investDogecoin = investDogecoin;
+window.sellDogecoin = sellDogecoin;
