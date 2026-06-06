@@ -5,6 +5,9 @@ if (window.timerRunning) {
 let cryptoInterval;
 let uiInterval;
 let countdownInterval;
+const message = "THE MARKET IS THE BEST GAME BY THE WAY"
+//
+console.log(message)
 // ---------------- GAME STATE ----------------
 
 let gameState = {
