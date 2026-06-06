@@ -407,17 +407,6 @@ h2, h3{
     background-position: center;
 }
 
-.event{
-    background-image: url(https://jooinn.com/images/wooden-floor-texture-5.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-blend-mode: multiply;
-
-    font-size: 1.2rem;
-    font-weight: bolder;
-}
-
 body.event #gameContainer {
     min-height: 100vh;
     border-radius: 10px;
@@ -431,10 +420,19 @@ body.event::before {
     z-index: -1;
 }
 
-body.event {
+.event{
     background-image: url("https://jooinn.com/images/wooden-floor-texture-5.jpg");
     background-color: rgba(121, 0, 0, 0.61);
     background-size: cover;
+
+    background-image: url(https://jooinn.com/images/wooden-floor-texture-5.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-blend-mode: multiply;
+
+    font-size: 1.2rem;
+    font-weight: bolder;
 }
 
 input{
@@ -455,4 +453,18 @@ input:focus{
 h1{
     font-size: 2.1em;
     color: white;
+}
+.event-mode {
+    color: red;
+    text-transform: uppercase;
+}
+#cash{
+    position: fixed;
+    display: flex;
+    align-self: center;
+    top: 0;
+    padding: 10px;
+    background-color: rgb(0, 0, 0, 0.7);
+    margin: 10px;
+    border-radius: 25px;
 }
