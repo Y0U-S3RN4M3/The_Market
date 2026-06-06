@@ -125,6 +125,9 @@ function callEvent(){
     localStorage.setItem("eventSave", eventIsOn);
     timeLeft = config.eventTime;
     window.location.href = "event.html";
+    for(let key in stock){
+        stock[key] = 100;
+    }
 }
 
 function stopEvent(){
@@ -132,6 +135,9 @@ function stopEvent(){
     localStorage.setItem("eventSave", eventIsOn);
     timeLeft = config.normalTime;
     window.location.href = "game.html";
+    for(let key in stock){
+        stock[key] = 10;
+    }
 }
 
 // ---------------- TIMER ----------------
