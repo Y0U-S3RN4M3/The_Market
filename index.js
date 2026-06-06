@@ -6,6 +6,10 @@ localStorage.removeItem("timerSave");
 if (window.timerRunning) {
     clearInterval(window.timerRunning);
 }
+
+let cryptoInterval;
+let uiInterval;
+let countdownInterval;
 // ---------------- GAME STATE ----------------
 
 let gameState = {
