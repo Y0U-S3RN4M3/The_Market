@@ -433,7 +433,6 @@ function restartGame() {
     localStorage.clear();
 
     // 🔄 RESET STATE (minimal safe reset)
-    location.href = "index.html";
     saveGame()
 }
 
