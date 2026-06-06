@@ -106,8 +106,8 @@ function loadStock() {
 // ---------------- EVENT SYSTEM ----------------
 
 const config = {
-    eventTime: 5,
-    normalTime: 5,
+    eventTime: 60,
+    normalTime: 600,
 }
 
 
