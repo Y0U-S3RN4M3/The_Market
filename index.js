@@ -10,7 +10,7 @@ if (window.timerRunning) {
 
 let gameState = {
     cashCount: 10,
-    multiplier: 1,
+    multiplier: 0,
     payPercent: 100,
 
     appleCount: 0,
@@ -402,7 +402,7 @@ function restartGame() {
     window.cashLoop = null;
 
     gameState.cashCount = 10;
-    gameState.multiplier = 1;
+    gameState.multiplier = 0;
     gameState.payPercent = 100;
     gameState.appleCount = 0;
     gameState.bananaCount = 0;
