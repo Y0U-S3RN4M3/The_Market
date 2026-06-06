@@ -109,7 +109,12 @@ const config = {
 
 
 let timeLeft = Number(localStorage.getItem("timerSave"));
-if (!timeLeft || isNaN(timeLeft)) timeLeft = config.normalTime;
+let savedTime = Number(localStorage.getItem("timerSave"));
+
+let timeLeft =
+    !savedTime || isNaN(savedTime)
+        ? config.normalTime
+        : savedTime;
 
 let eventIsOn = localStorage.getItem("eventSave") === "true";
 
