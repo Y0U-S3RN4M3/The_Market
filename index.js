@@ -118,9 +118,6 @@ let eventIsOn = localStorage.getItem("eventSave") === "true";
 
 function callEvent(){
     eventIsOn = true;
-    window.onload = () => {
-        document.body.style.backgroundColor = "rgb(255, 0, 0, 0.2)"
-    };
     location.reload();
     localStorage.setItem("eventSave", eventIsOn);
     timeLeft = config.eventTime;
@@ -205,6 +202,8 @@ function changeTrend() {
 changeTrend();
 
 function updateCrypto() {
+    console.log("CRYPTO TICK");
+
     gameState.BitcoinVal = Math.max(
         1,
         gameState.BitcoinVal + Math.floor(Math.random() * 3000 - 1000)
@@ -591,6 +590,7 @@ function restartGame() {
 // ---------------- INIT ----------------
 
 function initiate() {
+    console.log("INITIATE RUNNING");
     loadGame();
     loadStock();
     updateUI();
@@ -602,14 +602,13 @@ function initiate() {
 
     setCountDown();
     cryptoInterval = setInterval(updateCrypto, 1000);
+    console.log("CRYPTO INTERVAL STARTED");
+
 
     window.cashLoop = setInterval(updateUI, 500);
 }
 
-if (!window.__INIT_STARTED__) {
-    window.__INIT_STARTED__ = true;
-    window.onload = initiate;
-}
+window.addEventListener("load", initiate);
 
 window.investBitcoin = investBitcoin;
 window.sellBitcoin = sellBitcoin;
