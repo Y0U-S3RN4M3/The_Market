@@ -305,19 +305,6 @@ function sellLitecoin() {
     }
 }
 
-// ---------------- CRYPTO UI FIX ----------------
-
-function updateCryptoOwnedUI() {
-    const btc = document.getElementById("Bitcoins");
-    if (btc) btc.textContent = `Bitcoins: ${gameState.Bitcoin.toFixed(6)}`;
-
-    const ltc = document.getElementById("Litecoins");
-    if (ltc) ltc.textContent = `Litecoins: ${gameState.Litecoin.toFixed(6)}`;
-
-    const doge = document.getElementById("Dogecoins");
-    if (doge) doge.textContent = `Dogecoins: ${gameState.Dogecoin.toFixed(6)}`;
-}
-
 // ---------------- BUY ----------------
 
 function setupBuyButtons() {
