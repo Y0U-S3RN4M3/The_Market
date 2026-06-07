@@ -231,114 +231,97 @@ function updateCrypto() {
     saveGame();
 }
 
-// ---------------- CRYPTO BUY / SELL SYSTEM ----------------
+// ---------------- CRYPTO BUY / SELL FIXED ----------------
 
 function investBitcoin() {
     const input = Number(document.getElementById("cryptoInput").value);
     if (!input || input <= 0) return;
 
-    if (gameState.cashCount >= input) {
-        const amount = input / gameState.BitcoinVal;
+    if (gameState.cashCount < input) return alert("Not enough Penties");
 
-        gameState.cashCount -= input;
-        gameState.Bitcoin += amount;
+    const amount = input / gameState.BitcoinVal;
 
-        saveGame();
-        updateUI();
-        updateCryptoOwnedUI();
-    } else {
-        alert("Not enough Penties");
-    }
+    gameState.cashCount -= input;
+    gameState.Bitcoin += amount;
+
+    saveGame();
+    updateUI();
+    updateCryptoOwnedUI();
 }
 
 function sellBitcoin() {
-    const input = Number(document.getElementById("cryptoInput").value);
-    if (!input || input <= 0) return;
+    if (gameState.Bitcoin <= 0) return alert("No Bitcoin");
 
-    if (gameState.Bitcoin >= input) {
-        const gain = input * gameState.BitcoinVal;
+    const gain = gameState.Bitcoin * gameState.BitcoinVal;
 
-        gameState.Bitcoin -= input;
-        gameState.cashCount += gain;
+    gameState.cashCount += gain;
+    gameState.Bitcoin = 0;
 
-        saveGame();
-        updateUI();
-        updateCryptoOwnedUI();
-    } else {
-        alert("Not enough Bitcoin");
-    }
+    saveGame();
+    updateUI();
+    updateCryptoOwnedUI();
 }
+
+// ---------------- LITECOIN ----------------
 
 function investLitecoin() {
     const input = Number(document.getElementById("cryptoInput").value);
     if (!input || input <= 0) return;
 
-    if (gameState.cashCount >= input) {
-        const amount = input / gameState.LitecoinVal;
+    if (gameState.cashCount < input) return alert("Not enough Penties");
 
-        gameState.cashCount -= input;   // FIXED
-        gameState.Litecoin += amount;
+    const amount = input / gameState.LitecoinVal;
 
-        saveGame();
-        updateUI();
-        updateCryptoOwnedUI();
-    } else {
-        alert("Not enough Penties");
-    }
+    gameState.cashCount -= input;
+    gameState.Litecoin += amount;
+
+    saveGame();
+    updateUI();
+    updateCryptoOwnedUI();
 }
 
 function sellLitecoin() {
-    const input = Number(document.getElementById("cryptoInput").value);
-    if (!input || input <= 0) return;
+    if (gameState.Litecoin <= 0) return alert("No Litecoin");
 
-    if (gameState.Litecoin >= input) {
-        const gain = input * gameState.LitecoinVal;
+    const gain = gameState.Litecoin * gameState.LitecoinVal;
 
-        gameState.Litecoin -= input;   // FIXED
-        gameState.cashCount += gain;
+    gameState.cashCount += gain;
+    gameState.Litecoin = 0;
 
-        saveGame();
-        updateUI();
-        updateCryptoOwnedUI();
-    } else {
-        alert("Not enough Litecoin");
-    }
+    saveGame();
+    updateUI();
+    updateCryptoOwnedUI();
 }
+
+// ---------------- DOGECOIN ----------------
 
 function investDogecoin() {
     const input = Number(document.getElementById("cryptoInput").value);
     if (!input || input <= 0) return;
 
-    if (gameState.cashCount >= input) {
-        const amount = input / gameState.DogecoinVal;
+    if (gameState.cashCount < input) return alert("Not enough Penties");
 
-        gameState.cashCount -= input;
-        gameState.Dogecoin += amount;
+    const amount = input / gameState.DogecoinVal;
 
-        saveGame();
-        updateUI();
-        updateCryptoOwnedUI();
-    } else {
-        alert("Not enough Penties");
-    }
+    gameState.cashCount -= input;
+    gameState.Dogecoin += amount;
+
+    saveGame();
+    updateUI();
+    updateCryptoOwnedUI();
 }
 
 function sellDogecoin() {
-    const input = Number(document.getElementById("cryptoInput").value);
-    if (!input || input <= 0) return;
+    if (gameState.Dogecoin <= 0) return alert("No Dogecoin");
 
-    if (gameState.Dogecoin >= input) {
-        const gain = input * gameState.DogecoinVal;
+    const gain = gameState.Dogecoin * gameState.DogecoinVal;
 
-        gameState.Dogecoin -= input;
-        gameState.cashCount += gain;
+    gameState.cashCount += gain;
+    gameState.Dogecoin = 0;
 
-        saveGame();
-        updateUI();
-        updateCryptoOwnedUI();
-    } else {
-        alert("Not enough Dogecoin");
-    }
+    saveGame();
+    updateUI();
+    updateCryptoOwnedUI();
 }
 
 // ---------------- BUY ----------------
