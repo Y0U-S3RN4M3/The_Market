@@ -583,7 +583,7 @@ function initiate() {
     }, 50);
 
     setCountDown();
-    cryptoInterval = setInterval(updateCrypto, 1000);
+    cryptoInterval = setInterval(updateCrypto, 250);
     console.log("CRYPTO INTERVAL STARTED");
 
 
