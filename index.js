@@ -305,30 +305,6 @@ function sellLitecoin() {
     }
 }
 
-// ---------------- BUY ----------------
-
-function setupBuyButtons() {
-    for (const [btnId, key] of Object.entries(buttonToKey)) {
-        const btn = document.getElementById(btnId);
-        if (!btn) continue;
-
-        btn.onclick = () => {
-            const price = prices[key] * (gameState.payPercent / 100);
-
-            if (gameState.cashCount >= price && stock[key] > 0) {
-                gameState.cashCount -= eventIsOn ? price / 2 : price;
-                gameState[key]++;
-                stock[key]--;
-
-                saveGame();
-                updateUI();
-            } else {
-                alert("Not enough penties or out of stock!");
-            }
-        };
-    }
-}
-
 function investDogecoin() {
     const input = Number(document.getElementById("cryptoInput").value);
     if (!input || input <= 0) return;
@@ -364,6 +340,31 @@ function sellDogecoin() {
         alert("Not enough Dogecoin");
     }
 }
+
+// ---------------- BUY ----------------
+
+function setupBuyButtons() {
+    for (const [btnId, key] of Object.entries(buttonToKey)) {
+        const btn = document.getElementById(btnId);
+        if (!btn) continue;
+
+        btn.onclick = () => {
+            const price = prices[key] * (gameState.payPercent / 100);
+
+            if (gameState.cashCount >= price && stock[key] > 0) {
+                gameState.cashCount -= eventIsOn ? price / 2 : price;
+                gameState[key]++;
+                stock[key]--;
+
+                saveGame();
+                updateUI();
+            } else {
+                alert("Not enough penties or out of stock!");
+            }
+        }
+    }
+}
+
 
 // ---------------- SELL ----------------
 
