@@ -142,7 +142,7 @@ function stopEvent(){
 let stockReset = localStorage.getItem("stockResetDone") === "true";
 
 function setCountDown() {
-    countDownInterval = setInterval(() => {
+    countdownInterval = setInterval(() => {
         timeLeft--;
 
         if (timeLeft <= 0) {
@@ -231,6 +231,16 @@ function updateCrypto() {
     saveGame();
 }
 
+function updateCryptoOwnedUI() {
+    const btc = document.getElementById("Bitcoins");
+    const ltc = document.getElementById("Litecoins");
+    const doge = document.getElementById("Dogecoins");
+
+    if (btc) btc.textContent = `Bitcoins: ${gameState.Bitcoin.toFixed(6)}`;
+    if (ltc) ltc.textContent = `Litecoins: ${gameState.Litecoin.toFixed(6)}`;
+    if (doge) doge.textContent = `Dogecoins: ${gameState.Dogecoin.toFixed(6)}`;
+}
+
 // ---------------- CRYPTO BUY / SELL FIXED ----------------
 
 function investBitcoin() {
@@ -294,7 +304,6 @@ function sellLitecoin() {
 }
 
 // ---------------- DOGECOIN ----------------
-
 function investDogecoin() {
     const input = Number(document.getElementById("cryptoInput").value);
     if (!input || input <= 0) return;
