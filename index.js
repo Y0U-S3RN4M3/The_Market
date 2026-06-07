@@ -250,13 +250,10 @@ function investBitcoin() {
 }
 
 function sellBitcoin() {
-    const input = Number(document.getElementById("cryptoInput").value);
-    if (!input || input <= 0) return;
+    if (gameState.Bitcoin > 0) {
+        const gain = gameState.Bitcoin * gameState.BitcoinVal;
 
-    if (gameState.Bitcoin >= input) {
-        const gain = input * gameState.BitcoinVal;
-
-        gameState.Bitcoin -= input;
+        gameState.Bitcoin = 0;
         gameState.cashCount += gain;
 
         saveGame();
@@ -274,7 +271,7 @@ function investLitecoin() {
     if (gameState.cashCount >= input) {
         const amount = input / gameState.LitecoinVal;
 
-        gameState.cashCount -= input;
+        gameState.cashCount = 0;
         gameState.Litecoin += amount;
 
         saveGame();
@@ -286,13 +283,10 @@ function investLitecoin() {
 }
 
 function sellLitecoin() {
-    const input = Number(document.getElementById("cryptoInput").value);
-    if (!input || input <= 0) return;
+    if (gameState.Litecoin > 0) {
+        const gain = gameState.Litecoin * gameState.LitecoinVal;
 
-    if (gameState.Litecoin >= input) {
-        const gain = input * gameState.LitecoinVal;
-
-        gameState.Litecoin -= input;
+        gameState.Litecoin -= gameState.Litecoin;
         gameState.cashCount += gain;
 
         saveGame();
@@ -322,13 +316,10 @@ function investDogecoin() {
 }
 
 function sellDogecoin() {
-    const input = Number(document.getElementById("cryptoInput").value);
-    if (!input || input <= 0) return;
+    if (gameState.Dogecoin > 0) {
+        const gain = gameState.Dogecoin * gameState.DogecoinVal;
 
-    if (gameState.Dogecoin >= input) {
-        const gain = input * gameState.DogecoinVal;
-
-        gameState.Dogecoin -= input;
+        gameState.Dogecoin = 0;
         gameState.cashCount += gain;
 
         saveGame();
