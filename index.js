@@ -145,7 +145,7 @@ function stopEvent(){
 let stockReset = localStorage.getItem("stockResetDone") === "true";
 
 function setCountDown() {
-    setInterval(() => {
+    countDownInterval = setInterval(() => {
         timeLeft--;
 
         if (timeLeft <= 0) {
@@ -247,6 +247,7 @@ function investBitcoin() {
     } else {
         alert("Not enough Penties");
     }
+    updateCryptoOwnedUI();
 }
 
 function sellBitcoin() {
@@ -264,6 +265,7 @@ function sellBitcoin() {
     } else {
         alert("Not enough Bitcoin");
     }
+    updateCryptoOwnedUI();
 }
 
 function investLitecoin() {
@@ -281,6 +283,7 @@ function investLitecoin() {
     } else {
         alert("Not enough Penties");
     }
+    updateCryptoOwnedUI();
 }
 
 function sellLitecoin() {
@@ -298,6 +301,7 @@ function sellLitecoin() {
     } else {
         alert("Not enough Litecoin");
     }
+    updateCryptoOwnedUI();
 }
 
 function investDogecoin() {
@@ -315,6 +319,7 @@ function investDogecoin() {
     } else {
         alert("Not enough Penties");
     }
+    updateCryptoOwnedUI();
 }
 
 function sellDogecoin() {
@@ -332,6 +337,7 @@ function sellDogecoin() {
     } else {
         alert("Not enough Dogecoin");
     }
+    updateCryptoOwnedUI();
 }
 
 // ---------------- CRYPTO UI FIX ----------------
