@@ -486,7 +486,7 @@ function perkIncrease() {
         gameState.multiplier += Math.sqrt(gameState.cashCount) / 10000;
         const multiplier = document.getElementById("multiplier");
         multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
-        gameState.payPercent -= Math.sqrt(gameState.cashCount) / 1000;
+        gameState.payPercent -= Math.sqrt(gameState.cashCount) / 10000;
         if(gameState.payPercent < 50) gameState.payPercent = 50;
         const payPercent = document.getElementById("payPercent");
         payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`
