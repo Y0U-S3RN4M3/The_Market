@@ -220,13 +220,13 @@ function updateCrypto() {
     );
     
     const btc = document.getElementById("BitcoinDisplay");
-    if (btc) btc.textContent = `1 BITCOIN: ${gameState.BitcoinVal} Penties`;
+    if (btc) btc.textContent = `1 BITCOIN: ${gameState.BitcoinVal}`;
 
     const ltc = document.getElementById("LitecoinDisplay");
-    if (ltc) ltc.textContent = `1 LITECOIN: ${gameState.LitecoinVal.toFixed(2)} Penties`;
+    if (ltc) ltc.textContent = `1 LITECOIN: ${gameState.LitecoinVal.toFixed(2)}`;
 
     const doge = document.getElementById("DogecoinDisplay");
-    if (doge) doge.textContent = `1 DOGECOIN: ${gameState.DogecoinVal.toFixed(6)} Penties`;
+    if (doge) doge.textContent = `1 DOGECOIN: ${gameState.DogecoinVal.toFixed(6)}`;
 
     saveGame();
 }
