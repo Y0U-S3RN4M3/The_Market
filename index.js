@@ -487,7 +487,7 @@ function updateUI() {
 // PERKS
 
 function perkIncrease() {
-    if(gameState.cashCount >= 100000){
+    if(gameState.cashCount >= 100000 && (gameState.multiplier < 5 && gameState.payPercent > 50){
         gameState.multiplier += Math.sqrt(gameState.cashCount) / 10000;
         const multiplier = document.getElementById("multiplier");
         multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
