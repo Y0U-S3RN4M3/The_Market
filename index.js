@@ -204,8 +204,8 @@ changeTrend();
 function updateCrypto() {
     console.log("CRYPTO TICK");
 
-    if(gameState.multiplier > 5) gameState.multiplier = 5;
-    if(gameState.payPercent < 50) gameState.payPercent = 50;
+    if(gameState.multiplier > 10) gameState.multiplier = 10;
+    if(gameState.payPercent < 10) gameState.payPercent = 10;
 
     gameState.BitcoinVal = Math.max(
         1,
@@ -487,7 +487,7 @@ function updateUI() {
 // PERKS
 
 function perkIncrease() {
-    if(gameState.cashCount >= 100000 && (gameState.multiplier < 5 && gameState.payPercent > 50){
+    if(gameState.cashCount >= 100000){
         gameState.multiplier += Math.sqrt(gameState.cashCount) / 10000;
         const multiplier = document.getElementById("multiplier");
         multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
