@@ -204,6 +204,9 @@ changeTrend();
 function updateCrypto() {
     console.log("CRYPTO TICK");
 
+    if(gameState.multiplier > 5) gameState.multiplier = 5;
+    if(gameState.payPercent < 50) gameState.payPercent = 50;
+
     gameState.BitcoinVal = Math.max(
         1,
         gameState.BitcoinVal + Math.floor(Math.random() * 3000 - 1000)
@@ -242,6 +245,8 @@ function updateCryptoOwnedUI() {
 }
 
 // ---------------- CRYPTO BUY / SELL FIXED ----------------
+
+// -------------------- BITCOIN -----------------------
 
 function investBitcoin() {
     const input = Number(document.getElementById("cryptoInput").value);
