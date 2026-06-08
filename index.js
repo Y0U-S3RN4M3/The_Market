@@ -118,7 +118,6 @@ let eventIsOn = localStorage.getItem("eventSave") === "true";
 
 function callEvent(){
     eventIsOn = true;
-    location.reload();
     localStorage.setItem("eventSave", eventIsOn);
     timeLeft = config.eventTime;
     window.location.href = "event.html";
