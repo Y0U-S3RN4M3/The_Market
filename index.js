@@ -489,10 +489,10 @@ function updateUI() {
 
 function perkIncrease() {
     if(gameState.cashCount >= 100000){
-        gameState.multiplier += Math.sqrt(gameState.cashCount) / 100000;
+        gameState.multiplier += Math.sqrt(gameState.cashCount) / 25000;
         const multiplier = document.getElementById("multiplier");
         multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
-        gameState.payPercent -= Math.sqrt(gameState.cashCount) / 10000;
+        gameState.payPercent -= Math.sqrt(gameState.cashCount) / 2500;
         if(gameState.payPercent < 10) gameState.payPercent = 10;
         const payPercent = document.getElementById("payPercent");
         payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`
