@@ -163,10 +163,12 @@ function setCountDown() {
             localStorage.setItem("stockResetDone", "true");
             for(let key in stock){
                 if(eventIsOn){
-                    stock[key] = 100
+                    stock[key] = 100;
+                    alert("STOCK RESET");
                 }
                 else{
-                    stock[key] = 10
+                    stock[key] = 10;
+                    alert("STOCK RESET");
                 }
             }
             saveGame()
