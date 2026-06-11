@@ -296,7 +296,7 @@ function updateCrypto() {
     console.log("CRYPTO TICK");
 
     if(gameState.multiplier > gameState.multiplierMax) gameState.multiplier = gameState.multiplierMax;
-    if(gameState.payPercent < 10) gameState.payPercent = 10;
+    if(gameState.payPercent < 30) gameState.payPercent = 30;
 
     gameState.BitcoinVal = Math.max(
         1,
@@ -675,7 +675,7 @@ function updateUI() {
     // PAY %
     const pay = 
     document.getElementById("payPercent");
-    if(gameState.payPercent < 10) gameState.payPercent = 10;
+    if(gameState.payPercent < 30) gameState.payPercent = 30;
     if (pay) pay.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
 
     // ITEMS
