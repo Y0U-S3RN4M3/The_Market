@@ -577,6 +577,9 @@ function restartGame() {
 // ---------------- INIT ----------------
 
 function initiate() {
+    setInterval(() => {
+        saveGame()
+    }, 1000);
     console.log("INITIATE RUNNING");
     loadGame();
     loadStock();
