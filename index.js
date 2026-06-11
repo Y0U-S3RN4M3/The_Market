@@ -210,7 +210,6 @@ let eventIsOn = localStorage.getItem("eventSave") === "true";
 
 function callEvent(){
     eventIsOn = true;
-    location.reload();
     localStorage.setItem("eventSave", eventIsOn);
     timeLeft = config.eventTime;
     window.location.href = "event.html";
@@ -765,7 +764,7 @@ function perkIncrease() {
         gameState.payPercent -= Math.sqrt(gameState.cashCount) / 1000;
         const payPercent = document.getElementById("payPercent");
         payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`
-        gameState.cashCount = 10s;
+        gameState.cashCount = 10;
         resetAllItems();
         gameState.Bitcoin = 0;
         gameState.Litecoin = 0;
@@ -773,7 +772,7 @@ function perkIncrease() {
         gameState.BitcoinVal = 100000;
         gameState.LitecoinVal = 100;
         gameState.DogecoinVal = 10000000000;
-        for(key in stock){
+        for(let key in stock){
             stock[key] = 10;
         }
         saveGame()
@@ -810,7 +809,7 @@ function prestige(){
     gameState.Bitcoin = 0;
     gameState.Litecoin = 0;
     gameState.Dogecoin = 0;
-    for(key in stock){
+    for(let key in stock){
             stock[key] = 10;
     }
     timeLeft = config.normalTime;
@@ -845,7 +844,7 @@ function restartGame() {
     gameState.Litecoin = 0;
     gameState.Dogecoin = 0;
     gameState.prestiges = 0;
-    for(key in stock){
+    for(let key in stock){
             stock[key] = 10;
     }
     timeLeft = config.normalTime;
