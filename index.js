@@ -765,7 +765,7 @@ function perkIncrease() {
         gameState.payPercent -= Math.sqrt(gameState.cashCount) / 1000;
         const payPercent = document.getElementById("payPercent");
         payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`
-        gameState.cashCount = 10000000000000000000000000000000000000000;
+        gameState.cashCount = 10s;
         resetAllItems();
         gameState.Bitcoin = 0;
         gameState.Litecoin = 0;
@@ -800,7 +800,7 @@ function prestige(){
     };
     gameState.prestiges += 1;
     gameState.multiplierMax += 0.5;
-    gameState.cashCount = 10000000000000000000000000000000000000000000000;
+    gameState.cashCount = 10;
     gameState.multiplier = 0;
     gameState.payPercent = 100;
     resetAllItems();
@@ -834,7 +834,7 @@ function restartGame() {
     countdownInterval = null;
     window.cashLoop = null;
 
-    gameState.cashCount = 1000000000000;
+    gameState.cashCount = 10;
     gameState.multiplier = 0;
     gameState.payPercent = 100;
     resetAllItems();
