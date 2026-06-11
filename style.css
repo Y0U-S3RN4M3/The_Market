@@ -469,3 +469,15 @@ h1{
     border-radius: 25px;
     font-size: 2em;
 }
+.displays{
+    width: 500px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+.rarity{
+    display: none;
+}
