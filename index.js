@@ -758,10 +758,10 @@ function resetAllItems() {
 
 function perkIncrease() {
     if(gameState.cashCount >= 100000){
-        gameState.multiplier += Math.sqrt(gameState.cashCount) / 10000;
+        gameState.multiplier += Math.sqrt(gameState.cashCount) / 50000;
         const multiplier = document.getElementById("multiplier");
         multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
-        gameState.payPercent -= Math.sqrt(gameState.cashCount) / 1000;
+        gameState.payPercent -= Math.sqrt(gameState.cashCount) / 5000;
         const payPercent = document.getElementById("payPercent");
         payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`
         gameState.cashCount = 10;
