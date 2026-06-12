@@ -37,10 +37,10 @@ body::before {
     padding: 20px;
     color: white;
     text-shadow:
-        1px 1px 0 red,
+        1px 1px 0 green,
         -1px -1px 0 blue,
         0 0 8px white,
-        0 0 15px cyan;
+        0 0 15px blue;
     filter: blur(1px);
     background-size: cover;
     text-align: center;
