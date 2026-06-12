@@ -93,14 +93,14 @@ let prices = {
     cheesecakeCount: 1000000000000000,  // 1QD
 
     // uncanny
-    bluecapMushroomsCount: 1000000000000000000,          // 1Qi
-    ashenPearsCount: 10000000000000000000,              // 10Qi
-    twighlightHoneycombsCount: 100000000000000000000,   // 100Qi
-    petersPickledPeppersCount: 1000000000000000000000,  // 1Sx
-    twistedTurnipCount: 20000000000000000000000,        // 20Sx
-    shadowedMelonCount: 200000000000000000000000,       // 200Sx
-    crimsonVeinedPlumCount: 10000000000000000000000000, // 10Sp
-    monsterCount: 1000000000000000000000000000,         // 1Oct
+    bluecapMushroomsCount: 10**20,     // 100Qi
+    ashenPearsCount: 10**21,           // 1Sx
+    twighlightHoneycombsCount: 10**22, // 10Sx
+    petersPickledPeppersCount: 10**23, // 100Sx
+    twistedTurnipCount: 2*10**27,      // 2Oct
+    shadowedMelonCount: 2*10**28,      // 20Oct
+    crimsonVeinedPlumCount: 5*10**29,  // 500Oct
+    monsterCount: 10**31,              // 10No
 };
 
 let stock = {
