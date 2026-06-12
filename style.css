@@ -10,7 +10,13 @@
     text-align: center;
 }
 *::selection{
-    background-color: rgb(36, 36, 36);
+    background: cyan;
+    color: #ff0055;
+    text-shadow:
+        1px 1px 0 red,
+        -1px -1px 0 blue,
+        0 0 8px white,
+        0 0 15px cyan;
 }
 body{
     background-image: url(https://jooinn.com/images/wooden-floor-texture-5.jpg);
