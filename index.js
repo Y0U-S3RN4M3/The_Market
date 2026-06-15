@@ -799,7 +799,7 @@ function prestige(){
     };
     gameState.prestiges += 1;
     gameState.multiplierMax += 0.5;
-    gameState.cashCount = 10;
+    gameState.cashCount = 10000000000000000000000000000000;
     gameState.multiplier = 0;
     gameState.payPercent = 100;
     resetAllItems();
@@ -833,7 +833,7 @@ function restartGame() {
     countdownInterval = null;
     window.cashLoop = null;
 
-    gameState.cashCount = 10;
+    gameState.cashCount = 1000000000000000000000000000000;
     gameState.multiplier = 0;
     gameState.payPercent = 100;
     resetAllItems();
