@@ -438,17 +438,28 @@ function setupBuyButtons() {
         btn.onclick = () => {
             const price = prices[key] * (gameState.payPercent / 100);
 
-            if (gameState.cashCount >= price && stock[key] > 0) {
+            if (
+                Number(gameState.cashCount) >= Number(price) &&
+                Number(stock[key]) > 0
+            ) {
                 gameState.cashCount -= eventIsOn ? price / 2 : price;
                 gameState[key]++;
                 stock[key]--;
 
                 saveGame();
                 updateUI();
-            } else {
+            }
+            else {
+                console.log({
+                    item: key,
+                    cash: gameState.cashCount,
+                    price: price,
+                    stock: stock[key]
+                });
+
                 alert("Not enough penties or out of stock!");
             }
-        }
+        };
     }
 }
 
