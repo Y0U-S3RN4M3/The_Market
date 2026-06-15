@@ -778,14 +778,16 @@ function perkIncrease() {
         window.alert("You do not have enough money");
     }
 }
-
 function getCashLevel(prestige) {
-    const exponent = 8 + prestige * 6;
+    if (prestige === 0) return 1e6; // first prestige requirement
 
-    // snap exponent into “big number tiers”
-    const tierSnap = Math.floor(exponent / 6) * 6;
+    let illion = 2; // B
 
-    return 1000 * (10 ** tierSnap);
+    for (let i = 1; i < prestige; i++) {
+        illion += Math.floor((i + 1) * 1.5);
+    }
+
+    return 10 ** ((illion + 1) * 3);
 }
 
 function prestige(){
