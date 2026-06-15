@@ -293,7 +293,6 @@ function changeTrend() {
 changeTrend();
 
 function updateCrypto() {
-    console.log("CRYPTO TICK");
 
     if(gameState.multiplier > gameState.multiplierMax) gameState.multiplier = gameState.multiplierMax;
     if(gameState.payPercent < 30) gameState.payPercent = 30;
@@ -632,8 +631,6 @@ function getFormattedNumber(n){
         if(nthNum > 100){
             string = 'INFINITY';
         }
-        console.log(nthNum);
-        console.log(string);
         return string;
     }
     function getNumberShortened(n) {
@@ -799,7 +796,7 @@ function prestige(){
     };
     gameState.prestiges += 1;
     gameState.multiplierMax += 0.5;
-    gameState.cashCount = 10000000000000000000000000000000;
+    gameState.cashCount = 10;
     gameState.multiplier = 0;
     gameState.payPercent = 100;
     resetAllItems();
@@ -833,7 +830,7 @@ function restartGame() {
     countdownInterval = null;
     window.cashLoop = null;
 
-    gameState.cashCount = 1000000000000000000000000000000;
+    gameState.cashCount = 10;
     gameState.multiplier = 0;
     gameState.payPercent = 100;
     resetAllItems();
