@@ -81,16 +81,16 @@ let prices = {
     raisinToastCount: 100000,
 
     // rare
-    chocolateCount: 10**8,          // 100M
-    pizzaCount: 75*10**8,              // 750M
-    cookieCount: 5*10**9,            // 5B
-    chickenCount: 15*10**9,          // 15B
-    pastaCount: 50*10**9,            // 50B
-    burgerCount: 250*10**9,          // 250B
-    donutCount: 10**10,          // 1T
-    pancakeCount: 10*10**10,       // 10T
-    iceCreamCount: 75*10**10,      // 75T
-    cheesecakeCount: 10**11,  // 1QD
+    chocolateCount: 100000000,          // 100M
+    pizzaCount: 750000000,              // 750M
+    cookieCount: 5000000000,            // 5B
+    chickenCount: 15000000000,          // 15B
+    pastaCount: 50000000000,            // 50B
+    burgerCount: 250000000000,          // 250B
+    donutCount: 1000000000000,          // 1T
+    pancakeCount: 10000000000000,       // 10T
+    iceCreamCount: 75000000000000,      // 75T
+    cheesecakeCount: 1000000000000000,  // 1QD
 
     // uncanny
     bluecapMushroomsCount: 10**20,     // 100Qi
@@ -799,7 +799,7 @@ function prestige(){
     };
     gameState.prestiges += 1;
     gameState.multiplierMax += 0.5;
-    gameState.cashCount = 10;
+    gameState.cashCount = 10000000000000000000000000000000;
     gameState.multiplier = 0;
     gameState.payPercent = 100;
     resetAllItems();
@@ -833,7 +833,7 @@ function restartGame() {
     countdownInterval = null;
     window.cashLoop = null;
 
-    gameState.cashCount = 10;
+    gameState.cashCount = 1000000000000000000000000000000;
     gameState.multiplier = 0;
     gameState.payPercent = 100;
     resetAllItems();
