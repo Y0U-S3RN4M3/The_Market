@@ -192,7 +192,7 @@ function loadGame() {
 
 function loadStock() {
     const saved = localStorage.getItem("stock");
-    if (saved) stock = JSON.parse(saved);
+    if (saved) stock = { ...stock, ...JSON.parse(saved) };
 }
 
 // ---------------- EVENT SYSTEM ----------------
