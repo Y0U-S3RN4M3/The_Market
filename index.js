@@ -81,26 +81,26 @@ let prices = {
     raisinToastCount: 100000,
 
     // rare
-    chocolateCount: 100000000,          // 100M
-    pizzaCount: 750000000,              // 750M
-    cookieCount: 5000000000,            // 5B
-    chickenCount: 15000000000,          // 15B
-    pastaCount: 50000000000,            // 50B
-    burgerCount: 250000000000,          // 250B
-    donutCount: 1000000000000,          // 1T
-    pancakeCount: 10000000000000,       // 10T
-    iceCreamCount: 75000000000000,      // 75T
-    cheesecakeCount: 1000000000000000,  // 1QD
+    chocolateCount: 100*10**6,       // 100M
+    pizzaCount: 750*10**9,           // 750B
+    cookieCount: 5*10**12,           // 5T
+    chickenCount: 15*10**15,         // 15Qa
+    pastaCount: 50*10**18,           // 50Qi
+    burgerCount: 250*10**21,         // 250Sx
+    donutCount: 10**24,              // 1Sp
+    pancakeCount: 10*10**27,         // 10Oc
+    iceCreamCount: 75*10**30,        // 75No
+    cheesecakeCount: 1*10**33,       // 1Dec
 
     // uncanny
-    bluecapMushroomsCount: 10**20,     // 100Qi
-    ashenPearsCount: 10**21,           // 1Sx
-    twighlightHoneycombsCount: 10**22, // 10Sx
-    petersPickledPeppersCount: 10**23, // 100Sx
-    twistedTurnipCount: 2*10**27,      // 2Oct
-    shadowedMelonCount: 2*10**28,      // 20Oct
-    crimsonVeinedPlumCount: 5*10**29,  // 500Oct
-    monsterCount: 10**31,              // 10No
+    bluecapMushroomsCount: 10**36,     // 100UnDec
+    ashenPearsCount: 10**39,           // 1DoDec
+    twighlightHoneycombsCount: 10**42, // 10TDec
+    petersPickledPeppersCount: 10**45, // 100QaDec
+    twistedTurnipCount: 2*10**48,      // 2QiDec
+    shadowedMelonCount: 2*10**52,      // 20SxDec
+    crimsonVeinedPlumCount: 5*10**55,  // SpDec
+    monsterCount: 10**58,              // OctDec
 };
 
 let stock = {
@@ -192,7 +192,7 @@ function loadGame() {
 
 function loadStock() {
     const saved = localStorage.getItem("stock");
-    if (saved) stock = { ...stock, ...JSON.parse(saved) };
+    if (saved) stock = JSON.parse(saved);
 }
 
 // ---------------- EVENT SYSTEM ----------------
@@ -438,28 +438,17 @@ function setupBuyButtons() {
         btn.onclick = () => {
             const price = prices[key] * (gameState.payPercent / 100);
 
-            if (
-                Number(gameState.cashCount) >= Number(price) &&
-                Number(stock[key]) > 0
-            ) {
+            if (gameState.cashCount >= price && stock[key] > 0) {
                 gameState.cashCount -= eventIsOn ? price / 2 : price;
                 gameState[key]++;
                 stock[key]--;
 
                 saveGame();
                 updateUI();
-            }
-            else {
-                console.log({
-                    item: key,
-                    cash: gameState.cashCount,
-                    price: price,
-                    stock: stock[key]
-                });
-
+            } else {
                 alert("Not enough penties or out of stock!");
             }
-        };
+        }
     }
 }
 
@@ -807,7 +796,7 @@ function prestige(){
     };
     gameState.prestiges += 1;
     gameState.multiplierMax += 0.5;
-    gameState.cashCount = 10;
+    gameState.cashCount = 100*10**45;
     gameState.multiplier = 0;
     gameState.payPercent = 100;
     resetAllItems();
@@ -841,7 +830,7 @@ function restartGame() {
     countdownInterval = null;
     window.cashLoop = null;
 
-    gameState.cashCount = 10;
+    gameState.cashCount = 1000000000000000000000000;
     gameState.multiplier = 0;
     gameState.payPercent = 100;
     resetAllItems();
