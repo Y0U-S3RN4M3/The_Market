@@ -13,7 +13,6 @@ console.log(message)
 let gameState = {
     cashCount: 10,
     multiplier: 0,
-    multiplierMax: 10,
     payPercent: 100,
 
     // common
@@ -293,9 +292,6 @@ function changeTrend() {
 changeTrend();
 
 function updateCrypto() {
-
-    if(gameState.multiplier > gameState.multiplierMax) gameState.multiplier = gameState.multiplierMax;
-    if(gameState.payPercent < 30) gameState.payPercent = 30;
 
     gameState.BitcoinVal = Math.max(
         1,
@@ -667,7 +663,7 @@ function updateUI() {
     // MULTIPLIER
     const mult = document.getElementById("multiplier");
     const multmax = (gameState.prestiges * 2.5) + 10;
-    if(gameState.multiplier > multmax) gameState.multiplier = gameState.multiplierMax;
+    if(gameState.multiplier > multmax) gameState.multiplier = multmax;
     if (mult) mult.textContent = `Multiplier: ${gameState.multiplier.toFixed(3)}`;
 
     // PAY %
