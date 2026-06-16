@@ -1,3 +1,4 @@
+(() => {
 if (window.timerRunning) {
     clearInterval(window.timerRunning);
 }
@@ -978,3 +979,5 @@ window.sellLitecoin = sellLitecoin;
 
 window.investDogecoin = investDogecoin;
 window.sellDogecoin = sellDogecoin;
+
+})();
