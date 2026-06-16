@@ -63,6 +63,37 @@ let gameState = {
     Dogecoin: 0,
 };
 
+const defaultGameState = { ...gameState };
+
+function repairGameState() {
+    for (const key in defaultGameState) {
+
+        // Recreate deleted properties
+        if (!(key in gameState)) {
+            gameState[key] = defaultGameState[key];
+        }
+
+        // Prevent NaN and non-numbers
+        if (
+            typeof defaultGameState[key] === "number" &&
+            (
+                typeof gameState[key] !== "number" ||
+                isNaN(gameState[key])
+            )
+        ) {
+            gameState[key] = defaultGameState[key];
+        }
+
+        // Prevent negative values
+        if (
+            typeof defaultGameState[key] === "number" &&
+            gameState[key] < 0
+        ) {
+            gameState[key] = 0;
+        }
+    }
+}
+
 let prices = {
     // common
     appleCount: 10,
@@ -717,6 +748,7 @@ function updateUI() {
     Object.assign(prices, defaultPrices);
 
     repairStock();
+    repairGameState();
     
     // CASH
     const cash = document.getElementById("cash");
