@@ -63,7 +63,7 @@ let gameState = {
     Dogecoin: 0,
 };
 
-const prices = {
+let prices = {
     // common
     appleCount: 10,
     bananaCount: 15,
