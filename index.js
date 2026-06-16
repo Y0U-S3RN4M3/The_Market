@@ -685,7 +685,7 @@ function updateUI() {
         monsterCount: 10**58                // 1OctDec
     };
     
-    let prices = { ...defaultPrices };
+    prices = { ...defaultPrices };
     
     // CASH
     const cash = document.getElementById("cash");
