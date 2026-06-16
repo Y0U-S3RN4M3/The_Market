@@ -648,7 +648,6 @@ function getFormattedNumber(n){
 function updateUI() {
     // FIX FROM CONSOLE
     const defaultPrices = {
-        // common
         appleCount: 10,
         bananaCount: 15,
         orangeCount: 20,
