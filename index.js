@@ -292,7 +292,7 @@ function changeTrend() {
 changeTrend();
 
 function updateCrypto() {
-
+    
     gameState.BitcoinVal = Math.max(
         1,
         gameState.BitcoinVal + Math.floor(Math.random() * 3000 - 1000)
@@ -647,42 +647,46 @@ function getFormattedNumber(n){
 }
 function updateUI() {
     // FIX FROM CONSOLE
+    const defaultPrices = {
+        // common
+        appleCount: 10,
+        bananaCount: 15,
+        orangeCount: 20,
+        yougurtCount: 100,
+        mangoCount: 200,
+        breadCount: 500,
+        frozenAppleSlicesCount: 1000,
+        rawBananaCount: 1500,
+        frozenOrangeCount: 2500,
+        frozenYougurtCount: 5000,
+        frozenMangoSlicesCount: 10000,
+        toastCount: 20000,
+        raisinToastCount: 100000,
     
-    prices.appleCount: 10,
-    prices.bananaCount: 15,
-    prices.orangeCount: 20,
-    prices.yougurtCount: 100,
-    prices.mangoCount: 200,
-    prices.breadCount: 500,
-    prices.frozenAppleSlicesCount: 1000,
-    prices.rawBananaCount: 1500,
-    prices.frozenOrangeCount: 2500,
-    prices.frozenYougurtCount: 5000,
-    prices.frozenMangoSlicesCount: 10000,
-    prices.toastCount: 20000,
-    prices.raisinToastCount: 100000,
-
-    // rare
-    prices.chocolateCount: 100*10**6,       // 100M
-    prices.pizzaCount: 750*10**9,           // 750B
-    prices.cookieCount: 5*10**12,           // 5T
-    prices.chickenCount: 15*10**15,         // 15Qa
-    prices.pastaCount: 50*10**18,           // 50Qi
-    prices.burgerCount: 250*10**21,         // 250Sx
-    prices.donutCount: 10**24,              // 1Sp
-    prices.pancakeCount: 10*10**27,         // 10Oc
-    prices.iceCreamCount: 75*10**30,        // 75No
-    prices.cheesecakeCount: 1*10**33,       // 1Dec
-
-    // uncanny
-    prices.bluecapMushroomsCount: 10**36,     // 100UnDec
-    prices.ashenPearsCount: 10**39,           // 1DoDec
-    prices.twighlightHoneycombsCount: 10**42, // 10TDec
-    prices.petersPickledPeppersCount: 10**45, // 100QaDec
-    prices.twistedTurnipCount: 2*10**48,      // 2QiDec
-    prices.shadowedMelonCount: 2*10**52,      // 20SxDec
-    prices.crimsonVeinedPlumCount: 5*10**55,  // SpDec
-    prices.monsterCount: 10**58,              // OctDec
+        // rare
+        chocolateCount: 100 * 10**6,      // 100M
+        pizzaCount: 750 * 10**9,          // 750B
+        cookieCount: 5 * 10**12,          // 5T
+        chickenCount: 15 * 10**15,        // 15Qa
+        pastaCount: 50 * 10**18,          // 50Qi
+        burgerCount: 250 * 10**21,        // 250Sx
+        donutCount: 10**24,               // 1Sp
+        pancakeCount: 10 * 10**27,        // 10Oc
+        iceCreamCount: 75 * 10**30,       // 75No
+        cheesecakeCount: 1 * 10**33,      // 1Dec
+    
+        // uncanny
+        bluecapMushroomsCount: 10**36,      // 1UnDec
+        ashenPearsCount: 10**39,            // 1DoDec
+        twighlightHoneycombsCount: 10**42,  // 1TDec
+        petersPickledPeppersCount: 10**45,  // 1QaDec
+        twistedTurnipCount: 2 * 10**48,     // 2QiDec
+        shadowedMelonCount: 2 * 10**52,     // 20SxDec
+        crimsonVeinedPlumCount: 5 * 10**55, // 5SpDec
+        monsterCount: 10**58                // 1OctDec
+    };
+    
+    let prices = { ...defaultPrices };
     
     // CASH
     const cash = document.getElementById("cash");
