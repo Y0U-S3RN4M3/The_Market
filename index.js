@@ -141,6 +141,35 @@ let stock = {
     monsterCount: 10,
 };
 
+const defaultStock = { ...stock };
+
+function repairStock() {
+    const maxStock = eventIsOn ? 100 : 10;
+
+    for (const key in defaultStock) {
+
+        // Recreate deleted stock
+        if (!(key in stock)) {
+            stock[key] = maxStock;
+        }
+
+        // Prevent non-numbers
+        if (typeof stock[key] !== "number" || isNaN(stock[key])) {
+            stock[key] = maxStock;
+        }
+
+        // Prevent negative stock
+        if (stock[key] < 0) {
+            stock[key] = 0;
+        }
+
+        // Prevent too much stock
+        if (stock[key] > maxStock) {
+            stock[key] = maxStock;
+        }
+    }
+}
+
 const buttonToKey = {
     apples: "appleCount",
     bananas: "bananaCount",
@@ -686,6 +715,8 @@ function updateUI() {
     };
     
     Object.assign(prices, defaultPrices);
+
+    repairStock();
     
     // CASH
     const cash = document.getElementById("cash");
