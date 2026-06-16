@@ -781,13 +781,7 @@ function perkIncrease() {
 }
 
 function getCashLevel(prestige) {
-    let exponent = 9;
-
-    for (let i = 0; i < prestige; i++) {
-        exponent *= 3;
-    }
-
-    return 10 ** exponent;
+    return 10 ** (15 * prestige + 9);
 }
 
 function prestige(){
