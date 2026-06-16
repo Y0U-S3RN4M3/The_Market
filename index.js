@@ -779,7 +779,7 @@ function perkIncrease() {
     }
 }
 function getCashLevel(prestige) {
-    if (prestige === 0) return 1e6; // first prestige requirement
+    if (prestige === 0) return 1e9; // first prestige requirement
 
     let illion = 2; // B
 
