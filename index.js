@@ -779,16 +779,15 @@ function perkIncrease() {
         window.alert("You do not have enough money");
     }
 }
+
 function getCashLevel(prestige) {
-    if (prestige === 0) return 1e9; // first prestige requirement
+    let exponent = 9;
 
-    let illion = 2; // B
-
-    for (let i = 1; i < prestige; i++) {
-        illion += Math.floor((i + 1) * 1.5);
+    for (let i = 0; i < prestige; i++) {
+        exponent *= 3;
     }
 
-    return 10 ** ((illion + 1) * 3);
+    return 10 ** exponent;
 }
 
 function prestige(){
