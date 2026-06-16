@@ -666,7 +666,8 @@ function updateUI() {
 
     // MULTIPLIER
     const mult = document.getElementById("multiplier");
-    if(gameState.multiplier > gameState.multiplierMax) gameState.multiplier = gameState.multiplierMax;
+    const multmax = (gameState.prestiges * 2.5) + 10;
+    if(gameState.multiplier > multmax) gameState.multiplier = gameState.multiplierMax;
     if (mult) mult.textContent = `Multiplier: ${gameState.multiplier.toFixed(3)}`;
 
     // PAY %
@@ -797,7 +798,6 @@ function prestige(){
         return;
     };
     gameState.prestiges += 1;
-    gameState.multiplierMax += 0.5;
     gameState.cashCount = 10;
     gameState.multiplier = 0;
     gameState.payPercent = 100;
