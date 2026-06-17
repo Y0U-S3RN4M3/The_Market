@@ -754,7 +754,7 @@ function updateUI() {
     // CASH
     const cash = document.getElementById("cash");
     if (cash) {
-        cash.textContent = `You have ${getFormattedNumber(gameState.cashCount)} Penties`;
+        cash.textContent = `You have ℗${getFormattedNumber(gameState.cashCount)}`;
     }
 
     // PRESTIGES
