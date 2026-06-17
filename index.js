@@ -981,3 +981,57 @@ window.investDogecoin = investDogecoin;
 window.sellDogecoin = sellDogecoin;
 
 })();
+
+function perkIncrease() {
+    if(gameState.cashCount >= 100000){
+        gameState.multiplier += Math.sqrt(gameState.cashCount) / 50000;
+        const multiplier = document.getElementById("multiplier");
+        multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
+        gameState.payPercent -= Math.sqrt(gameState.cashCount) / 5000;
+        const payPercent = document.getElementById("payPercent");
+        payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`
+        gameState.cashCount = 10;
+        resetAllItems();
+        gameState.Bitcoin = 0;
+        gameState.Litecoin = 0;
+        gameState.Dogecoin = 0;
+        gameState.BitcoinVal = 100000;
+        gameState.LitecoinVal = 100;
+        gameState.DogecoinVal = 10000000000;
+        for(let key in stock){
+            stock[key] = 10;
+        }
+        saveGame()
+    }
+    else{
+        window.alert("You do not have enough money");
+    }
+}
+
+function getCashLevel(prestige) {
+    return 10 ** (15 * prestige + 9);
+}
+
+function prestige(){
+    const cashLevel = getCashLevel(gameState.prestiges);
+    if(gameState.cashCount < cashLevel){
+        window.alert("Not enough Penties");
+        return;
+    };
+    gameState.prestiges += 1;
+    gameState.cashCount = 10;
+    gameState.multiplier = 0;
+    gameState.payPercent = 100;
+    resetAllItems();
+    gameState.BitcoinVal = 100000;
+    gameState.LitecoinVal = 100;
+    gameState.DogecoinVal = 10000000000;
+    gameState.Bitcoin = 0;
+    gameState.Litecoin = 0;
+    gameState.Dogecoin = 0;
+    for(let key in stock){
+            stock[key] = 10;
+    }
+    timeLeft = config.normalTime;
+    saveGame();
+}
