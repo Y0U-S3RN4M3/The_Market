@@ -112,7 +112,7 @@ let prices = {
     raisinToastCount: 100000,
 
     // rare
-    chocolateCount: 100*10**6,       // 100M
+    chocolateCount: 500*10**6,       // 100M
     pizzaCount: 750*10**9,           // 750B
     cookieCount: 5*10**12,           // 5T
     chickenCount: 15*10**15,         // 15Qa
