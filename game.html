@@ -14,99 +14,134 @@
     <div id="gameContainer">
     <h1 class="header" style="padding: 80px;">THE MARKET</h1>
     <a href="index.html" style="text-decoration: none;">
-        <button class="btn" style="display: flex; justify-self: center;">Back</button>
+        <button class="btn" id="back" style="display: flex; justify-self: center;">></button>
     </a><br>
-    <button id='perkIncreaseBtn' class="btn">ADD TO PERKS</button>
-    <button id="prestigeBtn" class="btn">PRESTIGE</button>
-    <h2 id="cash">You have 10℗</h2>
-    <h2 id="prestiges">Prestiges: 0</h2>
-    <h2 id="cashLevel">You need 100M for the next prestige...</h2>
-    <h2 id="multiplier">Multiplier: 0</h2>
-    <h2 id="payPercent">Pay Percent: 100%</h2>
-    <h2 id="countDown">There is 10m 00s left...</h2>
+    <div id="menu">
+        <button class="btn menuItem" id="perkOpen">+</button>
+        <button id="openPrestigeScreen" class="btn menuItem">🪽</button>
+        <button id="openSettings" class="btn menuItem">🛠</button>
+    </div>
+    <div id="addToPerks">
+        <div id='removePerkScreen'>✘</div>
+        <h1>YOU NEED 100K TO ADD TO PERKS</h1>
+        <p style="color: white">Adding to perks will restart all of your progress except for prestiges, multiplier and pay percent, but will add to your multiplier and pay percent. The more the better.</p>
+        <pre style="color: white">
+        P = penties;
+        Multiplier = Multiplier + √P ÷ 50000;
+        Pay Percent = Multiplier + √P ÷ 5000;
+        </pre>
+        <button id='perkIncreaseBtn' style="border-color: rgb(35, 35, 35)" class="btn">Add To Perks</button>
+    </div>
+    <div id="prestigeScreen">
+        <div id='removePrestigeScreen'>✘</div>
+        <h1 id="cashLevel">You need 100M for the next prestige...</h1>
+        <p style="color: white">Adding to perks will restart all of your progress except for prestiges, which increase.</p>
+        <button id="prestigeBtn" class="btn">Prestige</button>
+    </div>
+    <div id="settings">
+        <h1>SETTINGS</h1>
+        <button id='removeSettings'>✘</button>
+        <p style="padding: 5px">Buy Max?</p>
+        <button class="btn maxBtnNo" style="border-color: white;" id="maxBtn">YES</button>
+        <p>UI Type:</p>
+        <button class="btn maxBtnNo" style="padding: 10px; margin: 10px" id="uiBtn">TYPE 1</button>
+    </div>
+    <button class="btn" id="menuBtn">></button>
+    <div class="ui">
+        <h2 id="cash">Penties(℗):<br> 10℗</h2>
+        <h2 id="prestiges">Prestiges:<br> 0</h2>
+        <h2 id="multiplier">Multiplier:<br> 0</h2>
+        <h2 id="payPercent">Pay Percent:<br> 100%</h2>
+    </div>
 
-        <!---------------- COMMON FRUITS ---------------->
+    <h2 id="countDown">There is 10m 00s left...</h2>
 
     <button class="btn displays" id='commonFoodBtn'>COMMON FOODS</button>
     <div id="commonFoods" class="rarity">
     <div id="grid">
         <div id="apples" class="item">
             <h4>Apples</h4>
-            <h5>10 Penties</h5>
+            <h5>10℗</h5>
             <h5 id="appleStock">Stock: 10</h5>
             <img src="https://cdn.britannica.com/22/187222-050-07B17FB6/apples-on-a-tree-branch.jpg">
         </div>
         <div id="bananas" class="item">
             <h4>Bananas</h4>
-            <h5>15 Penties</h5>
+            <h5>15℗</h5>
             <h5 id="bananaStock">Stock: 10</h5>
             <img src="https://www.popoptiq.com/wp-content/uploads/2019/01/4-28-1-1.jpg">
         </div>
         <div id="oranges" class="item">
             <h4>Oranges</h4>
-            <h5>20 Penties</h5>
+            <h5>20℗</h5>
             <h5 id="orangeStock">Stock: 10</h5>
             <img src="https://www.tastingtable.com/img/gallery/are-oranges-named-after-the-color/intro-1666984048.jpg">
         </div>
         <div id="yougurt" class="item">
             <h4>Yougurt</h4>
-            <h5>100 Penties</h5>
+            <h5>100℗</h5>
             <h5 id="yougurtStock">Stock: 10</h5>
             <img src="https://static.toiimg.com/photo/75220490.cms">
         </div>
         <div id="mango" class="item">
             <h4>Mango</h4>
-            <h5>200 Penties</h5>
+            <h5>200℗</h5>
             <h5 id="mangoStock">Stock: 10</h5>
             <img src="https://harvesttotable.com/wp-content/uploads/2019/11/Mango-bigstock-Tropical-Mango-Tree-With-Big-R-288199537-scaled.jpg">
         </div>
         <div id="bread" class="item">
             <h4>bread</h4>
-            <h5>500 Penties</h5>
+            <h5>500℗</h5>
             <h5 id="breadStock">Stock: 10</h5>
             <img src="https://images.pexels.com/photos/209206/pexels-photo-209206.jpeg?cs=srgb&dl=baked-bread-buns-209206.jpg&fm=jpg">
         </div>
         <div id="frozenAppleSlices" class="item"> 
             <h4>Frozen Apple Slices</h4>
-            <h5>1k Penties</h5>
+            <h5>1k℗</h5>
             <h5 id="frozenAppleSlicesStock">Stock: 10</h5>
             <img src="https://tse2.mm.bing.net/th?id=OIP.lVCSmowSr2zVkNAaEiMsggHaHa&pid=Api&P=0&h=180">
         </div>
         <div id="rawBanana" class="item">
             <h4>Raw Bananas</h4>
-            <h5>1.5k Penties</h5>
+            <h5>1.5k℗</h5>
             <h5 id="rawBananaStock">Stock: 10</h5>
             <img src="https://www.tasteofhome.com/wp-content/uploads/2022/07/GettyImages-1141164080-green-bananas.jpg">
         </div>
         <div id="frozenOrange" class="item">
             <h4>Frozen Oranges</h4>
-            <h5>2.5k Penties</h5>
+            <h5>2.5k℗</h5>
             <h5 id="frozenOrangeStock">Stock: 10</h5>
             <img src="https://thumbs.dreamstime.com/b/frozen-orange-slice-clear-cube-wet-surface-day-encased-ice-sits-blurred-city-background-325620621.jpg">
         </div>
         <div id="frozenYougurt" class="item">
             <h4>Frozen Yougurt</h4>
-            <h5>5k Penties</h5>
+            <h5>5k℗</h5>
             <h5 id="frozenYougurtStock">Stock: 10</h5>
             <img src="https://www.biggerbolderbaking.com/wp-content/uploads/2016/01/BBB108-Homemade-Frozen-Yogurt-Thumbnail-FINAL.jpg">
         </div>
         <div id="frozenMangoSlices" class="item">
             <h4>Frozen Mango Slices</h4>
-            <h5>10k Penties</h5>
+            <h5>10k℗</h5>
             <h5 id="frozenMangoSlicesStock">Stock: 10</h5>
             <img src="https://tse2.mm.bing.net/th?id=OIP.Y6JSMqwDqUERjPUBx37MvgHaHa&pid=Api&P=0&h=180">
         </div>
         <div id="toast" class="item">
             <h4>Toast</h4>
-            <h5>20k Penties</h5>
+            <h5>20k℗</h5>
             <h5 id="toastStock">Stock: 10</h5>
             <img src="https://www.foodrepublic.com/img/gallery/the-quickest-way-to-toast-bread-for-an-intensely-satisfying-crunch/l-intro-1684532933.jpg">
         </div>
         <div id="raisinToast" class="item">
             <h4>Raisin Toast</h4>
-            <h5>100k Penties</h5>
+            <h5>100k℗</h5>
             <h5 id="raisinToastStock">Stock: 10</h5>
             <img src="https://thumbs.dreamstime.com/b/raisin-fruit-toast-polyunsaturated-margarine-25114952.jpg">
+        </div>
+        <div id="raisin" class="item">
+            <h4>Raisins</h4>
+            <h5>5M℗</h5>
+            <h5 id="raisinStock">Stock: 10</h5>
+            <img src="https://tse1.mm.bing.net/th/id/OIP.1a6IQG34uCFxSp_u4D8nlwHaE8?pid=Api&P=0&h=180">
         </div>
     </div>
     <div id="displayContainer">
@@ -189,71 +224,73 @@
             <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-raisin-toast">Sell</button>
             <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-raisin-toasts">Sell All</button>
         </div>
+        <div class="sellItem">
+            <h2 id="raisinDisplay">Raisin: 0</h2>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-raisins">Sell</button>
+            <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-raisins">Sell All</button>
+        </div>
     </div>
     </div>
-
-    <!---------------- RARE FRUITS ---------------->
-
     <button class="btn displays" id="rareFoodsBtn">RARE FOODS</button>
     <div id="rareFoods" class="rarity">
         <div id="grid">
             <div id="chocolates" class="item">
                 <h4>Chocolate</h4>
-                <h5>100M Penties</h5>
+                <h5>100M℗</h5>
                 <h5 id="chocolateStock">Stock: 10</h5>
                 <img src="https://tse3.mm.bing.net/th/id/OIP.rhMaSOkeUV-oyeeg_RnSvwHaEJ?pid=Api&P=0&h=180">
             </div>
             <div id="pizzas" class="item">
                 <h4>Pizza</h4>
-                <h5>750B Penties</h5>
+                <h5>750B℗</h5>
                 <h5 id="pizzaStock">Stock: 10</h5>
                 <img src="https://tse3.mm.bing.net/th/id/OIP.8UeIFPMYwIErE1ShRYB9QAHaEo?pid=Api&P=0&h=180">
             </div>
             <div id="cookies" class="item">
                 <h4>Cookies</h4>
-                <h5>5T Penties</h5>
+                <h5>5T℗</h5>
                 <h5 id="cookieStock">Stock: 10</h5>
                 <img src="https://tse1.mm.bing.net/th/id/OIP.LrIdCWcX2BPHAlyhBSzFVQHaE6?pid=Api&P=0&h=180">
             </div>
             <div id="chicken" class="item">
                 <h4>Chicken</h4>
-                <h5>15Qa Penties</h5>
+                <h5>15Qa℗</h5>
                 <h5 id="chickenStock">Stock: 10</h5>
                 <img src="https://tse2.mm.bing.net/th/id/OIP.yEwTHioLe2--BqL7WLFZ3QHaE8?pid=Api&P=0&h=180">
             </div>
             <div id="pasta" class="item">
                 <h4>Pasta</h4>
-                <h5>50Qi Penties</h5>
+                <h5>50Qi℗</h5>
                 <h5 id="pastaStock">Stock: 10</h5>
                 <img src="https://tse2.mm.bing.net/th/id/OIP.8YtMP9tELOtelc-f0rQ-6QHaEp?pid=Api&P=0&h=180">
             </div>
             <div id="burger" class="item">
                 <h4>Burger</h4>
-                <h5>250Sx Penties</h5>
+                <h5>250Sx℗</h5>
                 <h5 id="burgerStock">Stock: 10</h5>
                 <img src="https://brookrest.com/wp-content/uploads/2020/05/AdobeStock_282247995-scaled.jpeg">
             </div>
             <div id="donuts" class="item"> 
                 <h4>Donuts</h4>
-                <h5>1Sp Penties</h5>
+                <h5>1Sp℗</h5>
                 <h5 id="donutStock">Stock: 10</h5>
                 <img src="https://cdn.britannica.com/38/230838-050-D0173E79/doughnuts-donuts.jpg">
             </div>
             <div id="pancakes" class="item">
                 <h4>Pancake</h4>
-                <h5>10Oct Penties</h5>
+                <h5>10Oct℗</h5>
                 <h5 id="pancakeStock">Stock: 10</h5>
                 <img src="https://www.realsimple.com/thmb/Fi3e-DS5Duo4WPqX-l5RGNOtNeE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/how-to-make-pancakes-step-by-step-bf45f02d4b3c4392bddf92e05c9e17eb.jpg">
             </div>
             <div id="iceCream" class="item">
                 <h4>Ice Cream</h4>
-                <h5>75No Penties</h5>
+                <h5>75No℗</h5>
                 <h5 id="iceCreamStock">Stock: 10</h5>
                 <img src="https://cdn.britannica.com/50/80550-050-5D392AC7/Scoops-kinds-ice-cream.jpg">
             </div>
             <div id="cheesecake" class="item">
                 <h4>Cheesecake</h4>
-                <h5>1Dec Penties</h5>
+                <h5>1Dec℗</h5>
                 <h5 id="cheesecakeStock">Stock: 10</h5>
                 <img src="https://yummyrecipes.woochiens.com/wp-content/uploads/2025/06/kawtarhandali_New_York_Style_Cherry_Cheesecake_0be46d12-498e-4236-afda-93672440b258.png">
             </div>
@@ -336,56 +373,56 @@
             <div id="bluecapMushrooms" class="item">
                 <h4>Bluecap Mushrooms</h4>
                 <h5>An eerie scent of darkness and gloom...</h5>
-                <h5>1UnDec Penties</h5>
+                <h5>1UnDec℗</h5>
                 <h5 id="bluecapMushroomsStock">Stock: 10</h5>
                 <img src="https://getwallpapers.com/wallpaper/full/c/2/3/1174611-neon-mushroom-wallpaper-1920x1080-retina.jpg">
             </div>
             <div id="ashenPears" class="item">
                 <h4>Ashen Pears</h4>
                 <h5>Burned in the hottest of coals, juicy as ever...</h5>
-                <h5>1DoDec Penties</h5>
+                <h5>1DoDec℗</h5>
                 <h5 id="ashenPearsStock">Stock: 10</h5>
                 <img src="https://d39ai5mk5cpjgw.cloudfront.net/generation/6a2939f73498d452dee217ee/d49c0d0e.png">
             </div>
             <div id="twighlightHoneycombs" class="item">
                 <h4>Twighlight Honeycombs</h4>
                 <h5>The honeycombs that only taste like honey in twighlight</h5>
-                <h5>10TDec Penties</h5>
+                <h5>10TDec℗</h5>
                 <h5 id="twighlightHoneycombsStock">Stock: 10</h5>
                 <img src="https://d39ai5mk5cpjgw.cloudfront.net/generation/6a293ac461a751ba8eabaafe/edca3274.webp">
             </div>
             <div id="petersPickledPeppers" class="item">
                 <h4>Peter's Pickled Peppers</h4>
                 <h5>Peter's pickled peppers, picked by Peter himself</h5>
-                <h5>100QaDec Penties</h5>
+                <h5>100QaDec℗</h5>
                 <h5 id="petersPickledPeppersStock">Stock: 10</h5>
                 <img src="https://static.wixstatic.com/media/c546d5_4cc39938d260447a8b111d96229005c2~mv2.jpg/v1/fill/w_480,h_902,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/c546d5_4cc39938d260447a8b111d96229005c2~mv2.jpg">
             </div>
             <div id="twistedTurnip" class="item">
                 <h4>Twisted Turnip</h4>
                 <h5>The turnip that grow in spirals, found in the twisted grove</h5>
-                <h5>2QiDec Penties</h5>
+                <h5>2QiDec℗</h5>
                 <h5 id="twistedTurnipStock">Stock: 10</h5>
                 <img src="https://d39ai5mk5cpjgw.cloudfront.net/generation/6a2a37148eb2ab18e7f96d6b/4a81e495.webp">
             </div>
             <div id="shadowedMelon" class="item">
                 <h4>Shadowed Melon</h4>
                 <h5>Its shadow is one of the only to take form...</h5>
-                <h5>20SxDec Penties</h5>
+                <h5>20SxDec℗</h5>
                 <h5 id="shadowedMelonStock">Stock: 10</h5>
                 <img src="https://d39ai5mk5cpjgw.cloudfront.net/generation/6a2a37e3ee741ea72e4de534/dc35dda0.webp">
             </div>
             <div id="crimsonVeinedPlum" class="item"> 
                 <h4>Crimson-Veined Plum</h4>
                 <h5>Its crimson veins bleed into the fabric of space and time...</h5>
-                <h5>500SpDec Penties</h5>
+                <h5>500SpDec℗</h5>
                 <h5 id="crimsonVeinedPlumStock">Stock: 10</h5>
                 <img src="https://d39ai5mk5cpjgw.cloudfront.net/generation/6a2a40446395ae896ba70131/76db950b.webp">
             </div>
             <div id="monster" class="item"> 
                 <h4>Monster</h4>
                 <h5>No one dares to drink this drink, this is the monsters origin...</h5>
-                <h5>10OcVg Penties</h5>
+                <h5>1OctDec℗</h5>
                 <h5 id="monsterStock">Stock: 10</h5>
                 <img src="https://mir-s3-cdn-cf.behance.net/projects/404/c2e92a156656955.Y3JvcCwyMTYwLDE2ODksMCw0NDM.png">
             </div>
@@ -451,18 +488,239 @@
             </div>
         </div>
     </div>
+    <button class="btn displays" id="legendaryFoodsBtn">LEGENDARY FOODS</button>
+    <div id="legendaryFoods" class="rarity">
+        <div id="grid">
+            <div id="grannyAndGrampaPig" class="item">
+                <h4>Granny and Grampa Pig</h4>
+                <h5>Perfectly cooked to the right temperature, pork with the richest taste...</h5>
+                <h5>1NoDec℗</h5>
+                <h5 id="grannyAndGrampaPigStock">Stock: 20</h5>
+                <img src="https://tse3.mm.bing.net/th/id/OIP.K-n74PmR-jP8M0Tl55QYywHaHa?pid=Api&P=0&h=180">
+            </div>
+            <div id="weLiveWeLoveWeDie" class="item">
+                <h4>We Live, We Love, We Die</h4>
+                <h5>Strangely blue wings of the extinct smurf cats</h5>
+                <h5>1Vg℗</h5>
+                <h5 id="weLiveWeLoveWeDieStock">Stock: 20</h5>
+                <img src="https://tse3.mm.bing.net/th/id/OIP.9JIFA0VAD6HpszrQWksH9QHaEK?pid=Api&P=0&h=180">
+            </div>
+            <div id="doge" class="item">
+                <h4>Doge</h4>
+                <h5>What did poor lil' doge ever do???</h5>
+                <h5>10UnVg℗</h5>
+                <h5 id="dogeStock">Stock: 20</h5>
+                <img src="https://up.yimg.com/ib/th/id/OIP.-0nnT8bRhK2BEB2XT26rCAHaHs?pid=Api&rs=1&c=1&qlt=95&w=118&h=123">
+            </div>
+            <div id="rickButRolled" class="item">
+                <h4>Rick BUT Rolled</h4>
+                <h5>Hmm, you wonder, how is rick with flakes deep fried?</h5>
+                <h5>100DoVg℗</h5>
+                <h5 id="rickButRolledStock">Stock: 20</h5>
+                <img src="https://media.tenor.com/jjS3qI3VFX4AAAA1/rick-astley.webp">
+            </div>
+            <div id="pepe" class="item">
+                <h4>Pepe the Frog</h4>
+                <h5>Pepe the Fries, now the owner officially promotes animal cruelty</h5>
+                <h5>200TVg℗</h5>
+                <h5 id="pepeStock">Stock: 20</h5>
+                <img src="https://tse2.mm.bing.net/th/id/OIP.HQxkWnYK22R7yAOmgq3J5wAAAA?pid=Api&P=0&h=180">
+            </div>
+            <div id="friedRnest" class="item">
+                <h4>Fried Rnest</h4>
+                <h5>It is only a joke to my classmate...</h5>
+                <h5>2QaVg℗</h5>
+                <h5 id="friedRnestStock">Stock: 20</h5>
+                <img src="https://images.squarespace-cdn.com/content/v1/5d03e904285c420001b75db0/6347803d-ce7c-4196-b023-dd385abad107/Ernest-FB-ProfilePic-01.png">
+            </div>
+            <div id="appa" class="item"> 
+                <h4>Appa</h4>
+                <h5>APPA YIP YIP!!! The avatar's one and only flying bison, gone...</h5>
+                <h5>500QiVg℗</h5>
+                <h5 id="appaStock">Stock: 20</h5>
+                <img src="https://comicbook.com/wp-content/uploads/sites/4/2025/03/Avatar-The-Last-Airbender-Appas-Lost-Days.jpg?resize=425">
+            </div>
+        </div>
+        <div id="displayContainer">
+            <div id="displayContainer">
+                <!-- Granny and Grampa Pig -->
+                <div class="sellItem">
+                    <h2 id="grannyAndGrampaPigDisplay">Granny and Grampa Pig: 0</h2>
+                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-granny-and-grampa-pig">Sell</button>
+                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-granny-and-grampa-pigs">Sell All</button>
+                </div>
+
+                <!-- We Live, We Love, We Die -->
+                <div class="sellItem">
+                    <h2 id="weLiveWeLoveWeDieDisplay">We Live, We Love, We Die: 0</h2>
+                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-we-live-we-love-we-die">Sell</button>
+                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-we-live-we-love-we-dies">Sell All</button>
+                </div>
+
+                <!-- Doge -->
+                <div class="sellItem">
+                    <h2 id="dogeDisplay">Doge: 0</h2>
+                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-doge">Sell</button>
+                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-doges">Sell All</button>
+                </div>
+
+                <!-- Rick BUT Rolled -->
+                <div class="sellItem">
+                    <h2 id="rickButRolledDisplay">Rick BUT Rolled: 0</h2>
+                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-rick-but-rolled">Sell</button>
+                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-rick-but-rolls">Sell All</button>
+                </div>
+
+                <!-- Pepe -->
+                <div class="sellItem">
+                    <h2 id="pepeDisplay">Pepe the Frog: 0</h2>
+                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-pepe">Sell</button>
+                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-pepes">Sell All</button>
+                </div>
+
+                <!-- Fried Rnest -->
+                <div class="sellItem">
+                    <h2 id="friedRnestDisplay">Fried Rnest: 0</h2>
+                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-fried-rnest">Sell</button>
+                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-fried-rnests">Sell All</button>
+                </div>
+
+                <!-- Appa -->
+                <div class="sellItem">
+                    <h2 id="appaDisplay">Appa: 0</h2>
+                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-appa">Sell</button>
+                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-appas">Sell All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn displays" id="supernaturalFoodsBtn">SUPERNATURAL FOODS</button>
+    <div id="supernaturalFoods" class="rarity">
+        <div id="grid">
+            <div id="bettysBitterButter" class="item">
+                <h4>Betty's Bitter Butter</h4>
+                <h5>Betty's Bitter Butter, Bought By Betty By Blundering</h5>
+                <h5>1SxVg℗</h5>
+                <h5 id="bettysBitterButterStock">Stock: 25</h5>
+                <img src="https://tse3.mm.bing.net/th/id/OIP.XJ7JYAR5TT7Y2wjgGNUyWgHaEo?pid=Api&P=0&h=180">
+            </div>
+            <div id="cosmicCheese" class="item">
+                <h4>Cosmic Cheese</h4>
+                <h5>The Cosmos' structure has been shifted to a strange substance. CHEESE...</h5>
+                <h5>10SpVg℗</h5>
+                <h5 id="cosmicCheeseStock">Stock: 25</h5>
+                <img src="https://tse4.mm.bing.net/th/id/OIP.dXU43ZekPqBJ-mD3WFxnKAHaEL?pid=Api&P=0&h=180">
+            </div>
+            <div id="livingSoccerBall" class="item">
+                <h4>Living Soccer Ball</h4>
+                <h5>Is there any way anyone would eat that thing?</h5>
+                <h5>1NoVg℗</h5>
+                <h5 id="livingSoccerBallStock">Stock: 25</h5>
+                <img src="https://d39ai5mk5cpjgw.cloudfront.net/generation/6a3778c5c7c357006bb64f7b/65adde34.webp">
+            </div>
+            <div id="math" class="item">
+                <h4>Math</h4>
+                <h5>The entire concept of math, all in your palm, and you just, eat it???</h5>
+                <h5>100Trg℗</h5>
+                <h5 id="mathStock">Stock: 25</h5>
+                <img src="https://tse4.mm.bing.net/th/id/OIP.Nbtbz-eBUXThVJ8vsQbzXgHaEo?pid=Api&P=0&h=180">
+            </div>
+            <div id="pi" class="item">
+                <h4>Pi</h4>
+                <h5>3.14159265358979323846264338327950288<br>4197169399375105820974944592307<br>8164062862089986280348253421170679...</h5>
+                <h5>2DoTrg℗</h5>
+                <h5 id="piStock">Stock: 25</h5>
+                <img src="https://tse4.mm.bing.net/th/id/OIP.ch1DMDvM9SmGl-RY5gUh0AHaEK?pid=Api&P=0&h=180">
+            </div>
+            <div id="meet" class="item">
+                <h4>Meet</h4>
+                <h5>Your joking...</h5>
+                <h5>1TTrg℗</h5>
+                <h5 id="meetStock">Stock: 25</h5>
+                <img src="https://tse4.mm.bing.net/th/id/OIP.E1Y6Ld0HqzigvMUTGupN9wHaD6?pid=Api&P=0&h=180">
+            </div>
+        </div>
+        <div id="displayContainer">
+
+            <!-- Betty's Bitter Butter -->
+            <div class="sellItem">
+                <h2 id="bettysBitterButterDisplay">Betty's Bitter Butter: 0</h2>
+                <button class="btn sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-bettys-bitter-butter">Sell</button>
+                <button class="btn sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-all-bettys-bitter-butters">Sell All</button>
+            </div>
+        
+            <!-- Cosmic Cheese -->
+            <div class="sellItem">
+                <h2 id="cosmicCheeseDisplay">Cosmic Cheese: 0</h2>
+                <button class="btn sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-cosmic-cheese">Sell</button>
+                <button class="btn sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-all-cosmic-cheeses">Sell All</button>
+            </div>
+        
+            <!-- Living Soccer Ball -->
+            <div class="sellItem">
+                <h2 id="livingSoccerBallDisplay">Living Soccer Ball: 0</h2>
+                <button class="btn sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-living-soccer-ball">Sell</button>
+                <button class="btn sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-all-living-soccer-balls">Sell All</button>
+            </div>
+        
+            <!-- Math -->
+            <div class="sellItem">
+                <h2 id="mathDisplay">Math: 0</h2>
+                <button class="btn sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-math">Sell</button>
+                <button class="btn sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-all-maths">Sell All</button>
+            </div>
+        
+            <!-- Pi -->
+            <div class="sellItem">
+                <h2 id="piDisplay">Pi: 0</h2>
+                <button class="btn sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-pi">Sell</button>
+                <button class="btn sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-all-pis">Sell All</button>
+            </div>
+        
+            <!-- Meet -->
+            <div class="sellItem">
+                <h2 id="meetDisplay">Meet: 0</h2>
+                <button class="btn sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-meet">Sell</button>
+                <button class="btn sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-all-meets">Sell All</button>
+            </div>
+        </div>
+    </div>
     </div>
     <h1 style="margin-top: 20px;">CRYPTO</h1>
     <input type="number" id="cryptoInput" placeholder="input a penty amount">
-    <h2 id="BitcoinDisplay">1 BITCOIN: 100000 Penties</h2>
+    <h2 id="BitcoinDisplay">1 BITCOIN: 100000℗</h2>
     <h3 id="Bitcoins">Bitcoins: 0</h3>
     <button class="btn" onclick="investBitcoin()">INVEST</button>
     <button class="btn" onclick="sellBitcoin()">SELL</button>
-    <h2 id="LitecoinDisplay">1 LITECOIN: 100 Penties</h2>
+    <h2 id="LitecoinDisplay">1 LITECOIN: 100℗</h2>
     <h3 id="Litecoins">Litecoins: 0</h3>
     <button class="btn" onclick="investLitecoin()">INVEST</button>
     <button class="btn" onclick="sellLitecoin()">SELL</button>
-    <h2 id="DogecoinDisplay">1 DOGECOIN: 0.0001 Penties</h2>
+    <h2 id="DogecoinDisplay">1 DOGECOIN: 0.0001℗</h2>
     <h3 id="Dogecoins">Dogecoins: 0</h3>
     <button class="btn" onclick="investDogecoin()">INVEST</button>
     <button class="btn" onclick="sellDogecoin()">SELL</button>
