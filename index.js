@@ -2,7 +2,8 @@
     if (window.timerRunning) {
         clearInterval(window.timerRunning);
     }
-    
+    const clicksound = new Audio("./sounds/mouseclick.mp3");
+    const chachingsound = new Audio("./sounds/chaching.mp3");
     let cryptoInterval;
     let uiInterval;
     let countdownInterval;
@@ -730,6 +731,9 @@
     
                     const gain = Math.floor(prices[key] * getRandomSellMultiplier());
                     const total = gain + gain * gameState.multiplier;
+
+                    chachingsound.currentTime = 0.25;
+                    chachingsound.play();
     
                     gameState[key]--;
                     gameState.cashCount += total;
@@ -743,6 +747,9 @@
                 allBtn.onclick = () => {
                     const count = gameState[key];
                     if (!count) return;
+
+                    chachingsound.currentTime = 0.25;
+                    chachingsound.play();
     
                     const totalGain =
                         Math.floor(prices[key] * getRandomSellMultiplier() * count);
@@ -1292,6 +1299,15 @@
         loadStock();
         updateUI();
         displayRaritiesAndMenuPages();
+
+        const clickables = [...document.querySelectorAll(".item"), ...document.querySelectorAll(".btn"), document.getElementById("removePerkScreen"), document.getElementById("removePrestigeScreen"), document.getElementById("removeSettings")];
+        clickables.forEach(click => {
+            click.addEventListener('click', () => {
+                clicksound.currentTime = 0.51;
+                clicksound.play();
+            });
+        });
+
     
         setTimeout(() => {
             setupBuyButtons();
