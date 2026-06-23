@@ -1,0 +1,647 @@
+*,
+*::before,
+*::after{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+*::selection{
+    color: white;
+    text-shadow:
+        1px 1px 0 red,
+        -1px -1px 0 blue,
+        0 0 8px white,
+        0 0 15px cyan;
+}
+body{
+    background-image: url(https://jooinn.com/images/wooden-floor-texture-5.jpg);
+    font-family: "Courier Prime", Verdana, Arial, sans-serif;
+    background-color: hsla(0, 0%, 0%, 0.247);
+    padding: 15px;
+}
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: -1;
+}
+.header{
+    padding: 20px;
+    color: white;
+    text-shadow:
+        1px 1px 0 green,
+        -1px -1px 0 blue,
+        0 0 8px white,
+        0 0 15px blue;
+    filter: blur(1px);
+    background-size: cover;
+    text-align: center;
+    padding-top: 2em;
+    font-size: 5em;
+    animation: glitch 1.5s linear .5s 1;
+    will-change: transform;
+}
+@keyframes glitch{
+    4%{
+        font-family: Arial, sans-serif;
+        color: red;
+        transform: translateX(0);
+
+    }
+    5.9%{
+        transform: translateX(0);
+
+    }
+    6%{
+        color: black;
+        transform: translateX(20px);
+
+    }
+    6.5%{
+        transform: translateX(0);
+    }
+    10%{
+        font-family: Verdana, Arial, sans-serif;
+        color: hsl(219, 100%, 50%);
+        transform: translateX(-30px);
+    }
+    10.5%{
+        transform: translateX(0);
+    }
+    11.9%{
+        transform: translateX(0);
+
+    }
+    12%{
+        color: black;
+        transform: translateX(30px);
+
+    }
+    12.5%{
+        transform: translateX(0);
+    }
+    15%{
+        font-family: "Courier Prime", Arial, sans-serif;
+        transform: translateX(0);
+
+    }
+    15.9%{
+        transform: translateX(0);
+    }
+    16%{
+        font-family: Arial, sans-serif;
+        color: red;
+        transform: translateX(-20px);
+    }
+    16.5%{
+        transform: translateX(0);
+    }
+    18%{
+        color: green;
+        transform: translateX(0);
+
+    }
+    19.9%{
+        transform: translateX(0);
+
+    }
+    20%{
+        font-family: "Courier Prime", verdana, Arial, sans-serif;
+        color: white;
+        transform: translateX(-30px);
+
+    }
+    20.5%{
+        transform: translateX(0);
+    }
+    47.9%{
+        transform: translateX(0);
+    }
+    48%{
+        color: white;
+        transform: translateX(-20px);
+    }
+    48.5%{
+        transform: translateX(0);
+    }
+    49%{
+        color: black;
+        transform: translateX(0);
+
+    }
+    49.9%{
+        transform: translateX(0);
+
+    }
+    50%{
+        font-family: Verdana, Arial, sans-serif;
+        color: red;
+        transform: translateX(0);
+
+    }
+    50.5%{
+        transform: translateX(0);
+
+    }
+    52%{
+        color: hsl(219, 100%, 50%);
+        transform: translateX(0);
+
+    }
+    55.9%{
+        transform: translateX(0);
+
+    }
+    55%{
+        font-family: "Courier Prime", verdana, Arial, sans-serif;
+        color: white;
+        transform: translateX(20px);
+
+    }
+    55.5%{
+        transform: translateX(0);
+    }
+    57%{
+        color: green;
+        transform: translateX(0);
+
+    }
+    58%{
+        color: black;
+        font-family: Arial, sans-serif;
+        transform: translateX(0);
+
+    }
+    77.9%{
+        transform: translateX(0);
+
+    }
+    78%{
+        color: white;
+        transform: translateX(-30px);
+    }
+    78.5%{
+        transform: translateX(0);
+    }
+    79%{
+        color: green;
+        font-family: Verdana, Arial, sans-serif;
+        transform: translateX(0);
+
+    }
+    79.5%{
+        transform: translateX(0);
+    }
+    80%{
+        color: black;
+        transform: translateX(0);
+
+    }
+    81%{
+        color: white;
+        font-family: "Courier Prime", verdana, Arial, sans-serif;
+        transform: translateX(0);
+
+
+
+    }
+    98%{
+        color: black;
+        transform: translateX(0);
+
+    }
+    99%{
+        color: white;
+        transform: translateX(0);
+
+    }
+}
+#buttonCtn{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+    width: 500px;
+    margin: auto;
+    padding-top: 2em;
+}
+#buttonCtn .btn{
+    margin: 0;
+}
+.btn{
+    padding: 1em;
+    margin: 3em;
+    font-family: "Courier Prime", verdana, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 1.5em;
+    border-radius: 5px;
+    border: none;
+    background-color: hsl(0, 0%, 0%);
+    color: white;
+    transition: transform 0.5s ease 0s;
+    margin-top: 0;
+    cursor: pointer;
+    display: flex;
+    justify-self: center;
+}
+#end-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+}
+a{
+    text-decoration: none;
+}
+.btn:hover{
+    transform: translateY(10px);
+}
+.btn:hover::after{
+    content: '?'
+}
+#grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 250px);
+    gap: 2em;
+    justify-content: space-evenly;
+    align-items: space-evenly;
+    padding: 100px 0;
+}
+.item{
+    
+    background: hsla(0, 0%, 0%, 0.7);
+    border-radius: 5px;
+    padding: 20px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: .25s;
+}
+.item:hover{
+    transform: scale(1.1);
+    box-shadow: 0 0 12.5px white;
+}
+.item:active{
+    transform: scale(0.95);
+    box-shadow: 0 0 0px black;
+}
+#grid h4,
+#grid h5{
+    color: white;
+    padding-bottom: 5px;
+}
+#grid img{
+    height: 100px;
+    border-radius: 5px;
+}
+h2, h3{
+    text-align: center;
+    color: white;
+    padding-bottom: 11px;
+
+}
+#displayContainer, #grid{
+    padding: 100px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    text-align: center;
+}
+
+#tutorial{
+    background-color:hsla(0, 0%, 0%, 0.5);
+    border-radius: 15px;
+    color: white;
+    padding: 30px;
+    width: auto;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    margin: 100px;
+}
+#marketingImg, 
+
+#container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100vh;
+    width: 100%;
+}
+
+#marketingImg {
+    z-index: 2;
+    animation: celebrationComp 4s ease-out forwards;
+}
+
+.circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 200px;
+    height: 200px;
+    border: 5px solid white;
+    border-radius: 50%;
+    z-index: 1000;
+    opacity: 1;
+    animation: explosion 1s ease forwards;
+}
+
+
+@keyframes celebrationComp {
+    0%{
+        transform: scale(0) rotateX(0) rotateY(0);
+    }
+    20%{
+        transform: scale(1) rotateX(180deg) rotateY(180deg);
+    }
+    40%{
+        transform: scale(2) rotateX(0deg) rotateY(0deg);
+    }
+    60%{
+        transform: scale(-3) rotateX(180deg) rotateY(180deg);
+    }
+    80%{
+        transform: scale(4) rotateX(180deg) rotateY(180deg);
+    }
+    100%{
+        transform: scale(0) rotateX(180deg) rotateY(-360deg) rotateZ(360deg);
+    }
+
+
+}
+
+@keyframes explosion {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(10);
+        opacity: 1;
+        box-shadow: 0 0 40px 15px white;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(10);
+        opacity: 0;
+        box-shadow: none;
+    }
+}
+.event{
+    text-transform: uppercase;
+}
+.eventHeader{
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#eventBody{
+    height: 98vh;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    background-image: url(https://carnegiescience.edu/sites/default/files/styles/event_background/public/2025-03/Blackhole_SF.jpg?itok=UQ4ArpB1);
+    background-color: rgba(255, 255, 255, 0.5);
+    background-size: cover;
+    background-position: center;
+}
+
+body.event #gameContainer {
+    min-height: 100vh;
+    border-radius: 10px;
+}
+
+body.event::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-color: rgba(180, 0, 0, 0);
+    z-index: -1;
+}
+
+.event{
+    background-image: url("https://jooinn.com/images/wooden-floor-texture-5.jpg");
+    background-color: rgba(121, 0, 0, 0.61);
+    background-size: cover;
+
+    background-image: url(https://jooinn.com/images/wooden-floor-texture-5.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-blend-mode: multiply;
+
+    font-size: 1.2rem;
+    font-weight: bolder;
+}
+
+input{
+    margin: 30px;
+    align-self: center;
+    font-size: 2em;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 15px;
+    font-family: 'Courier Prime', Courier, monospace;
+    font-weight: bold;
+}
+input:focus{
+    outline: none;
+}
+h1{
+    font-size: 2.1em;
+    color: white;
+}
+.event-mode {
+    color: red;
+    text-transform: uppercase;
+}
+.displays{
+    width: 500px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+.rarity{
+    display: none;
+}
+.ui{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: calc(100% - 120px); /* leave room for menu */
+    background-color: hsla(0,0%,0%,0.5);
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    min-width: 750px;
+    max-width: 1000px;
+    border-bottom-right-radius: 15px;
+
+    padding: 10px;
+    z-index: 100;
+}
+#back{
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: block;
+    margin: 10px;
+    margin-top: 110px;
+    width: 75px;
+    text-align: center;
+}
+#back:hover::after{
+    content: '>';
+}
+#menu{
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    margin: 0;
+    background-color:hsla(0, 0%, 0%, 0.5);
+    border-radius: 10px;
+    
+}
+#menu{
+    position: fixed;
+    right: 0;
+    top: 25%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    margin: 10px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.menuItem{
+    width: 60px;
+    height: 60px;      /* makes them square */
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 2px solid rgba(48, 48, 48)
+}
+
+.menuItem:hover::after{
+    content: '';
+}
+
+.btn.menuItem:hover{
+    transform: none;
+    border-color: white;
+}
+#menuBtn{
+    position: fixed;
+    right: 0;
+    top: 65%;
+    transform: translateY(-50%);
+    margin-right: 25px;
+}
+#menuBtn:hover::after{
+    content: ''
+}
+#addToPerks, #prestigeScreen, #settings{
+    background-color: hsla(0, 0%, 0%, 1);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 15px;
+    height: 50vh;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    flex-direction: column;
+    border-color: white;
+    position: fixed;
+    top: 25%;
+    left: 0%;
+    min-width: 600px;
+    left: 50vw;
+    right: 50vw;
+
+    z-index: 1000;
+
+    /* add this */
+    position: fixed;
+}
+#addToPerks button, #prestigeScreen button #settings button{
+    border: 2px solid rgb(85, 85, 85);
+    margin: 30px;
+}
+
+#removePerkScreen, #removePrestigeScreen, #removeSettings{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: rgba(255,0,0,.7);
+    color: white;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    z-index:9999;
+    border-radius: 5px;
+    border: none;
+}
+#removePerkScreen:hover{
+    cursor: pointer;
+}
+#settings p{
+    color: white;
+}
+#settings{
+    width: 80vw;
+    align-items: top;
+}
+#ui h2{
+    padding-right: 10px;
+}
+#maxBtn{
+    margin-top: 10px;
+    padding: 10px;
+}
+#maxBtn:hover{
+    translate: none;
+    transform: none;
+}
+.maxBtnNo{
+    background-color: green;
+}
+.maxBtnYes{
+    background-color: red;
+}
+#uiBtn:hover::after{
+    content: '';
+}
+#update{
+    padding: 50px;
+    background-color:hsl(0, 0%, 0%, 0.8);
+    color: white;
+    border-radius: 20px;
+}
+.updateHeader{
+    padding: 15px;
+}
