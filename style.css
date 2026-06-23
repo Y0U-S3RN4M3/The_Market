@@ -668,3 +668,6 @@ h1{
 .updateHeader{
     padding: 15px;
 }
+#cash, #prestiges, #multiplier, #payPercent{
+    padding: 15px;
+}
