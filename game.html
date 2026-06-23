@@ -24,18 +24,16 @@
     <div id="addToPerks">
         <div id='removePerkScreen'>✘</div>
         <h1>YOU NEED 100K TO ADD TO PERKS</h1>
-        <p style="color: white">Adding to perks will restart all of your progress except for prestiges, multiplier and pay percent, but will add to your multiplier and pay percent. The more the better.</p>
-        <pre style="color: white">
-        P = penties;
-        Multiplier = Multiplier + √P ÷ 50000;
-        Pay Percent = Multiplier + √P ÷ 5000;
-        </pre>
+        <p style="color: white">Adding to perks will restart all of your progress except for prestiges, multiplier and pay percent, but will add to your multiplier and pay percent. The more the better.</p><br>
+        <p style="color: white;" id="newMultiplierDisplay">Your new multiplier will be 0</p>
+        <p style="color: white;" id="newPayPercentDisplay">Your new pay percent will be 100%</p>
         <button id='perkIncreaseBtn' style="border-color: rgb(35, 35, 35)" class="btn">Add To Perks</button>
     </div>
     <div id="prestigeScreen">
         <div id='removePrestigeScreen'>✘</div>
         <h1 id="cashLevel">You need 100M for the next prestige...</h1>
-        <p style="color: white">Adding to perks will restart all of your progress except for prestiges, which increase.</p>
+        <p style="color: white">Adding to perks will restart all of your progress except for prestiges, which increases by 1. Prestiges will increase your multiplier max, which increases by 4 for each prestige.</p><br>
+        <p style="color: white" id="multipliermaxdisplay">Your multiplier max is 10</p>
         <button id="prestigeBtn" class="btn">Prestige</button>
     </div>
     <div id="settings">
@@ -620,23 +618,16 @@
                     <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-appas">Sell All</button>
                 </div>
 
-                <!-- Appa -->
-                <div class="sellItem">
-                    <h2 id="appaDisplay">Appa: 0</h2>
-                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-appa">Sell</button>
-                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-appas">Sell All</button>
-                </div>
-
                 <!-- Undefined Item -->
                 <div class="sellItem">
-                    <h2 id="appaDisplay">Appa: 0</h2>
+                    <h2 id="undefinedItemDisplay">Appa: 0</h2>
                     <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-undefined-item">Sell</button>
-                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-overly-defined-items">Sell All</button>
+                    <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-undefined-items">Sell All</button>
                 </div>
 
                 <!-- Overly Defined Item -->
                 <div class="sellItem">
-                    <h2 id="appaDisplay">Appa: 0</h2>
+                    <h2 id="overlyDefinedItemDisplay">Appa: 0</h2>
                     <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-overly-defined-item">Sell</button>
                     <button class="btn sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-overly-defined-items">Sell All</button>
                 </div>

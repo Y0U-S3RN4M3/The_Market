@@ -165,7 +165,7 @@
         friedRnestCount: 2e78,              // 2QaVg
         appaCount: 5e81,                    // 500QiVg
         undefinedItemCount: 1e85,           // 10SpVg
-        overlyDefinedItemCount: 1e87,       // 1NoVg
+        overlyDefinedItemCount: 1e90,       // 1NoVg
 
         // supernatural
         bettysBitterButterCount: 1e93,   // 1Trg
@@ -932,7 +932,7 @@
             friedRnestCount: 2e78,
             appaCount: 5e81,
             undefinedItemCount: 1e85,           // 10SpVg
-            overlyDefinedItemCount: 1e87,       // 1NoVg
+            overlyDefinedItemCount: 1e90,       // 1NoVg
 
             // supernatural
             bettysBitterButterCount: 1e84,
@@ -972,7 +972,30 @@
         document.getElementById("payPercent");
         if(gameState.payPercent < 30) gameState.payPercent = 30;
         if (pay) pay.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
-    
+        
+        // MULTIPLIER AND PAY PERCENT NEW AMOUNT GAIN
+
+        const newpaypercentdisplay = document.getElementById("newPayPercentDisplay");
+        const newmultiplierdisplay = document.getElementById("newMultiplierDisplay");
+        if(gameState.cashCount < 100000){
+            newpaypercentdisplay.textContent = 'Not Enough';
+            newmultiplierdisplay.textContent = 'Not Enough';
+        }
+        else{
+            newmultiplierdisplay.textContent = `Your new multiplier will be ${gameState.multiplier + (Math.sqrt(gameState.cashCount) / 50000)}`;
+            newpaypercentdisplay.textContent = `Your new pay percent will be ${gameState.payPercent - (Math.sqrt(gameState.cashCount) / 5000)}`;
+        }
+        if((gameState.multiplier + (Math.sqrt(gameState.cashCount) / 50000)) > multmax){
+            newmultiplierdisplay.textContent = `Your new multiplier will be ${multmax}`;
+        }
+        if((gameState.payPercent - (Math.sqrt(gameState.cashCount) / 5000)) < 30){
+            newpaypercentdisplay.textContent = `Your new pay percent will be 30%`
+        }
+
+        // MULTIPLIER MAX
+
+        document.getElementById("multipliermaxdisplay").textContent = `Your multiplier max is ${multmax}`;
+
         // ITEMS
         for (const key in gameState) {
             if (!key.endsWith("Count")) continue;
@@ -1184,7 +1207,7 @@
             return;
         };
         gameState.prestiges += 1;
-        gameState.cashCount = 10;
+        gameState.cashCount = 10**90;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
@@ -1221,7 +1244,7 @@
         countdownInterval = null;
         window.cashLoop = null;
     
-        gameState.cashCount = 10;
+        gameState.cashCount = 100000000000000;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
