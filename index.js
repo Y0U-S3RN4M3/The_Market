@@ -53,6 +53,7 @@
         shadowedMelonCount: 0,
         crimsonVeinedPlumCount: 0,
         monsterCount: 0,
+        whatCount: 0,
     
         // legendary
         grannyAndGrampaPigCount: 0,
@@ -62,7 +63,8 @@
         pepeCount: 0,
         friedRnestCount: 0,
         appaCount: 0,
-        prestiges: 0,
+        undefinedItemCount: 0,
+        overlyDefinedItemCount: 0,
 
         // supernatural
         bettysBitterButterCount: 0,
@@ -71,7 +73,9 @@
         mathCount: 0,
         piCount: 0,
         meetCount: 0,
-    
+        
+        prestiges: 0,
+
         BitcoinVal: 100000,
         LitecoinVal: 100,
         DogecoinVal: 10000000000,
@@ -150,6 +154,7 @@
         shadowedMelonCount: 2*10**52,      // 20SxDec
         crimsonVeinedPlumCount: 5*10**55,  // SpDec
         monsterCount: 10**58,              // OctDec
+        whatCount: 1e59,                   // NoDec
 
         // legendary
         grannyAndGrampaPigCount: 1e59,      // 1NoDec
@@ -159,14 +164,16 @@
         pepeCount: 2e74,                    // 200TVg
         friedRnestCount: 2e78,              // 2QaVg
         appaCount: 5e81,                    // 500QiVg
+        undefinedItemCount: 1e85,           // 10SpVg
+        overlyDefinedItemCount: 1e87,       // 1NoVg
 
         // supernatural
-        bettysBitterButterCount: 1e84,   // 1SxVg
-        cosmicCheeseCount: 1e85,         // 10SpVg
-        livingSoccerBallCount: 1e87,     // 1NoVg
-        mathCount: 1e92,                 // 100Trg
-        piCount: 2e95,                   // 2DoTrg
-        meetCount: 1e99,                 // 1TTrg
+        bettysBitterButterCount: 1e93,   // 1Trg
+        cosmicCheeseCount: 1e97,         // 10UnTrg
+        livingSoccerBallCount: 1e101,    // 100DoTrg
+        mathCount: 1e105,                // 1QaTrg
+        piCount: 2e109,                  // 20QiTrg
+        meetCount: 1e111,                // 1SxTrg
     };
     
     let stock = {
@@ -207,6 +214,7 @@
         shadowedMelonCount: 15,
         crimsonVeinedPlumCount: 15,
         monsterCount: 15,
+        whatCount: 20,
 
         // legendary
         grannyAndGrampaPigCount: 20,
@@ -216,6 +224,9 @@
         pepeCount: 20,
         friedRnestCount: 20,
         appaCount: 20,
+        undefinedItemCount: 20,
+        overlyDefinedItemCount: 20,
+
 
         // supernatural
         bettysBitterButterCount: 25,
@@ -230,7 +241,7 @@
         for(key in stock){
             if(prices[key] >= 100*10**6){
                 if(prices[key] >= 10**36){
-                    if(prices[key] >= 1e59){
+                    if(prices[key] >= 1e59 && stock[key] != 'whatCount'){
                         stock[key] = 25;
                     }
                     else{
@@ -311,6 +322,7 @@
         shadowedMelon: "shadowedMelonCount",
         crimsonVeinedPlum: "crimsonVeinedPlumCount",
         monster: "monsterCount",
+        what: "whatCount",
 
         grannyAndGrampaPig: "grannyAndGrampaPigCount",
         weLiveWeLoveWeDie: "weLiveWeLoveWeDieCount",
@@ -319,6 +331,8 @@
         pepe: "pepeCount",
         friedRnest: "friedRnestCount",
         appa: "appaCount",
+        undefinedItem: "undefinedItemCount",
+        overlyDefinedItem: "overlyDefinedItemCount",
 
         bettysBitterButter: "bettysBitterButterCount",
         cosmicCheese: "cosmicCheeseCount",
@@ -669,6 +683,7 @@
         shadowedMelonCount: "sell-all-shadowed-melon",
         crimsonVeinedPlumCount: "sell-all-crimson-veined-plum",
         monsterCount: "sell-all-monsters",
+        whatCount: "sell-all-whats",
 
         // legendary
         grannyAndGrampaPigCount: "sell-all-granny-and-grampa-pigs",
@@ -678,6 +693,8 @@
         pepeCount: "sell-all-pepes",
         friedRnestCount: "sell-all-fried-rnests",
         appaCount: "sell-all-appas",
+        undefinedItemCount: "sell-all-undefined-items",
+        overlyDefinedItemCount: "sell-all-overly-defined-items",
 
         // supernatural
         bettysBitterButterCount: "sell-all-bettys-bitter-butters",
@@ -904,6 +921,7 @@
             shadowedMelonCount: 2 * 10**52,     // 20SxDec
             crimsonVeinedPlumCount: 5 * 10**55, // 5SpDec
             monsterCount: 10**58,               // 1OctDec
+            whatCount: 1e59,                    // 1NoDec
 
             // legendary
             grannyAndGrampaPigCount: 1e59,
@@ -913,6 +931,8 @@
             pepeCount: 2e74,
             friedRnestCount: 2e78,
             appaCount: 5e81,
+            undefinedItemCount: 1e85,           // 10SpVg
+            overlyDefinedItemCount: 1e87,       // 1NoVg
 
             // supernatural
             bettysBitterButterCount: 1e84,
@@ -1154,7 +1174,7 @@
     }
     
     function getCashLevel(prestige) {
-        return 10 ** (15 * prestige + 9);
+        return 10 ** (11 * prestige + 9);
     }
     
     function prestige(){
@@ -1164,7 +1184,7 @@
             return;
         };
         gameState.prestiges += 1;
-        gameState.cashCount = 10;
+        gameState.cashCount = 10**919;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
@@ -1201,7 +1221,7 @@
         countdownInterval = null;
         window.cashLoop = null;
     
-        gameState.cashCount = 10;
+        gameState.cashCount = 100000000000000;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
