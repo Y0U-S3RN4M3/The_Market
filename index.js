@@ -1184,7 +1184,7 @@
             return;
         };
         gameState.prestiges += 1;
-        gameState.cashCount = 10**919;
+        gameState.cashCount = 10;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
@@ -1221,7 +1221,7 @@
         countdownInterval = null;
         window.cashLoop = null;
     
-        gameState.cashCount = 100000000000000;
+        gameState.cashCount = 10;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
