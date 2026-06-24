@@ -463,7 +463,7 @@
         );
         
         gameState.LitecoinVal = Math.max(
-            0.01,
+            50,
             gameState.LitecoinVal + roundDownToDecimals(Math.random() * 2 - 1, 2)
         );
         
@@ -956,6 +956,8 @@
         repairGameState();
         
         // CASH
+
+        if(gameState.cashCount < 10) gameState.cashCount = 10;
         const cash = document.getElementById("cash");
         if (cash) {
             cash.textContent = `Penties(℗): ${getFormattedNumber(gameState.cashCount)}℗`;
