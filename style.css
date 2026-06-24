@@ -608,6 +608,9 @@ h1{
     /* add this */
     position: fixed;
 }
+#settings{
+    max-width: 750px;
+}
 #addToPerks button, #prestigeScreen button #settings button{
     border: 2px solid rgb(85, 85, 85);
     margin: 30px;
