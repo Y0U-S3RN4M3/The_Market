@@ -74,6 +74,13 @@
         mathCount: 0,
         piCount: 0,
         meetCount: 0,
+
+        // mythological
+        benCount: 0,
+        greenGiantCount: 0,
+        theFirstSpinjitsuMasterCount: 0,
+        trueRnestCount: 0,
+        transendantBenCount: 0,
         
         prestiges: 0,
 
@@ -170,11 +177,18 @@
 
         // supernatural
         bettysBitterButterCount: 1e93,   // 1Trg
-        cosmicCheeseCount: 1e97,         // 10UnTrg
-        livingSoccerBallCount: 1e101,    // 100DoTrg
-        mathCount: 1e105,                // 1QaTrg
-        piCount: 2e109,                  // 20QiTrg
-        meetCount: 1e111,                // 1SxTrg
+        cosmicCheeseCount: 1e99,         // 1DoTrg
+        livingSoccerBallCount: 1e105,    // 1QaTrg
+        mathCount: 1e111,                // 1SxTrg
+        piCount: 2e117,                  // 1NoTrg
+        meetCount: 1e123,                // 1DoQdrg
+
+        // mythological
+        benCount: 1e126,                     // 1QaQdrg
+        greenGiantCount: 1e129,              // 10OctQdrg
+        theFirstSpinjitsuMasterCount: 1e153, // 1Qqg
+        trueRnestCount: 1e159,               // 100DoQqg
+        transendantBenCount: 1e168,          // 1QiQqg
     };
     
     let stock = {
@@ -236,14 +250,26 @@
         mathCount: 25,
         piCount: 25,
         meetCount: 25,
+
+        // mythological
+        benCount: 30,
+        greenGiantCount: 30,
+        theFirstSpinjitsuMasterCount: 30,
+        trueRnestCount: 30,
+        transendantBenCount: 30,
     };
 
     function restock(){
         for(key in stock){
             if(prices[key] >= 100*10**6){
                 if(prices[key] >= 10**36){
-                    if(prices[key] >= 1e59 && stock[key] != 'whatCount'){
-                        stock[key] = 25;
+                    if(prices[key] >= 1e59 && key != 'whatCount'){
+                        if(prices[key] >= 1e126){
+                            stock[key] = 30;
+                        }
+                        else{
+                            stock[key] = 25;
+                        }
                     }
                     else{
                         stock[key] = 20;
@@ -341,6 +367,12 @@
         math: "mathCount",
         pi: "piCount",
         meet: "meetCount",
+
+        ben: "benCount",
+        greenGiant: "greenGiantCount",
+        theFirstSpinjitsuMaster: "theFirstSpinjitsuMasterCount",
+        trueRnest: "trueRnestCount",
+        transendantBen: "transendantBenCount",
     };
     
     // ---------------- SAVE / LOAD ----------------
@@ -458,7 +490,7 @@
     function updateCrypto() {
         
         gameState.BitcoinVal = Math.max(
-            1,
+            50000,
             gameState.BitcoinVal + Math.floor(Math.random() * 3000 - 1000)
         );
         
@@ -468,7 +500,7 @@
         );
         
         gameState.DogecoinVal = Math.max(
-            0.000001,
+            5000000000,
             gameState.DogecoinVal + Math.floor(Math.random() * 1000000 - 500000)
         );
         
@@ -704,6 +736,13 @@
         mathCount: "sell-all-maths",
         piCount: "sell-all-pis",
         meetCount: "sell-all-meets",
+
+        // mythological
+        benCount: "sell-all-bens",
+        greenGiantCount: "sell-all-green-giants",
+        theFirstSpinjitsuMasterCount: "sell-all-the-first-spinjitsu-masters",
+        trueRnestCount: "sell-all-true-rnests",
+        transendantBenCount: "sell-all-transendant-bens",
     };
     
     const sellableItems = Object.keys(prices);
@@ -731,12 +770,13 @@
     
                     const gain = Math.floor(prices[key] * getRandomSellMultiplier());
                     const total = gain + gain * gameState.multiplier;
+                    const tootal = total * ((gameState.prestiges/2) + 1);
 
                     chachingsound.currentTime = 0.25;
                     chachingsound.play();
     
                     gameState[key]--;
-                    gameState.cashCount += total;
+                    gameState.cashCount += tootal;
     
                     saveGame();
                     updateUI();
@@ -942,12 +982,19 @@
             overlyDefinedItemCount: 1e90,       // 1NoVg
 
             // supernatural
-            bettysBitterButterCount: 1e84,
-            cosmicCheeseCount: 1e85,
-            livingSoccerBallCount: 1e87,
-            mathCount: 1e92,
-            piCount: 2e95,
-            meetCount: 1e99,
+            bettysBitterButterCount: 1e93,   // 1Trg
+            cosmicCheeseCount: 1e99,         // 1DoTrg
+            livingSoccerBallCount: 1e105,    // 1QaTrg
+            mathCount: 1e111,                // 1SxTrg
+            piCount: 2e117,                  // 1NoTrg
+            meetCount: 1e123,                // 1DoQdrg
+
+            // mythological
+            benCount: 1e126,                     // 1QaQdrg
+            greenGiantCount: 1e129,              // 10OctQdrg
+            theFirstSpinjitsuMasterCount: 1e153, // 1Qqg
+            trueRnestCount: 1e159,               // 100DoQqg
+            transendantBenCount: 1e168,          // 1QiQqg
         };
         
         Object.assign(prices, defaultPrices);
@@ -956,8 +1003,6 @@
         repairGameState();
         
         // CASH
-
-        if(gameState.cashCount < 10) gameState.cashCount = 10;
         const cash = document.getElementById("cash");
         if (cash) {
             cash.textContent = `Penties(℗): ${getFormattedNumber(gameState.cashCount)}℗`;
@@ -986,24 +1031,38 @@
 
         const newpaypercentdisplay = document.getElementById("newPayPercentDisplay");
         const newmultiplierdisplay = document.getElementById("newMultiplierDisplay");
-        if(gameState.cashCount < 100000){
-            newpaypercentdisplay.textContent = 'Not Enough';
+        const requirement = 10 ** (2 * gameState.prestiges + 5);
+
+        if(gameState.cashCount < requirement){
+            newpaypercentdisplay.textContent = '...';
             newmultiplierdisplay.textContent = 'Not Enough';
         }
         else{
-            newmultiplierdisplay.textContent = `Your new multiplier will be ${gameState.multiplier + (Math.sqrt(gameState.cashCount) / 50000)}`;
-            newpaypercentdisplay.textContent = `Your new pay percent will be ${gameState.payPercent - (Math.sqrt(gameState.cashCount) / 5000)}`;
-        }
-        if((gameState.multiplier + (Math.sqrt(gameState.cashCount) / 50000)) > multmax){
-            newmultiplierdisplay.textContent = `Your new multiplier will be ${multmax}`;
-        }
-        if((gameState.payPercent - (Math.sqrt(gameState.cashCount) / 5000)) < 30){
-            newpaypercentdisplay.textContent = `Your new pay percent will be 30%`
+            const multiplierGain =
+                Math.floor(Math.log10(10 * (gameState.cashCount / requirement)));
+
+            const payPercentLoss =
+                Math.log10(gameState.cashCount / requirement + 1) * 2;
+
+            const newMultiplier =
+                Math.min(gameState.multiplier + multiplierGain, multmax);
+
+            const newPayPercent =
+                Math.max(gameState.payPercent - payPercentLoss, 30);
+
+            newmultiplierdisplay.textContent =
+                `Your new multiplier will be ${newMultiplier}`;
+
+            newpaypercentdisplay.textContent =
+                `Your new pay percent will be ${newPayPercent.toFixed(1)}%`;
         }
 
         // MULTIPLIER MAX
 
         document.getElementById("multipliermaxdisplay").textContent = `Your multiplier max is ${multmax}`;
+        document.getElementById("prestigemultdisplay").textContent = `Your prestige multiplier is ${(gameState.prestiges/2) + 1}`;
+        const perkneed = 10**(2 * gameState.prestiges + 5);
+        document.getElementById("perkneed").textContent = `You Need ${getFormattedNumber(perkneed)} To Add To Perks`;
 
         // ITEMS
         for (const key in gameState) {
@@ -1166,6 +1225,20 @@
                 }
             });
         }
+
+        const mythologicalBtn = document.getElementById("mythologicalFoodsBtn");
+        const mythologicalFood = document.getElementById("mythologicalFoods");
+        if(mythologicalBtn){
+            mythologicalBtn.addEventListener('click', () => {
+                if(gameState.prestiges >= 12){
+                    if(mythologicalFood.style.display == 'none') mythologicalFood.style.display = 'block';
+                    else mythologicalFood.style.display = 'none';
+                }
+                else{
+                    window.alert("You need 12 prestiges to enter here")
+                }
+            });
+        }
     }
 
     // ----------------- PERKS/PRESTIGES -----------------
@@ -1182,11 +1255,16 @@
     }
     
     function perkIncrease() {
-        if(gameState.cashCount >= 100000){
-            gameState.multiplier += Math.sqrt(gameState.cashCount) / 50000;
+        if(gameState.cashCount >= 10**(2 * gameState.prestiges + 5)){
+            const requirement = 10 ** (2 * gameState.prestiges + 5);
+
+            const multiplierGain = Math.floor(Math.log10(gameState.cashCount / requirement)) + 1;
+
+            gameState.multiplier += multiplierGain;
             const multiplier = document.getElementById("multiplier");
             multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
-            gameState.payPercent -= Math.sqrt(gameState.cashCount) / 5000;
+            const payPercentLoss = Math.log10(gameState.cashCount / requirement + 1) * 2;
+            gameState.payPercent -= payPercentLoss;
             const payPercent = document.getElementById("payPercent");
             payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`
             gameState.cashCount = 10;
@@ -1216,7 +1294,7 @@
             return;
         };
         gameState.prestiges += 1;
-        gameState.cashCount = 10;
+        gameState.cashCount = 1e10;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
@@ -1253,7 +1331,7 @@
         countdownInterval = null;
         window.cashLoop = null;
     
-        gameState.cashCount = 10;
+        gameState.cashCount = 10000000000000000000;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
@@ -1264,19 +1342,7 @@
         gameState.Litecoin = 0;
         gameState.Dogecoin = 0;
         gameState.prestiges = 0;
-        for(let key in prices){
-            if(prices[key] > 100*10**6){
-                if(prices[key] > 10**36){
-                    stock[key] = 20;
-                }
-                else{
-                    stock[key] = 15;
-                }
-            }
-            else{
-                stock[key] = 10;
-            }
-        }
+        restock();
         timeLeft = config.normalTime;
         
         // 🧹 CLEAR STORAGE

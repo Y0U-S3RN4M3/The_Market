@@ -23,7 +23,7 @@
     </div>
     <div id="addToPerks">
         <div id='removePerkScreen'>✘</div>
-        <h1>YOU NEED 100K TO ADD TO PERKS</h1>
+        <h1 id="perkneed">YOU NEED 100K TO ADD TO PERKS</h1>
         <p style="color: white">Adding to perks will restart all of your progress except for prestiges, multiplier and pay percent, but will add to your multiplier and pay percent. The more the better.</p><br>
         <p style="color: white;" id="newMultiplierDisplay">Your new multiplier will be 0</p>
         <p style="color: white;" id="newPayPercentDisplay">Your new pay percent will be 100%</p>
@@ -34,6 +34,7 @@
         <h1 id="cashLevel">You need 100M for the next prestige...</h1>
         <p style="color: white">Adding to perks will restart all of your progress except for prestiges, which increases by 1. Prestiges will increase your multiplier max, which increases by 4 for each prestige.</p><br>
         <p style="color: white" id="multipliermaxdisplay">Your multiplier max is 10</p>
+        <p style="color: white" id="prestigemultdisplay">Your prestige multiplier is 1</p>
         <button id="prestigeBtn" class="btn">Prestige</button>
     </div>
     <div id="settings">
@@ -57,9 +58,9 @@
     <button class="btn displays" id='commonFoodBtn'>COMMON FOODS</button>
     <div id="commonFoods" class="rarity">
     <div id="grid">
-        <div id="apples" class="item">
+        <div id="apples" class="iem">
             <h4>Apples</h4>
-            <h5>10℗</h5>
+            <h5 cla>10℗</h5>
             <h5 id="appleStock">Stock: 10</h5>
             <img src="https://cdn.britannica.com/22/187222-050-07B17FB6/apples-on-a-tree-branch.jpg">
         </div>
@@ -168,7 +169,7 @@
             <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-yougurts">Sell All</button>
         </div> 
         <!-- Mango -->
-        <div class="sellItem">
+                 <div class="sellItem">
             <h2 id="mangoDisplay">Mango: 0</h2>
             <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-mango">Sell</button>
             <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-mangos">Sell All</button>
@@ -640,42 +641,42 @@
             <div id="bettysBitterButter" class="item">
                 <h4>Betty's Bitter Butter</h4>
                 <h5>Betty's Bitter Butter, Bought By Betty By Blundering</h5>
-                <h5>1SxVg℗</h5>
+                <h5>1Trg℗</h5>
                 <h5 id="bettysBitterButterStock">Stock: 25</h5>
                 <img src="https://tse3.mm.bing.net/th/id/OIP.XJ7JYAR5TT7Y2wjgGNUyWgHaEo?pid=Api&P=0&h=180">
             </div>
             <div id="cosmicCheese" class="item">
                 <h4>Cosmic Cheese</h4>
                 <h5>The Cosmos' structure has been shifted to a strange substance. CHEESE...</h5>
-                <h5>10SpVg℗</h5>
+                <h5>1DoTrg℗</h5>
                 <h5 id="cosmicCheeseStock">Stock: 25</h5>
                 <img src="https://tse4.mm.bing.net/th/id/OIP.dXU43ZekPqBJ-mD3WFxnKAHaEL?pid=Api&P=0&h=180">
             </div>
             <div id="livingSoccerBall" class="item">
                 <h4>Living Soccer Ball</h4>
                 <h5>Is there any way anyone would eat that thing?</h5>
-                <h5>1NoVg℗</h5>
+                <h5>1QaTrg℗</h5>
                 <h5 id="livingSoccerBallStock">Stock: 25</h5>
                 <img src="https://d39ai5mk5cpjgw.cloudfront.net/generation/6a3778c5c7c357006bb64f7b/65adde34.webp">
             </div>
             <div id="math" class="item">
                 <h4>Math</h4>
                 <h5>The entire concept of math, all in your palm, and you just, eat it???</h5>
-                <h5>100Trg℗</h5>
+                <h5>1SxTrg℗</h5>
                 <h5 id="mathStock">Stock: 25</h5>
                 <img src="https://tse4.mm.bing.net/th/id/OIP.Nbtbz-eBUXThVJ8vsQbzXgHaEo?pid=Api&P=0&h=180">
             </div>
             <div id="pi" class="item">
                 <h4>Pi</h4>
                 <h5>3.14159265358979323846264338327950288<br>4197169399375105820974944592307<br>8164062862089986280348253421170679...</h5>
-                <h5>2DoTrg℗</h5>
+                <h5>1NoTrg℗</h5>
                 <h5 id="piStock">Stock: 25</h5>
                 <img src="https://tse4.mm.bing.net/th/id/OIP.ch1DMDvM9SmGl-RY5gUh0AHaEK?pid=Api&P=0&h=180">
             </div>
             <div id="meet" class="item">
                 <h4>Meet</h4>
                 <h5>Your joking...</h5>
-                <h5>1TTrg℗</h5>
+                <h5>1DoQrdg℗</h5>
                 <h5 id="meetStock">Stock: 25</h5>
                 <img src="https://tse4.mm.bing.net/th/id/OIP.E1Y6Ld0HqzigvMUTGupN9wHaD6?pid=Api&P=0&h=180">
             </div>
@@ -749,6 +750,103 @@
             </div>
         </div>
     </div>
+    <button class="btn displays" id="mythologicalFoodsBtn">MYTHOLOGICAL FOODS</button>
+    <div id="mythologicalFoods" class="rarity">
+        <div id="grid">
+            <div id="ben" class="item">
+                <h4>Ben</h4>
+                <h5>Ben, a specialised civilian.</h5>
+                <h5>1QaQdrg℗</h5>
+                <h5 id="benStock">Stock: 25</h5>
+                <img src="https://mail.google.com/mail/u/0?ui=2&ik=2b0b9b94c0&attid=0.1&permmsgid=msg-a:r-6046550821872795114&th=19ef415b6ad4b67e&view=fimg&fur=ip&permmsgid=msg-a:r-6046550821872795114&sz=s0-l75-ft&attbid=ANGjdJ84jnP9zwvYyGd2jVZx0NUJ77odAgIRKGtV-5tzf6Rn8gsBS7kS8TbWpYXExMXCQuArptP7XN3NqQdVVtuBhml3yIrzLur8jAKPf8pZ6aK30IXhWHcIar613es&disp=emb&realattid=BA0DDADA-A6EB-4233-8C17-AD054E2F7D70&zw">
+            </div>
+            <div id="greenGiant" class="item">
+                <h4>Green Giant</h4>
+                <h5>Ho Ho Ho, Green Giant</h5>
+                <h5>10OctQdrg℗</h5>
+                <h5 id="greenGiantStock">Stock: 25</h5>
+                <img src="https://tse2.mm.bing.net/th/id/OIP.Z-q2lKwM1tQw1lQDU1tyvQHaEo?pid=Api&P=0&h=180">
+            </div>
+            <div id="theFirstSpinjitsuMaster" class="item">
+                <h4>The First Spinjitsu Master</h4>
+                <h5>No, it was the first spinjitsu master who created ninjago.</h5>
+                <h5>1Qqg℗</h5>
+                <h5 id="theFirstSpinjitsuMasterStock">Stock: 25</h5>
+                <img src="https://tse1.mm.bing.net/th/id/OIP.lPDsdBckhRQyDCOa8uccAAHaEK?pid=Api&P=0&h=180">
+            </div>
+            <div id="trueRnest" class="item">
+                <h4>True Rnest</h4>
+                <h5>What is going on?</h5>
+                <h5>100DoQqg℗</h5>
+                <h5 id="trueRnestStock">Stock: 25</h5>
+                <img src="https://tse4.mm.bing.net/th/id/OIP.lUPqgLi6paK1cVz9ZUDHaQHaEK?pid=Api&P=0&h=180">
+            </div>
+            <div id="transendantBen" class="item">
+                <h4>Transendant Ben</h4>
+                <h5>An extremely specialized civilian...</h5>
+                <h5>1QiQqg℗</h5>
+                <h5 id="transendantBenStock">Stock: 25</h5>
+                <img src="./images/auraBen.png" style="height: 150px;">
+            </div>
+        </div>
+        <div id="displayContainer">
+
+            <!-- Ben -->
+            <div class="sellItem">
+                <h2 id="benDisplay">Ben: 0</h2>
+                <button class="sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-ben">Sell</button>
+                <button class="sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-all-bens">Sell All</button>
+            </div>
+        
+            <!-- Green Giant (cosmicCheese) -->
+            <div class="sellItem">
+                <h2 id="cosmicCheeseDisplay">Green Giant: 0</h2>
+                <button class="sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-cosmic-cheese">Sell</button>
+                <button class="sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-all-cosmic-cheeses">Sell All</button>
+            </div>
+        
+            <!-- The First Spinjitsu Master -->
+            <div class="sellItem">
+                <h2 id="theFirstSpinjitsuMasterDisplay">The First Spinjitsu Master: 0</h2>
+                <button class="sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-the-first-spinjitsu-master">Sell</button>
+                <button class="sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-all-the-first-spinjitsu-masters">Sell All</button>
+            </div>
+        
+            <!-- True Rnest -->
+            <div class="sellItem">
+                <h2 id="trueRnestDisplay">True Rnest: 0</h2>
+                <button class="sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-true-rnest">Sell</button>
+                <button class="sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-all-true-rnests">Sell All</button>
+            </div>
+        
+            <!-- Transendant Ben -->
+            <div class="sellItem">
+                <h2 id="transendantBenDisplay">Aura Ben: 0</h2>
+                <button class="sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-transendant-ben">Sell</button>
+                <button class="sellbtn"
+                    style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                    id="sell-all-transendant-bens">Sell All</button>
+            </div>
+        
+        </div>
     </div>
     <h1 style="margin-top: 20px;">CRYPTO</h1>
     <input type="number" id="cryptoInput" placeholder="input a penty amount">

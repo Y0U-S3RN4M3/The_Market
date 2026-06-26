@@ -312,6 +312,40 @@ a{
     transform: scale(0.95);
     box-shadow: 0 0 0px black;
 }
+.item{
+    
+    background: hsla(0, 0%, 0%, 0.7);
+    border-radius: 5px;
+    padding: 20px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: .25s;
+}
+.item:hover{
+    transform: scale(1.1);
+    box-shadow: 0 0 12.5px white;
+}
+.item:active{
+    transform: scale(0.95);
+    box-shadow: 0 0 0px black;
+}
+#apples{
+    
+    background: hsla(0, 0%, 0%, 0.7);
+    border-radius: 5px;
+    padding: 20px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: .25s;
+}
+#apples:hover{
+    transform: scale(1.1);
+    box-shadow: 0 0 12.5px white;
+}
+#apples:active{
+    transform: scale(0.95);
+    box-shadow: 0 0 0px black;
+}
 #grid h4,
 #grid h5{
     color: white;
@@ -607,9 +641,6 @@ h1{
 
     /* add this */
     position: fixed;
-}
-#settings{
-    max-width: 750px;
 }
 #addToPerks button, #prestigeScreen button #settings button{
     border: 2px solid rgb(85, 85, 85);
