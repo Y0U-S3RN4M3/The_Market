@@ -81,6 +81,11 @@
         theFirstSpinjitsuMasterCount: 0,
         trueRnestCount: 0,
         transendantBenCount: 0,
+
+        // exotic
+        sushiCount: 0,
+        caviarCount: 0,
+        butterChickenCount: 0,
         
         prestiges: 0,
 
@@ -189,6 +194,11 @@
         theFirstSpinjitsuMasterCount: 1e153, // 1Qqg
         trueRnestCount: 1e159,               // 100DoQqg
         transendantBenCount: 1e168,          // 1QiQqg
+
+        // exotic
+        sushiCount: 1e177,
+        caviarCount: 1e186,
+        butterChickenCount: 1e201,
     };
     
     let stock = {
@@ -257,6 +267,11 @@
         theFirstSpinjitsuMasterCount: 30,
         trueRnestCount: 30,
         transendantBenCount: 30,
+
+        // exotic
+        sushiCount: 50,
+        caviarCount: 50,
+        butterChickenCount: 50,
     };
 
     function restock(){
@@ -373,6 +388,10 @@
         theFirstSpinjitsuMaster: "theFirstSpinjitsuMasterCount",
         trueRnest: "trueRnestCount",
         transendantBen: "transendantBenCount",
+
+        sushi: "sushiCount",
+        caviar: "caviarCount",
+        butterChicken: "butterChickenCount"
     };
     
     // ---------------- SAVE / LOAD ----------------
@@ -743,6 +762,11 @@
         theFirstSpinjitsuMasterCount: "sell-all-the-first-spinjitsu-masters",
         trueRnestCount: "sell-all-true-rnests",
         transendantBenCount: "sell-all-transendant-bens",
+
+        // exotic
+        sushiCount: "sell-all-sushis",
+        caviarCount: "sell-all-caviars",
+        butterChickenCount: "sell-all-butter-chickens"
     };
     
     const sellableItems = Object.keys(prices);
@@ -995,6 +1019,10 @@
             theFirstSpinjitsuMasterCount: 1e153, // 1Qqg
             trueRnestCount: 1e159,               // 100DoQqg
             transendantBenCount: 1e168,          // 1QiQqg
+
+            sushiCount: 1e177,
+            caviarCount: 1e186,
+            butterChickenCount: 1e201,
         };
         
         Object.assign(prices, defaultPrices);
@@ -1239,6 +1267,20 @@
                 }
             });
         }
+
+        const exoticBtn = document.getElementById("exoticFoodsBtn");
+        const exoticFood = document.getElementById("exoticFoods");
+        if(exoticBtn){
+            exoticBtn.addEventListener('click', () => {
+                if(gameState.prestiges >= 20){
+                    if(exoticFood.style.display == 'none') exoticFood.style.display = 'block';
+                    else exoticFood.style.display = 'none';
+                }
+                else{
+                    window.alert("You need 20 prestiges to enter here")
+                }
+            });
+        }
     }
 
     // ----------------- PERKS/PRESTIGES -----------------
@@ -1294,7 +1336,7 @@
             return;
         };
         gameState.prestiges += 1;
-        gameState.cashCount = 1e10;
+        gameState.cashCount = 10e919;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
@@ -1331,7 +1373,7 @@
         countdownInterval = null;
         window.cashLoop = null;
     
-        gameState.cashCount = 10000000000000000000;
+        gameState.cashCount = 10000000000000000;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
