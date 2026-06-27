@@ -147,7 +147,7 @@
         raisinCount: 5000000,
     
         // rare
-        chocolateCount: 100*10**6,       // 500M
+        chocolateCount: 100*10**6,       // 100M
         pizzaCount: 750*10**9,           // 750B
         cookieCount: 5*10**12,           // 5T
         chickenCount: 15*10**15,         // 15Qa
@@ -159,15 +159,15 @@
         cheesecakeCount: 1*10**33,       // 1Dec
     
         // uncanny
-        bluecapMushroomsCount: 10**36,     // 100UnDec
+        bluecapMushroomsCount: 10**36,     // 1UnDec
         ashenPearsCount: 10**39,           // 1DoDec
-        twighlightHoneycombsCount: 10**42, // 10TDec
+        twighlightHoneycombsCount: 10**43, // 10TDec
         petersPickledPeppersCount: 100*10**45, // 100QaDec
         twistedTurnipCount: 2*10**48,      // 2QiDec
         shadowedMelonCount: 2*10**52,      // 20SxDec
-        crimsonVeinedPlumCount: 5*10**55,  // SpDec
-        monsterCount: 10**58,              // OctDec
-        whatCount: 1e59,                   // NoDec
+        crimsonVeinedPlumCount: 5*10**57,  // 500SpDec
+        monsterCount: 10**58,              // 1OctDec
+        whatCount: 1e61,                   // NoDec
 
         // legendary
         grannyAndGrampaPigCount: 1e59,      // 1NoDec
@@ -185,7 +185,7 @@
         cosmicCheeseCount: 1e99,         // 1DoTrg
         livingSoccerBallCount: 1e105,    // 1QaTrg
         mathCount: 1e111,                // 1SxTrg
-        piCount: 2e117,                  // 1NoTrg
+        piCount: 1e117,                  // 1NoTrg
         meetCount: 1e123,                // 1DoQdrg
 
         // mythological
@@ -195,10 +195,10 @@
         trueRnestCount: 1e159,               // 100DoQqg
         transendantBenCount: 1e168,          // 1QiQqg
 
-        // exotic
-        sushiCount: 1e177,
-        caviarCount: 1e186,
-        butterChickenCount: 1e201,
+        // exotic                         
+        sushiCount: 1e183,                   // 1Sxg
+        caviarCount: 1e192,                  // 1TSxg
+        butterChickenCount: 1e201,           // 1SxSxg
     };
     
     let stock = {
@@ -280,7 +280,12 @@
                 if(prices[key] >= 10**36){
                     if(prices[key] >= 1e59 && key != 'whatCount'){
                         if(prices[key] >= 1e126){
-                            stock[key] = 30;
+                            if(prices[key] >= 1e177){
+                                stock[key] = 50
+                            }
+                            else{
+                                stock[key] = 30;
+                            }
                         }
                         else{
                             stock[key] = 25;
@@ -956,6 +961,7 @@
     function updateUI() {
         // FIX FROM CONSOLE
         const defaultPrices = {
+            // common
             appleCount: 10,
             bananaCount: 15,
             orangeCount: 20,
@@ -972,36 +978,36 @@
             raisinCount: 5000000,
         
             // rare
-            chocolateCount: 100 * 10**6,      // 100M
-            pizzaCount: 750 * 10**9,          // 750B
-            cookieCount: 5 * 10**12,          // 5T
-            chickenCount: 15 * 10**15,        // 15Qa
-            pastaCount: 50 * 10**18,          // 50Qi
-            burgerCount: 250 * 10**21,        // 250Sx
-            donutCount: 10**24,               // 1Sp
-            pancakeCount: 10 * 10**27,        // 10Oc
-            iceCreamCount: 75 * 10**30,       // 75No
-            cheesecakeCount: 1 * 10**33,      // 1Dec
+            chocolateCount: 100*10**6,       // 100M
+            pizzaCount: 750*10**9,           // 750B
+            cookieCount: 5*10**12,           // 5T
+            chickenCount: 15*10**15,         // 15Qa
+            pastaCount: 50*10**18,           // 50Qi
+            burgerCount: 250*10**21,         // 250Sx
+            donutCount: 10**24,              // 1Sp
+            pancakeCount: 10*10**27,         // 10Oc
+            iceCreamCount: 75*10**30,        // 75No
+            cheesecakeCount: 1*10**33,       // 1Dec
         
             // uncanny
-            bluecapMushroomsCount: 10**36,      // 1UnDec
-            ashenPearsCount: 10**39,            // 1DoDec
-            twighlightHoneycombsCount: 10**42,  // 1TDec
-            petersPickledPeppersCount: 10**45,  // 1QaDec
-            twistedTurnipCount: 2 * 10**48,     // 2QiDec
-            shadowedMelonCount: 2 * 10**52,     // 20SxDec
-            crimsonVeinedPlumCount: 5 * 10**55, // 5SpDec
-            monsterCount: 10**58,               // 1OctDec
-            whatCount: 1e59,                    // 1NoDec
+            bluecapMushroomsCount: 10**36,     // 1UnDec
+            ashenPearsCount: 10**39,           // 1DoDec
+            twighlightHoneycombsCount: 10**43, // 10TDec
+            petersPickledPeppersCount: 100*10**45, // 100QaDec
+            twistedTurnipCount: 2*10**48,      // 2QiDec
+            shadowedMelonCount: 2*10**52,      // 20SxDec
+            crimsonVeinedPlumCount: 5*10**57,  // 500SpDec
+            monsterCount: 10**58,              // 1OctDec
+            whatCount: 1e61,                   // NoDec
 
             // legendary
-            grannyAndGrampaPigCount: 1e59,
-            weLiveWeLoveWeDieCount: 1e63,
-            dogeCount: 1e67,
-            rickButRolledCount: 1e71,
-            pepeCount: 2e74,
-            friedRnestCount: 2e78,
-            appaCount: 5e81,
+            grannyAndGrampaPigCount: 1e59,      // 1NoDec
+            weLiveWeLoveWeDieCount: 1e63,       // 1Vg
+            dogeCount: 1e67,                    // 10UnVg
+            rickButRolledCount: 1e71,           // 100DoVg
+            pepeCount: 2e74,                    // 200TVg
+            friedRnestCount: 2e78,              // 2QaVg
+            appaCount: 5e81,                    // 500QiVg
             undefinedItemCount: 1e85,           // 10SpVg
             overlyDefinedItemCount: 1e90,       // 1NoVg
 
@@ -1010,7 +1016,7 @@
             cosmicCheeseCount: 1e99,         // 1DoTrg
             livingSoccerBallCount: 1e105,    // 1QaTrg
             mathCount: 1e111,                // 1SxTrg
-            piCount: 2e117,                  // 1NoTrg
+            piCount: 1e117,                  // 1NoTrg
             meetCount: 1e123,                // 1DoQdrg
 
             // mythological
@@ -1020,9 +1026,10 @@
             trueRnestCount: 1e159,               // 100DoQqg
             transendantBenCount: 1e168,          // 1QiQqg
 
-            sushiCount: 1e177,
-            caviarCount: 1e186,
-            butterChickenCount: 1e201,
+            // exotic                         
+            sushiCount: 1e183,                   // 1Sxg
+            caviarCount: 1e192,                  // 1TSxg
+            butterChickenCount: 1e201,           // 1SxSxg
         };
         
         Object.assign(prices, defaultPrices);
@@ -1272,12 +1279,12 @@
         const exoticFood = document.getElementById("exoticFoods");
         if(exoticBtn){
             exoticBtn.addEventListener('click', () => {
-                if(gameState.prestiges >= 20){
+                if(gameState.prestiges >= 17){
                     if(exoticFood.style.display == 'none') exoticFood.style.display = 'block';
                     else exoticFood.style.display = 'none';
                 }
                 else{
-                    window.alert("You need 20 prestiges to enter here")
+                    window.alert("You need 17 prestiges to enter here")
                 }
             });
         }
@@ -1336,7 +1343,7 @@
             return;
         };
         gameState.prestiges += 1;
-        gameState.cashCount = 10;
+        gameState.cashCount = 1e192;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
@@ -1373,7 +1380,7 @@
         countdownInterval = null;
         window.cashLoop = null;
     
-        gameState.cashCount = 10;
+        gameState.cashCount = 10000000000000000;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
