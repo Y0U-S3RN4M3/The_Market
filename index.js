@@ -1099,6 +1099,18 @@
         const perkneed = 10**(2 * gameState.prestiges + 5);
         document.getElementById("perkneed").textContent = `You Need ${getFormattedNumber(perkneed)} To Add To Perks`;
 
+        // COSTS
+        const costdisplays = document.querySelectorAll(".cost")
+        const keys = Object.keys(prices);
+
+        keys.forEach((key, i) => {
+            if (costdisplays[i]) {
+                const display = getFormattedNumber(prices[key] * (gameState.payPercent / 100));
+                costdisplays[i].textContent =
+                    `${display}℗`;
+            }
+        });
+
         // ITEMS
         for (const key in gameState) {
             if (!key.endsWith("Count")) continue;
@@ -1343,7 +1355,7 @@
             return;
         };
         gameState.prestiges += 1;
-        gameState.cashCount = 1e192;
+        gameState.cashCount = 10e919;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
@@ -1380,7 +1392,7 @@
         countdownInterval = null;
         window.cashLoop = null;
     
-        gameState.cashCount = 10000000000000000;
+        gameState.cashCount = 10e123;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
