@@ -489,7 +489,8 @@
             const el = document.getElementById("countDown");
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
-            if (el) el.textContent = `You have ${String(minutes).padStart("0", 2)}m and ${String(seconds).padStart("0", 2)}s left...`;
+            const paddedseconds = String(seconds).padStart(2, "0");
+            if (el) el.textContent = `You have ${minutes}m and ${paddedseconds}s left...`;
     
         }, 1000);
     }
@@ -1361,7 +1362,7 @@
             return;
         };
         gameState.prestiges += 1;
-        gameState.cashCount = 5e6;
+        gameState.cashCount = 10;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
@@ -1398,7 +1399,7 @@
         countdownInterval = null;
         window.cashLoop = null;
     
-        gameState.cashCount = 10e123;
+        gameState.cashCount = 10;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
