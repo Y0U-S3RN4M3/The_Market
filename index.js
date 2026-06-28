@@ -491,11 +491,11 @@
             const seconds = timeLeft % 60;
             const paddedseconds = String(seconds).padStart(2, "0");
             if (el) el.textContent = `You have ${minutes}m and ${paddedseconds}s left...`;
-    
         }, 1000);
     }
     
     // ---------------- CRYPTO ----------------
+
     function roundDownToDecimals(value, decimals) {
         const m = 10 ** decimals;
         return Math.floor((value + Number.EPSILON) * m) / m;
@@ -508,35 +508,72 @@
         lgup = Math.random() < 0.9;
         dgup = Math.random() < 0.9;
     
-        setTimeout(changeTrend, Math.random() * 60000 + 60000);
+        setTimeout(changeTrend, Math.random() * (120000 - 60000 + 1)) + 60000;
     }
     changeTrend();
     
     function updateCrypto() {
-        
-        gameState.BitcoinVal = Math.max(
-            50000,
-            gameState.BitcoinVal + Math.floor(Math.random() * 3000 - 1000)
-        );
-        
-        gameState.LitecoinVal = Math.max(
-            50,
-            gameState.LitecoinVal + roundDownToDecimals(Math.random() * 2 - 1, 2)
-        );
-        
-        gameState.DogecoinVal = Math.max(
-            5000000000,
-            gameState.DogecoinVal + Math.floor(Math.random() * 1000000 - 500000)
-        );
-        
+
+        // BITCOIN CHANGE
+
+        let bmin;
+        let bmax;
+        if(bgup){
+            bmin = -25;
+            bmax = 250;
+        }
+        else{
+            bmin = -2500;
+            bmax = -25;
+        }
+
+        const bchange = Math.floor(Math.random() * (bmax - bmin + 1)) + bmin;
+        gameState.BitcoinVal += bchange;
+        gameState.BitcoinVal = Math.max(gameState.BitcoinVal, 50000);
+
+        // BITCOIN CHANGE
+
+        let lmin;
+        let lmax;
+        if(lgup){
+            lmin = -0.025;
+            lmax = 0.25;
+        }
+        else{
+            lmin = -2.500;
+            lmax = -0.025;
+        }
+
+        let lchange = (Math.random() * (lmax - lmin + 1)) + lmin;
+        lchange = Math.round(lchange * 100) / 100;
+        gameState.LitecoinVal += lchange;
+        gameState.LitecoinVal = Math.max(gameState.LitecoinVal, 50);
+
+        // DOGECOIN CHANGE
+
+        let dmin;
+        let dmax;
+        if(dgup){
+            dmin = -25e5;
+            dmax = 25e6;
+        }
+        else{
+            dmin = -25e7;
+            dmax = 25e5;
+        }
+
+        const dchange = Math.floor(Math.random() * (dmax - dmin + 1)) + dmin;
+        gameState.DogecoinVal += dchange;
+        gameState.DogecoinVal = Math.max(gameState.DogecoinVal, 50000);
+
         const btc = document.getElementById("BitcoinDisplay");
-        if (btc) btc.textContent = `1 BITCOIN: ${gameState.BitcoinVal}`;
+        if (btc) btc.textContent = `1 BITCOIN: ${getFormattedNumber(gameState.BitcoinVal)}`;
     
         const ltc = document.getElementById("LitecoinDisplay");
-        if (ltc) ltc.textContent = `1 LITECOIN: ${gameState.LitecoinVal}`;
+        if (ltc) ltc.textContent = `1 LITECOIN: ${getFormattedNumber(gameState.LitecoinVal)}`;
     
         const doge = document.getElementById("DogecoinDisplay");
-        if (doge) doge.textContent = `1 DOGECOIN: ${gameState.DogecoinVal}`;
+        if (doge) doge.textContent = `1 DOGECOIN: ${getFormattedNumber(gameState.DogecoinVal)}`;
     
         saveGame();
     }
@@ -546,9 +583,9 @@
         const ltc = document.getElementById("Litecoins");
         const doge = document.getElementById("Dogecoins");
     
-        if (btc) btc.textContent = `Bitcoins: ${gameState.Bitcoin}`;
-        if (ltc) ltc.textContent = `Litecoins: ${gameState.Litecoin}`;
-        if (doge) doge.textContent = `Dogecoins: ${gameState.Dogecoin}`;
+        if (btc) btc.textContent = `Bitcoins: ${getFormattedNumber(gameState.Bitcoin)}`;
+        if (ltc) ltc.textContent = `Litecoins: ${getFormattedNumber(gameState.Litecoin)}`;
+        if (doge) doge.textContent = `Dogecoins: ${getFormattedNumber(gameState.Dogecoin)}`;
     }
     
     // ---------------- CRYPTO BUY / SELL FIXED ----------------
@@ -1136,13 +1173,13 @@
     
         // CRYPTO UI
         const btc = document.getElementById("BitcoinDisplay");
-        if (btc) btc.textContent = `1 BITCOIN: ${gameState.BitcoinVal}`;
+        if (btc) btc.textContent = `1 BITCOIN: ${getFormattedNumber(gameState.BitcoinVal)}`;
     
         const ltc = document.getElementById("LitecoinDisplay");
-        if (ltc) ltc.textContent = `1 LITECOIN: ${gameState.LitecoinVal}`;
+        if (ltc) ltc.textContent = `1 LITECOIN: ${getFormattedNumber(gameState.LitecoinVal)}`;
     
         const doge = document.getElementById("DogecoinDisplay");
-        if (doge) doge.textContent = `1 DOGECOIN: ${gameState.DogecoinVal}`;
+        if (doge) doge.textContent = `1 DOGECOIN: ${getFormattedNumber(gameState.DogecoinVal)}`;
     }
     
     // ----------------- DISPLAY RARITIES & MENU -----------------\
