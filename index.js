@@ -1066,7 +1066,8 @@
 
         const newpaypercentdisplay = document.getElementById("newPayPercentDisplay");
         const newmultiplierdisplay = document.getElementById("newMultiplierDisplay");
-        const requirement = 10 ** (2 * gameState.prestiges + 5);
+        const gainBase = 10 ** (2 * gameState.prestiges + 5);
+        const requirement = 10** (gameState.prestiges + 5)
 
         if(gameState.cashCount < requirement){
             newpaypercentdisplay.textContent = '...';
@@ -1074,10 +1075,10 @@
         }
         else{
             const multiplierGain =
-                Math.floor(Math.log10(10 * (gameState.cashCount / requirement)));
+                Math.log10(10 * (gameState.cashCount / gainBase));
 
             const payPercentLoss =
-                Math.log10(gameState.cashCount / requirement + 1) * 2;
+                Math.log10(gameState.cashCount / gainBase + 1) * 2;
 
             const newMultiplier =
                 Math.min(gameState.multiplier + multiplierGain, multmax);
@@ -1096,7 +1097,7 @@
 
         document.getElementById("multipliermaxdisplay").textContent = `Your multiplier max is ${multmax}`;
         document.getElementById("prestigemultdisplay").textContent = `Your prestige multiplier is ${(gameState.prestiges/2) + 1}`;
-        const perkneed = 10**(2 * gameState.prestiges + 5);
+        const perkneed = 10**(gameState.prestiges + 5);
         document.getElementById("perkneed").textContent = `You Need ${getFormattedNumber(perkneed)} To Add To Perks`;
 
         // COSTS
@@ -1143,7 +1144,8 @@
         if (doge) doge.textContent = `1 DOGECOIN: ${gameState.DogecoinVal}`;
     }
     
-    // ----------------- DISPLAY RARITIES & MENU -----------------
+    // ----------------- DISPLAY RARITIES & MENU -----------------\
+
     function displayRaritiesAndMenuPages(){
         console.log("display rarities and menu pages is runnign")
         // MENU
@@ -1316,18 +1318,22 @@
     }
     
     function perkIncrease() {
-        if(gameState.cashCount >= 10**(2 * gameState.prestiges + 5)){
-            const requirement = 10 ** (2 * gameState.prestiges + 5);
+        if(gameState.cashCount >= 10**(gameState.prestiges + 5)){
+            // const requirement = 10 ** (2 * gameState.prestiges + 5);
+            const gainBase = 10**(2*gameState.prestiges+5)
 
-            const multiplierGain = Math.floor(Math.log10(gameState.cashCount / requirement)) + 1;
+            const multiplierGain = Math.log10(gameState.cashCount / gainBase) + 1;
 
             gameState.multiplier += multiplierGain;
             const multiplier = document.getElementById("multiplier");
             multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
-            const payPercentLoss = Math.log10(gameState.cashCount / requirement + 1) * 2;
+
+            const payPercentLoss = Math.log10(gameState.cashCount / gainBase + 1) * 2;
+
             gameState.payPercent -= payPercentLoss;
             const payPercent = document.getElementById("payPercent");
-            payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`
+            payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
+
             gameState.cashCount = 10;
             resetAllItems();
             gameState.Bitcoin = 0;
@@ -1355,7 +1361,7 @@
             return;
         };
         gameState.prestiges += 1;
-        gameState.cashCount = 10;
+        gameState.cashCount = 5e6;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
@@ -1392,7 +1398,7 @@
         countdownInterval = null;
         window.cashLoop = null;
     
-        gameState.cashCount = 10;
+        gameState.cashCount = 10e123;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
