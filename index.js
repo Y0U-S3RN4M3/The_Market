@@ -2,6 +2,22 @@
     if (window.timerRunning) {
         clearInterval(window.timerRunning);
     }
+
+    const supabaseUrl = "https://sudgrewakskphlfwbubm.supabase.co";
+    const supabaseKey = "sb_publishable_u1nxZ4YtF2_XcvURH4AywQ_UZ-sZVlM";
+
+    const supabase = window.supabase.createClient(
+        supabaseUrl,
+        supabaseKey
+    );
+
+    let playerId = localStorage.getItem("playerId");
+
+    if (!playerId) {
+        playerId = crypto.randomUUID();
+        localStorage.setItem("playerId", playerId);
+    }
+
     const clicksound = new Audio("./sounds/mouseclick.mp3");
     const chachingsound = new Audio("./sounds/chaching.mp3");
     let cryptoInterval;
@@ -96,6 +112,8 @@
         Bitcoin: 0,
         Litecoin: 0,
         Dogecoin: 0,
+
+        username: 'Anonymous',
     };
     
     const defaultGameState = { ...gameState };
@@ -404,6 +422,7 @@
     function saveGame() {
         localStorage.setItem("gameSave", JSON.stringify(gameState));
         localStorage.setItem("stock", JSON.stringify(stock));
+        loadLeaderboard();
     }
     
     function loadGame() {
@@ -508,8 +527,7 @@
         lgup = Math.random() < 0.9;
         dgup = Math.random() < 0.9;
     
-        setTimeout(changeTrend, Math.random() * (120000 - 60000 + 1)) + 60000;
-    }
+        setTimeout(changeTrend, Math.random() * (120000 - 60000) + 60000);    }
     changeTrend();
     
     function updateCrypto() {
@@ -996,6 +1014,17 @@
         }
         return `${getNumberShortened(n)}${getNumberShortener(n)}`;
     }
+    function getHyperE(n){
+        if(n < 1e6){
+            return n;
+        }
+        const zerosAmnt = Math.floor(Math.log10(n));
+        const number = n / (10**zerosAmnt);
+        const fixed = number.toFixed(2);
+
+        if(zerosAmnt >= 303) return '';
+        return `${fixed}e${zerosAmnt}`;
+    }
     function updateUI() {
         // FIX FROM CONSOLE
         const defaultPrices = {
@@ -1075,10 +1104,26 @@
         repairStock();
         repairGameState();
         
+        // USERNAME
+
+        const usernameDisplay = document.getElementById("usernameDisplay");
+        if(usernameDisplay){
+            if(gameState.username.slice(-1).toLowerCase() === "s" || gameState.username.slice(-1).toLowerCase() === "S"){
+                usernameDisplay.textContent = `${gameState.username}' Market`;
+            }
+            else{
+                usernameDisplay.textContent = `${gameState.username}'s Market`
+            }
+        }
+
         // CASH
         const cash = document.getElementById("cash");
         if (cash) {
-            cash.textContent = `Penties(℗): ${getFormattedNumber(gameState.cashCount)}℗`;
+            cash.textContent = `Penties(℗): ${getFormattedNumber(gameState.cashCount)}${gameState.cashCount > 1e6 ?
+                `(` + String(getHyperE(gameState.cashCount)) + `)`:''}℗`;
+            const string = cash.textContent;
+            const cstring = string.replaceAll("()", '');
+            cash.textContent = cstring;
         }
     
         // PRESTIGES
@@ -1144,9 +1189,15 @@
 
         keys.forEach((key, i) => {
             if (costdisplays[i]) {
-                const display = getFormattedNumber(prices[key] * (gameState.payPercent / 100));
+                const price = prices[key] * (gameState.payPercent / 100)
+                const display = getFormattedNumber(price);
                 costdisplays[i].textContent =
-                    `${display}℗`;
+                    `${display}${price > 1e6 ?
+                         `(` + String(getHyperE(price)) + `)`:''}℗`;
+                const string = costdisplays[i].textContent;
+                const cstring = string.replaceAll("()", '');
+                costdisplays[i].textContent = cstring;
+                
             }
         });
 
@@ -1202,144 +1253,138 @@
                 }
             });
         }
-        // PERKS
-        const perkBtn = document.getElementById("perkOpen");
-        const perkDiv = document.getElementById("addToPerks");
-        const removePerk = document.getElementById("removePerkScreen");
-        if (perkBtn) {
-            perkBtn.addEventListener('click', () => {
-                if(getComputedStyle(perkDiv).display === 'none') perkDiv.style.display = 'flex';
+        function makeWindow(openId, closeId, windowId){
+            const openBtn = document.getElementById(openId);
+            const closeBtn = document.getElementById(closeId);
+            const window = document.getElementById(windowId);
+            if (openBtn) {
+                openBtn.addEventListener('click', () => {
+                    if(getComputedStyle(window).display === 'none') window.style.display = 'flex';
+                });
+            }
+            closeBtn?.addEventListener("click", () => {
+                console.log("CROSS CLICKED");
+                window.style.display = "none";
             });
         }
-        removePerk?.addEventListener("click", () => {
-            console.log("CROSS CLICKED");
-            perkDiv.style.display = "none";
-        });
-        // PRESTIGES
-        const prestigeBtn = document.getElementById("openPrestigeScreen");
-        const prestigeScreen = document.getElementById("prestigeScreen");
-        const removeScreen = document.getElementById("removePrestigeScreen");
-        if (prestigeBtn) {
-            prestigeBtn.addEventListener('click', () => {
-                if(getComputedStyle(prestigeScreen).display === 'none') prestigeScreen.style.display = 'flex';
-            });
-        }
-        removeScreen?.addEventListener("click", () => {
-            console.log("CROSS CLICKED");
-            prestigeScreen.style.display = "none";
-        });
-        
-        // SETTINGS
 
-        const settingsBtn = document.getElementById('openSettings');
-        const removeSettings = document.getElementById('removeSettings');
-        const settings = document.getElementById('settings');
+        makeWindow("perkOpen", "removePerkScreen", "addToPerks");
+        makeWindow("openPrestigeScreen", "removePrestigeScreen", "prestigeScreen");
+        makeWindow("openSettings", "removeSettings", "settings");
+        makeWindow("openLeaderboard", "removeLeaderboard", "leaderboardWindow");
+        makeWindow("restartGameBtn", "removeRestart", 'restart')
 
-        if (settingsBtn) {
-            settingsBtn.addEventListener('click', () => {
-                if(getComputedStyle(settings).display === 'none') settings.style.display = 'flex';
-            });
-        }
-        removeSettings?.addEventListener("click", () => {
-            console.log("CROSS CLICKED");
-            settings.style.display = "none";
-        });
+        function setUpRarity(btnId, rarityId){
+            const btn = document.getElementById(btnId);
+            const fruits = document.getElementById(rarityId);
 
-        const commonBtn = document.getElementById("commonFoodBtn");
-        const commonFruits = document.getElementById("commonFoods");
-
-        if (commonBtn) {
-            commonBtn.addEventListener('click', () => {
-                if(commonFruits.style.display == 'none')
-                    commonFruits.style.display = 'block';
-                else
-                    commonFruits.style.display = 'none';
-            });
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    if(fruits.style.display == 'none')
+                        fruits.style.display = 'block';
+                    else
+                    fruits.style.display = 'none';
+                });
+            }
         }
         
-        const rareBtn = document.getElementById("rareFoodsBtn");
-        const rareFood = document.getElementById("rareFoods");
-        if(rareBtn){
-            rareBtn.addEventListener('click', () => {
-                if(gameState.prestiges >= 1){
-                    if(rareFood.style.display == 'none') rareFood.style.display = 'block';
-                    else rareFood.style.display = 'none';
-                }
-                else{
-                    window.alert("You need a prestige to enter here.")
-                }
-            });
-        }
-        
-        const uncannyBtn = document.getElementById("uncannyFoodsBtn");
-        const uncannyFood = document.getElementById("uncannyFoods");
-        if(uncannyBtn){
-            uncannyBtn.addEventListener('click', () => {
-                if(gameState.prestiges >= 3){
-                    if(uncannyFood.style.display == 'none') uncannyFood.style.display = 'block';
-                    else uncannyFood.style.display = 'none';
-                }
-                else{
-                    window.alert("You need 3 prestiges to enter here")
-                }
-            });
-        }
-        
-        const legendaryBtn = document.getElementById("legendaryFoodsBtn");
-        const legendaryFood = document.getElementById("legendaryFoods");
-        if(legendaryBtn){
-            legendaryBtn.addEventListener('click', () => {
-                if(gameState.prestiges >= 5){
-                    if(legendaryFood.style.display == 'none') legendaryFood.style.display = 'block';
-                    else legendaryFood.style.display = 'none';
-                }
-                else{
-                    window.alert("You need 5 prestiges to enter here")
-                }
-            });
-        }
-
-        const supernaturalBtn = document.getElementById("supernaturalFoodsBtn");
-        const supernaturalFood = document.getElementById("supernaturalFoods");
-        if(supernaturalBtn){
-            supernaturalBtn.addEventListener('click', () => {
-                if(gameState.prestiges >= 8){
-                    if(supernaturalFood.style.display == 'none') supernaturalFood.style.display = 'block';
-                    else supernaturalFood.style.display = 'none';
-                }
-                else{
-                    window.alert("You need 8 prestiges to enter here")
-                }
-            });
-        }
-
-        const mythologicalBtn = document.getElementById("mythologicalFoodsBtn");
-        const mythologicalFood = document.getElementById("mythologicalFoods");
-        if(mythologicalBtn){
-            mythologicalBtn.addEventListener('click', () => {
-                if(gameState.prestiges >= 12){
-                    if(mythologicalFood.style.display == 'none') mythologicalFood.style.display = 'block';
-                    else mythologicalFood.style.display = 'none';
-                }
-                else{
-                    window.alert("You need 12 prestiges to enter here")
-                }
-            });
-        }
-
+        setUpRarity("commonFoodBtn", "commonFoods");
+        setUpRarity("rareFoodsBtn", "rareFoods");
+        setUpRarity("uncannyFoodsBtn", "uncannyFoods");
+        setUpRarity("legendaryFoodsBtn", "legendaryFoods");
+        setUpRarity("supernaturalFoodsBtn", "supernaturalFoods");
+        setUpRarity("mythologicalFoodsBtn", "mythologicalFoods");
+        setUpRarity("exoticFoodsBtn", "exoticFoods")
         const exoticBtn = document.getElementById("exoticFoodsBtn");
         const exoticFood = document.getElementById("exoticFoods");
-        if(exoticBtn){
-            exoticBtn.addEventListener('click', () => {
-                if(gameState.prestiges >= 17){
-                    if(exoticFood.style.display == 'none') exoticFood.style.display = 'block';
-                    else exoticFood.style.display = 'none';
+        
+    }
+
+    // ------------------- USERNAMES AND LEADERBOARDS -------------------
+    const submitBtn = document.getElementById("submitUsernameBtn");
+
+    async function submitUsername() {
+        const username = document.getElementById("userInput").value.trim();
+    
+        if (!username) return;
+    
+        gameState.username = username.replaceAll(" ", "_");
+        gameState.username = gameState.username.trim();
+        gameState.username = gameState.username.slice(0, 12);
+    
+        saveGame();
+        loadLeaderboard();
+    }
+
+    if(submitBtn) submitBtn.addEventListener('click', submitUsername);
+
+    async function uploadScore() {
+
+        const { error } = await supabase
+            .from("leaderboard")
+            .upsert(
+                {
+                    id: playerId,
+                    username: gameState.username,
+                    cash: gameState.cashCount,
+                    prestiges: gameState.prestiges,
+                    updated_at: new Date()
+                },
+                {
+                    onConflict: "id"
                 }
-                else{
-                    window.alert("You need 17 prestiges to enter here")
-                }
-            });
+            );
+    
+        if (error) {
+            console.error(error);
         }
+    }
+
+    async function loadLeaderboard() {
+
+        const { data, error } = await supabase
+            .from("leaderboard")
+            .select("*")
+            .order("prestiges", { ascending: false })
+            .order("cash", { ascending: false })
+            .limit(100);
+    
+        if (error) {
+            console.error(error);
+            return;
+        }
+    
+        const board = document.getElementById("leaderboard");
+    
+        board.innerHTML = "";
+    
+        data.forEach((player, index) => { 
+            if(index < 10){
+                board.innerHTML += `
+                    <div class="leaderboardRow" id='row${index + 1}'>
+                        <div class='place'>
+                            #${index + 1}
+                        </div>
+                    </div>
+                `;
+                const row = document.getElementById(`row${index+1}`);
+                row.innerHTML += `<div>${(player.username)}</div>`;
+                row.innerHTML += `<div>${((String(player.prestiges)))}</div>`
+                row.innerHTML += `<div>${((String(getFormattedNumber(player.cash))))}</div>`;
+
+                if(index === 0){
+                    row.style.border = `2px solid rgb(219, 164, 0)`;
+                }
+                else if(index === 1){
+                    row.style.border = `2px solid rgb(128, 128, 128)`;
+                }
+                else if(index === 2){
+                    row.style.border = `2px solid rgb(143, 52, 0)`;
+                }
+            }
+        });
+
+        uploadScore();
     }
 
     // ----------------- PERKS/PRESTIGES -----------------
@@ -1381,7 +1426,8 @@
             gameState.LitecoinVal = 100;
             gameState.DogecoinVal = 10000000000;
             restock();
-            saveGame()
+            saveGame();
+            uploadScore();
         }
         else{
             window.alert("You do not have enough money");
@@ -1412,6 +1458,7 @@
         restock();
         timeLeft = config.normalTime;
         saveGame();
+        uploadScore();
     }
     if(document.getElementById("perkIncreaseBtn")){
         document.getElementById("perkIncreaseBtn").addEventListener('click', perkIncrease);
@@ -1425,7 +1472,6 @@
             return;
         }
     
-        // 🔥 STOP ALL RUNNING LOOPS (this i.s the important part)
         clearInterval(cryptoInterval);
         clearInterval(uiInterval);
         clearInterval(countdownInterval);
@@ -1450,20 +1496,12 @@
         restock();
         timeLeft = config.normalTime;
         
-        // 🧹 CLEAR STORAGE
         localStorage.clear();
     
-        // 🔄 RESET STATE (minimal safe reset)
         saveGame()
+        uploadScore();
     }
 
-    window.restartGame = restartGame;
-
-    const restartBtn = document.getElementById("restartGame");
-
-    if (restartBtn) {
-        restartBtn.addEventListener("click", restartGame);
-    }
     // ---------------- INIT ----------------
     
     function initiate() {
@@ -1472,15 +1510,31 @@
         loadStock();
         updateUI();
         displayRaritiesAndMenuPages();
+        loadLeaderboard();
 
         const clickables = [...document.querySelectorAll(".item"), ...document.querySelectorAll(".btn"), document.getElementById("removePerkScreen"), document.getElementById("removePrestigeScreen"), document.getElementById("removeSettings")];
         clickables.forEach(click => {
             click.addEventListener('click', () => {
-                clicksound.currentTime = 0.51;
+                clicksound.currentTime = 0.59;
                 clicksound.play();
             });
         });
 
+
+        window.restartGame = restartGame;
+        const restartBtn = document.getElementById("restartGame");
+        console.log(restartBtn);
+
+        if (restartBtn) {
+            console.log("Restart button found");
+            restartBtn.addEventListener("click", () => {
+                console.log("Button clicked");
+                restartGame();
+            });
+        }
+
+        window.uploadScore - uploadScore;
+        uploadScore();
     
         setTimeout(() => {
             setupBuyButtons();
@@ -1500,6 +1554,7 @@
     }
     
     window.onload = initiate();    
+
     window.investBitcoin = investBitcoin;
     window.sellBitcoin = sellBitcoin;
     
@@ -1509,4 +1564,4 @@
     window.investDogecoin = investDogecoin;
     window.sellDogecoin = sellDogecoin;
     
-    })();
+})();

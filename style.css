@@ -20,6 +20,9 @@ body{
     background-color: hsla(0, 0%, 0%, 0.247);
     padding: 15px;
 }
+pre{
+    font-family: "Courier Prime", Verdana, Arial, sans-serif;
+}
 body::before {
     content: '';
     position: fixed;
@@ -611,14 +614,14 @@ h1{
 #menuBtn{
     position: fixed;
     right: 0;
-    top: 65%;
+    top: 75%;
     transform: translateY(-50%);
     margin-right: 25px;
 }
 #menuBtn:hover::after{
     content: ''
 }
-#addToPerks, #prestigeScreen, #settings{
+#addToPerks, #prestigeScreen, #settings, #leaderboardWindow, #restart{
     background-color: hsla(0, 0%, 0%, 1);
     padding: 20px;
     margin: 20px;
@@ -642,12 +645,20 @@ h1{
     /* add this */
     position: fixed;
 }
-#addToPerks button, #prestigeScreen button #settings button{
+#leaderBoardWindow{
+    height: none;
+    max-height: 75vh;
+}
+#leaderboardWindow{
+    justify-content: right;
+    align-items: center;
+}
+#addToPerks .btn, #prestigeScreen .btn #settings .btn, #leaderboardWindow .btn, #restart .btn{
     border: 2px solid rgb(85, 85, 85);
     margin: 30px;
 }
 
-#removePerkScreen, #removePrestigeScreen, #removeSettings{
+#removePerkScreen, #removePrestigeScreen, #removeSettings, #removeLeaderboard, #removeRestart{
     position: absolute;
     top: 10px;
     right: 10px;
@@ -748,4 +759,47 @@ h1{
     flex-direction: column;
     font-size: 2em;
     border-radius: 20px;
+}
+.leaderboardRow, #columns{
+    color: white;
+    background-color: black;
+    min-width: 600px;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    align-content: center;
+    justify-content: center;
+    margin: 7.5px;
+    border-radius: 10px;
+    border: 2px solid white;
+    width: 40vw;
+}
+#columns{
+    border: none;
+    padding: 0;
+}
+.leaderboardRow div, #columns div{
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 150px;
+    text-align: left;
+    margin: 5px;
+    border-left: 2px solid white;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 15px;
+    margin-left: 5px;
+}
+#columns div{
+    border-left: none;
+    padding: 0px;
+    padding-left: 10px;
+}
+#columns .place{
+    padding-left: 0px;
+}
+.leaderboardRow .place, #columns .place{
+    text-align: left;
+    width: 50px;
+    border-left: none;
 }

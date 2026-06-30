@@ -16,10 +16,21 @@
     <a href="index.html" style="text-decoration: none;">
         <button class="btn" id="back" style="display: flex; justify-self: center;">></button>
     </a><br>
+    <h1 id="usernameDisplay">Anonymous' Market</h1>
+    <input id="userInput" placeholder="Username">
+    <button class="btn" type="submit" id="submitUsernameBtn">SUBMIT</button>
     <div id="menu">
+        <button class="btn menuItem" id="restartGameBtn">↻</button>
         <button class="btn menuItem" id="perkOpen">+</button>
         <button id="openPrestigeScreen" class="btn menuItem">🪽</button>
         <button id="openSettings" class="btn menuItem">🛠</button>
+        <button id="openLeaderboard" class="btn menuItem">🜲</button>
+    </div>
+    <div id="restart">
+        <div id='removeRestart'>✘</div>
+        <h1>RESTART GAME</h1>
+        <p style="color: white; padding: 20px;">Restarting the game will reset everything, including prestiges, multiplier, pay percent and more...</p>
+        <button class="btn" id="restartGame">Restart Game</button>
     </div>
     <div id="addToPerks">
         <div id='removePerkScreen'>✘</div>
@@ -36,6 +47,18 @@
         <p style="color: white" id="multipliermaxdisplay">Your multiplier max is 10</p>
         <p style="color: white" id="prestigemultdisplay">Your prestige multiplier is 1</p>
         <button id="prestigeBtn" class="btn">Prestige</button>
+    </div>
+    <div id="leaderboardWindow">
+        <div id='removeLeaderboard'>✘</div>
+        <h2>Leaderboard</h2>
+        <div id="columns">
+            <div class="place"><pre> #no.</pre></div>
+            <div>username</div>
+            <div>prestiges</div>
+            <div>penties</div>
+        </div>
+        <div id="leaderboard">
+        </div>
     </div>
     <div id="settings">
         <h1>SETTINGS</h1>
@@ -923,6 +946,7 @@
     <h3 id="Dogecoins">Dogecoins: 0</h3>
     <button class="btn" onclick="investDogecoin()">INVEST</button>
     <button class="btn" onclick="sellDogecoin()">SELL</button>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="./index.js"></script>
 </body>
 </html>
