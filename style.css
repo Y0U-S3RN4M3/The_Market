@@ -614,14 +614,14 @@ h1{
 #menuBtn{
     position: fixed;
     right: 0;
-    top: 75%;
+    top: 82%;
     transform: translateY(-50%);
     margin-right: 25px;
 }
 #menuBtn:hover::after{
     content: ''
 }
-#addToPerks, #prestigeScreen, #settings, #leaderboardWindow, #restart{
+#addToPerks, #prestigeScreen, #settings, #leaderboardWindow, #restart, #workers{
     background-color: hsla(0, 0%, 0%, 1);
     padding: 20px;
     margin: 20px;
@@ -652,12 +652,12 @@ h1{
     min-height: 70vh;
     transform: translateY(-10vh)
 }
-#addToPerks .btn, #pre60tigeScreen .btn #settings .btn, #leaderboardWindow .btn, #restart .btn{
+#addToPerks .btn, #pre60tigeScreen .btn #settings .btn, #leaderboardWindow .btn, #restart .btn, #workers .btn{
     border: 2px solid rgb(85, 85, 85);
     margin: 30px;
 }
 
-#removePerkScreen, #removePrestigeScreen, #removeSettings, #removeLeaderboard, #removeRestart{
+#removePerkScreen, #removePrestigeScreen, #removeSettings, #removeLeaderboard, #removeRestart, #removeWorkers{
     position: absolute;
     top: 10px;
     right: 10px;

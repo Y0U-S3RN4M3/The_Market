@@ -51,6 +51,7 @@
     
         // rare
         chocolateCount: 0,
+        darkChocolateCount: 0,
         pizzaCount: 0,
         cookieCount: 0,
         chickenCount: 0,
@@ -166,6 +167,7 @@
     
         // rare
         chocolateCount: 100*10**6,       // 100M
+        darkChocolateCount: 1e11,        // 100B
         pizzaCount: 750*10**9,           // 750B
         cookieCount: 5*10**12,           // 5T
         chickenCount: 15*10**15,         // 15Qa
@@ -238,6 +240,7 @@
     
         // rare
         chocolateCount: 15,
+        darkChocolateCount: 15,
         pizzaCount: 15,
         cookieCount: 15,
         chickenCount: 15,
@@ -369,6 +372,7 @@
         raisin: "raisinCount",
     
         chocolates: "chocolateCount",
+        darkChocolate: "darkChocolateCount",
         pizzas: "pizzaCount",
         cookies: "cookieCount",
         chicken: "chickenCount",
@@ -777,6 +781,7 @@
     
         // rare
         chocolateCount: "sell-all-chocolates",
+        darkChocolateCount: "sell-all-dark-chocolates",
         pizzaCount: "sell-all-pizzas",
         cookieCount: "sell-all-cookies",
         chickenCount: "sell-all-chickens",
@@ -1046,6 +1051,7 @@
         
             // rare
             chocolateCount: 100*10**6,       // 100M
+            darkChocolateCount: 1e11,        // 100B
             pizzaCount: 750*10**9,           // 750B
             cookieCount: 5*10**12,           // 5T
             chickenCount: 15*10**15,         // 15Qa
@@ -1272,7 +1278,8 @@
         makeWindow("openPrestigeScreen", "removePrestigeScreen", "prestigeScreen");
         makeWindow("openSettings", "removeSettings", "settings");
         makeWindow("openLeaderboard", "removeLeaderboard", "leaderboardWindow");
-        makeWindow("restartGameBtn", "removeRestart", 'restart')
+        makeWindow("restartGameBtn", "removeRestart", 'restart');
+        makeWindow("workerBtn", "removeWorkers", "workers");
 
         function setUpRarity(btnId, rarityId){
             const btn = document.getElementById(btnId);
@@ -1445,7 +1452,7 @@
             return;
         };
         gameState.prestiges += 1;
-        gameState.cashCount = 10;
+        gameState.cashCount = 1e11;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
@@ -1482,7 +1489,7 @@
         countdownInterval = null;
         window.cashLoop = null;
     
-        gameState.cashCount = 10;
+        gameState.cashCount = 10e12;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
@@ -1498,7 +1505,7 @@
         
         localStorage.clear();
     
-        saveGame()
+        saveGame();
         uploadScore();
     }
 
