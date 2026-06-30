@@ -645,15 +645,14 @@ h1{
     /* add this */
     position: fixed;
 }
-#leaderBoardWindow{
-    height: none;
-    max-height: 75vh;
-}
 #leaderboardWindow{
     justify-content: right;
     align-items: center;
+    height: none;
+    min-height: 70vh;
+    transform: translateY(-10vh)
 }
-#addToPerks .btn, #prestigeScreen .btn #settings .btn, #leaderboardWindow .btn, #restart .btn{
+#addToPerks .btn, #pre60tigeScreen .btn #settings .btn, #leaderboardWindow .btn, #restart .btn{
     border: 2px solid rgb(85, 85, 85);
     margin: 30px;
 }
