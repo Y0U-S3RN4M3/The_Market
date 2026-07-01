@@ -1163,8 +1163,12 @@
             newmultiplierdisplay.textContent = 'Not Enough';
         }
         else{
-            const multiplierGain =
+            let multiplierGain =
                 Math.log10(10 * (gameState.cashCount / gainBase));
+
+            if(multiplierGain < gainBase && multiplierGain > requirement){
+                multiplierGain = (gameState.cashCount-requirement)/(gainBase-requirement);
+            }
 
             const payPercentLoss =
                 Math.log10(gameState.cashCount / gainBase + 1) * 2;
@@ -1176,7 +1180,7 @@
                 Math.max(gameState.payPercent - payPercentLoss, 30);
 
             newmultiplierdisplay.textContent =
-                `Your new multiplier will be ${newMultiplier}`;
+                `Your new multiplier will be ${Math.min(newMultiplier + 0.1, 14)}`;
 
             newpaypercentdisplay.textContent =
                 `Your new pay percent will be ${newPayPercent.toFixed(1)}%`;
@@ -1412,32 +1416,41 @@
     
     function perkIncrease() {
         if(gameState.cashCount >= 10**(gameState.prestiges + 5)){
-            // const requirement = 10 ** (2 * gameState.prestiges + 5);
-            const gainBase = 10**(2*gameState.prestiges+5)
+            if(gameState.multiplier < 10+(gameState.prestiges*4) || gameState.payPercent > 30){
+                const gainBase = 10**(2*gameState.prestiges+5);
+                const requirement = 10**(gameState.prestiges+5);
 
-            const multiplierGain = Math.log10(gameState.cashCount / gainBase) + 1;
+                let multiplierGain = Math.max(Math.log10(gameState.cashCount / gainBase) + 1, 0);
+                
+                if(multiplierGain < gainBase && multiplierGain > requirement){
+                    multiplierGain = ((gameState.cashCount-requirement)/(gainBase-requirement));
+                }
 
-            gameState.multiplier += multiplierGain;
-            const multiplier = document.getElementById("multiplier");
-            multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
+                gameState.multiplier += multiplierGain + 0.1;
+                const multiplier = document.getElementById("multiplier");
+                multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
 
-            const payPercentLoss = Math.log10(gameState.cashCount / gainBase + 1) * 2;
+                const payPercentLoss = Math.log10(gameState.cashCount / gainBase + 1) * 2;
 
-            gameState.payPercent -= payPercentLoss;
-            const payPercent = document.getElementById("payPercent");
-            payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
+                gameState.payPercent -= payPercentLoss;
+                const payPercent = document.getElementById("payPercent");
+                payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
 
-            gameState.cashCount = 10;
-            resetAllItems();
-            gameState.Bitcoin = 0;
-            gameState.Litecoin = 0;
-            gameState.Dogecoin = 0;
-            gameState.BitcoinVal = 100000;
-            gameState.LitecoinVal = 100;
-            gameState.DogecoinVal = 10000000000;
-            restock();
-            saveGame();
-            uploadScore();
+                gameState.cashCount = 1e6;
+                resetAllItems();
+                gameState.Bitcoin = 0;
+                gameState.Litecoin = 0;
+                gameState.Dogecoin = 0;
+                gameState.BitcoinVal = 100000;
+                gameState.LitecoinVal = 100;
+                gameState.DogecoinVal = 10000000000;
+                restock();
+                saveGame();
+                uploadScore();
+            }
+            else{
+                window.alert("You already have max multiplier and pay percent!")
+            }
         }
         else{
             window.alert("You do not have enough money");
@@ -1455,7 +1468,7 @@
             return;
         };
         gameState.prestiges += 1;
-        gameState.cashCount = 1e11;
+        gameState.cashCount = 1e6;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
@@ -1510,6 +1523,8 @@
     
         saveGame();
         uploadScore();
+
+        window.location.reload();
     }
 
     // ---------------- INIT ----------------
