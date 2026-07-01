@@ -894,7 +894,7 @@
         }
     }
     
-    // ---------------- UI (FULL RESTORED) ----------------
+    // ---------------- UI ----------------
     
     const ui = document.querySelector(".ui");
     const uiBtn = document.getElementById("uiBtn");
@@ -1281,27 +1281,30 @@
         makeWindow("restartGameBtn", "removeRestart", 'restart');
         makeWindow("workerBtn", "removeWorkers", "workers");
 
-        function setUpRarity(btnId, rarityId){
+        function setUpRarity(btnId, rarityId, need){
             const btn = document.getElementById(btnId);
             const fruits = document.getElementById(rarityId);
 
             if (btn) {
                 btn.addEventListener('click', () => {
-                    if(fruits.style.display == 'none')
-                        fruits.style.display = 'block';
-                    else
-                    fruits.style.display = 'none';
+                    if(gameState.prestiges >= need){
+                        if(fruits.style.display == 'none') fruits.style.display = 'block';
+                        else fruits.style.display = 'none';
+                    }
+                    else{
+                        window.alert(`You need ${need} prestiges to enter here`)
+                    }
                 });
             }
         }
         
-        setUpRarity("commonFoodBtn", "commonFoods");
-        setUpRarity("rareFoodsBtn", "rareFoods");
-        setUpRarity("uncannyFoodsBtn", "uncannyFoods");
-        setUpRarity("legendaryFoodsBtn", "legendaryFoods");
-        setUpRarity("supernaturalFoodsBtn", "supernaturalFoods");
-        setUpRarity("mythologicalFoodsBtn", "mythologicalFoods");
-        setUpRarity("exoticFoodsBtn", "exoticFoods")
+        setUpRarity("commonFoodBtn", "commonFoods", 0);
+        setUpRarity("rareFoodsBtn", "rareFoods", 1);
+        setUpRarity("uncannyFoodsBtn", "uncannyFoods", 3);
+        setUpRarity("legendaryFoodsBtn", "legendaryFoods", 5);
+        setUpRarity("supernaturalFoodsBtn", "supernaturalFoods", 8);
+        setUpRarity("mythologicalFoodsBtn", "mythologicalFoods", 12);
+        setUpRarity("exoticFoodsBtn", "exoticFoods", 20)
         const exoticBtn = document.getElementById("exoticFoodsBtn");
         const exoticFood = document.getElementById("exoticFoods");
         
@@ -1441,7 +1444,7 @@
         }
     }
     
-    function getCashLevel(prestige) {
+    function getCashLevel(prestige){
         return 10 ** (11 * prestige + 9);
     }
     
@@ -1489,7 +1492,7 @@
         countdownInterval = null;
         window.cashLoop = null;
     
-        gameState.cashCount = 10e12;
+        gameState.cashCount = 1e11;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
