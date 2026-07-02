@@ -592,7 +592,7 @@
         if (btc) btc.textContent = `1 BITCOIN: ${getFormattedNumber(gameState.BitcoinVal)}`;
     
         const ltc = document.getElementById("LitecoinDisplay");
-        if (ltc) ltc.textContent = `1 LITECOIN: ${getFormattedNumber(gameState.LitecoinVal)}`;
+        if (ltc) ltc.textContent = `1 LITECOIN: ${gameState.LitecoinVal}`;
     
         const doge = document.getElementById("DogecoinDisplay");
         if (doge) doge.textContent = `1 DOGECOIN: ${getFormattedNumber(gameState.DogecoinVal)}`;
@@ -606,7 +606,7 @@
         const doge = document.getElementById("Dogecoins");
     
         if (btc) btc.textContent = `Bitcoins: ${getFormattedNumber(gameState.Bitcoin)}`;
-        if (ltc) ltc.textContent = `Litecoins: ${getFormattedNumber(gameState.Litecoin)}`;
+        if (ltc) ltc.textContent = `Litecoins: ${gameState.Litecoin}`;
         if (doge) doge.textContent = `Dogecoins: ${getFormattedNumber(gameState.Dogecoin)}`;
     }
     
@@ -1238,7 +1238,7 @@
         if (btc) btc.textContent = `1 BITCOIN: ${getFormattedNumber(gameState.BitcoinVal)}`;
     
         const ltc = document.getElementById("LitecoinDisplay");
-        if (ltc) ltc.textContent = `1 LITECOIN: ${getFormattedNumber(gameState.LitecoinVal)}`;
+        if (ltc) ltc.textContent = `1 LITECOIN: ${gameState.LitecoinVal}`;
     
         const doge = document.getElementById("DogecoinDisplay");
         if (doge) doge.textContent = `1 DOGECOIN: ${getFormattedNumber(gameState.DogecoinVal)}`;
