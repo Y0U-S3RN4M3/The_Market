@@ -885,7 +885,7 @@
                         Math.floor(prices[key] * getRandomSellMultiplier() * count);
     
                     gameState[key] = 0;
-                    gameState.cashCount += totalGain + totalGain * gameState.multiplier;
+                    gameState.cashCount += (totalGain + totalGain * gameState.multiplier) * 1+(gameState.prestiges/2);
     
                     saveGame();
                     updateUI();
