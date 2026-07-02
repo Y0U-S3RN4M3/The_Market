@@ -167,7 +167,7 @@
     
         // rare
         chocolateCount: 100*10**6,       // 100M
-        darkChocolateCount: 1e11,        // 100B
+        darkChocolateCount: 5e10,        // 100B
         pizzaCount: 750*10**9,           // 750B
         cookieCount: 5*10**12,           // 5T
         chickenCount: 15*10**15,         // 15Qa
@@ -1051,7 +1051,7 @@
         
             // rare
             chocolateCount: 100*10**6,       // 100M
-            darkChocolateCount: 1e11,        // 100B
+            darkChocolateCount: 5e10,        // 100B
             pizzaCount: 750*10**9,           // 750B
             cookieCount: 5*10**12,           // 5T
             chickenCount: 15*10**15,         // 15Qa
