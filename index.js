@@ -1427,7 +1427,7 @@
                     multiplierGain = ((gameState.cashCount-requirement)/(gainBase-requirement));
                 }
 
-                gameState.multiplier += multiplierGain + 0.1;
+                gameState.multiplier += Math.max(multiplierGain + 0.1, 10+(gameState.prestiges*4));
                 const multiplier = document.getElementById("multiplier");
                 multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
 
