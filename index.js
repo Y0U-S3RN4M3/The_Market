@@ -1564,7 +1564,7 @@
         gameState.Litecoin = 0;
         gameState.Dogecoin = 0;
         gameState.workerProfit = 0;
-        gameState.workerAmount = (gameState.workerAmount/10)*3;
+        gameState.workerAmount = 0;
         restock();
         timeLeft = config.normalTime;
         saveGame();
