@@ -3,28 +3,29 @@
         clearInterval(window.timerRunning);
     }
 
-    const supabaseUrl = "https://sudgrewakskphlfwbubm.supabase.co";
-    const supabaseKey = "sb_publishable_u1nxZ4YtF2_XcvURH4AywQ_UZ-sZVlM";
+    const supabaseUrl = `https://sudgrewakskphlfwbubm.supabase.co`;
+    const supabaseKey = `sb_publishable_u1nxZ4YtF2_XcvURH4AywQ_UZ-sZVlM`;
 
     const supabase = window.supabase.createClient(
         supabaseUrl,
         supabaseKey
     );
 
-    let playerId = localStorage.getItem("playerId");
+    let playerId = localStorage.getItem(`playerId`);
 
     if (!playerId) {
         playerId = crypto.randomUUID();
-        localStorage.setItem("playerId", playerId);
+        localStorage.setItem(`playerId`, playerId);
     }
 
-    const clicksound = new Audio("./sounds/mouseclick.mp3");
-    const chachingsound = new Audio("./sounds/chaching.mp3");
+    const clicksound = new Audio(`./sounds/mouseclick.mp3`);
+    const chachingsound = new Audio(`./sounds/chaching.mp3`);
+    const cashName = `Penties`;
+    const cashSymbol = `𝓟`;
     let cryptoInterval;
     let uiInterval;
     let countdownInterval;
-    const message = "THE MARKET IS THE BEST GAME BY THE WAY"
-    //
+    const message = `RN im in the ZONE!!! I got ${cashName}${cashSymbol}${cashSymbol}${cashSymbol} on my mind.`
     console.log(message)
     // ---------------- GAME STATE ----------------
     
@@ -109,12 +110,15 @@
         BitcoinVal: 100000,
         LitecoinVal: 100,
         DogecoinVal: 10000000000,
+
+        workerAmount: 0,
+        workerProfit: 10e6,
     
         Bitcoin: 0,
         Litecoin: 0,
         Dogecoin: 0,
 
-        username: 'Anonymous',
+        username: `Anonymous`,
     };
     
     const defaultGameState = { ...gameState };
@@ -129,9 +133,9 @@
     
             // Prevent NaN and non-numbers
             if (
-                typeof defaultGameState[key] === "number" &&
+                typeof defaultGameState[key] === `number` &&
                 (
-                    typeof gameState[key] !== "number" ||
+                    typeof gameState[key] !== `number` ||
                     isNaN(gameState[key])
                 )
             ) {
@@ -140,10 +144,13 @@
     
             // Prevent negative values
             if (
-                typeof defaultGameState[key] === "number" &&
+                typeof defaultGameState[key] === `number` &&
                 gameState[key] < 0
             ) {
                 gameState[key] = 0;
+            }
+            if (gameState.workerProfit <= 0) {
+                gameState.workerProfit = 10e6;
             }
         }
     }
@@ -299,7 +306,7 @@
         for(key in stock){
             if(prices[key] >= 100*10**6){
                 if(prices[key] >= 10**36){
-                    if(prices[key] >= 1e59 && key != 'whatCount'){
+                    if(prices[key] >= 1e59 && key != `whatCount`){
                         if(prices[key] >= 1e126){
                             if(prices[key] >= 1e177){
                                 stock[key] = 50
@@ -339,7 +346,7 @@
             }
     
             // Prevent non-numbers
-            if (typeof stock[key] !== "number" || isNaN(stock[key])) {
+            if (typeof stock[key] !== `number` || isNaN(stock[key])) {
                 stock[key] = maxStock;
             }
     
@@ -356,86 +363,86 @@
     }
     
     const buttonToKey = {
-        apples: "appleCount",
-        bananas: "bananaCount",
-        oranges: "orangeCount",
-        yougurt: "yougurtCount",
-        mango: "mangoCount",
-        bread: "breadCount",
-        frozenAppleSlices: "frozenAppleSlicesCount",
-        rawBanana: "rawBananaCount",
-        frozenOrange: "frozenOrangeCount",
-        frozenYougurt: "frozenYougurtCount",
-        frozenMangoSlices: "frozenMangoSlicesCount",
-        toast: "toastCount",
-        raisinToast: "raisinToastCount",
-        raisin: "raisinCount",
+        apples: `appleCount`,
+        bananas: `bananaCount`,
+        oranges: `orangeCount`,
+        yougurt: `yougurtCount`,
+        mango: `mangoCount`,
+        bread: `breadCount`,
+        frozenAppleSlices: `frozenAppleSlicesCount`,
+        rawBanana: `rawBananaCount`,
+        frozenOrange: `frozenOrangeCount`,
+        frozenYougurt: `frozenYougurtCount`,
+        frozenMangoSlices: `frozenMangoSlicesCount`,
+        toast: `toastCount`,
+        raisinToast: `raisinToastCount`,
+        raisin: `raisinCount`,
     
-        chocolates: "chocolateCount",
-        darkChocolate: "darkChocolateCount",
-        pizzas: "pizzaCount",
-        cookies: "cookieCount",
-        chicken: "chickenCount",
-        pasta: "pastaCount",
-        burger: "burgerCount",
-        donuts: "donutCount",
-        pancakes: "pancakeCount",
-        iceCream: "iceCreamCount",
-        cheesecake: "cheesecakeCount",
+        chocolates: `chocolateCount`,
+        darkChocolate: `darkChocolateCount`,
+        pizzas: `pizzaCount`,
+        cookies: `cookieCount`,
+        chicken: `chickenCount`,
+        pasta: `pastaCount`,
+        burger: `burgerCount`,
+        donuts: `donutCount`,
+        pancakes: `pancakeCount`,
+        iceCream: `iceCreamCount`,
+        cheesecake: `cheesecakeCount`,
     
-        bluecapMushrooms: "bluecapMushroomsCount",
-        ashenPears: "ashenPearsCount",
-        twighlightHoneycombs: "twighlightHoneycombsCount",
-        petersPickledPeppers: "petersPickledPeppersCount",
-        twistedTurnip: "twistedTurnipCount",
-        shadowedMelon: "shadowedMelonCount",
-        crimsonVeinedPlum: "crimsonVeinedPlumCount",
-        monster: "monsterCount",
-        what: "whatCount",
+        bluecapMushrooms: `bluecapMushroomsCount`,
+        ashenPears: `ashenPearsCount`,
+        twighlightHoneycombs: `twighlightHoneycombsCount`,
+        petersPickledPeppers: `petersPickledPeppersCount`,
+        twistedTurnip: `twistedTurnipCount`,
+        shadowedMelon: `shadowedMelonCount`,
+        crimsonVeinedPlum: `crimsonVeinedPlumCount`,
+        monster: `monsterCount`,
+        what: `whatCount`,
 
-        grannyAndGrampaPig: "grannyAndGrampaPigCount",
-        weLiveWeLoveWeDie: "weLiveWeLoveWeDieCount",
-        doge: "dogeCount",
-        rickButRolled: "rickButRolledCount",
-        pepe: "pepeCount",
-        friedRnest: "friedRnestCount",
-        appa: "appaCount",
-        undefinedItem: "undefinedItemCount",
-        overlyDefinedItem: "overlyDefinedItemCount",
+        grannyAndGrampaPig: `grannyAndGrampaPigCount`,
+        weLiveWeLoveWeDie: `weLiveWeLoveWeDieCount`,
+        doge: `dogeCount`,
+        rickButRolled: `rickButRolledCount`,
+        pepe: `pepeCount`,
+        friedRnest: `friedRnestCount`,
+        appa: `appaCount`,
+        undefinedItem: `undefinedItemCount`,
+        overlyDefinedItem: `overlyDefinedItemCount`,
 
-        bettysBitterButter: "bettysBitterButterCount",
-        cosmicCheese: "cosmicCheeseCount",
-        livingSoccerBall: "livingSoccerBallCount",
-        math: "mathCount",
-        pi: "piCount",
-        meet: "meetCount",
+        bettysBitterButter: `bettysBitterButterCount`,
+        cosmicCheese: `cosmicCheeseCount`,
+        livingSoccerBall: `livingSoccerBallCount`,
+        math: `mathCount`,
+        pi: `piCount`,
+        meet: `meetCount`,
 
-        ben: "benCount",
-        greenGiant: "greenGiantCount",
-        theFirstSpinjitsuMaster: "theFirstSpinjitsuMasterCount",
-        trueRnest: "trueRnestCount",
-        transendantBen: "transendantBenCount",
+        ben: `benCount`,
+        greenGiant: `greenGiantCount`,
+        theFirstSpinjitsuMaster: `theFirstSpinjitsuMasterCount`,
+        trueRnest: `trueRnestCount`,
+        transendantBen: `transendantBenCount`,
 
-        sushi: "sushiCount",
-        caviar: "caviarCount",
-        butterChicken: "butterChickenCount"
+        sushi: `sushiCount`,
+        caviar: `caviarCount`,
+        butterChicken: `butterChickenCount`
     };
     
     // ---------------- SAVE / LOAD ----------------
     
     function saveGame() {
-        localStorage.setItem("gameSave", JSON.stringify(gameState));
-        localStorage.setItem("stock", JSON.stringify(stock));
+        localStorage.setItem(`gameSave`, JSON.stringify(gameState));
+        localStorage.setItem(`stock`, JSON.stringify(stock));
         loadLeaderboard();
     }
     
     function loadGame() {
-        const saved = localStorage.getItem("gameSave");
+        const saved = localStorage.getItem(`gameSave`);
         if (saved) gameState = { ...gameState, ...JSON.parse(saved) };
     }
     
     function loadStock() {
-        const saved = localStorage.getItem("stock");
+        const saved = localStorage.getItem(`stock`);
         if (saved) stock = JSON.parse(saved);
     }
     
@@ -447,16 +454,16 @@
     }
     
     
-    let timeLeft = Number(localStorage.getItem("timerSave"));
+    let timeLeft = Number(localStorage.getItem(`timerSave`));
     if (!timeLeft || isNaN(timeLeft)) timeLeft = config.normalTime;
     
-    let eventIsOn = localStorage.getItem("eventSave") === "true";
+    let eventIsOn = localStorage.getItem(`eventSave`) === `true`;
     
     function callEvent(){
         eventIsOn = true;
-        localStorage.setItem("eventSave", eventIsOn);
+        localStorage.setItem(`eventSave`, eventIsOn);
         timeLeft = config.eventTime;
-        window.location.href = "event.html";
+        window.location.href = `event.html`;
         for(let key in stock){
             stock[key] = 100;
         }
@@ -464,37 +471,38 @@
     
     function stopEvent(){
         eventIsOn = false;
-        localStorage.setItem("eventSave", eventIsOn);
+        localStorage.setItem(`eventSave`, eventIsOn);
         timeLeft = config.normalTime;
-        window.location.href = "game.html";
+        window.location.href = `game.html`;
         restock();
     }
     
     // ---------------- TIMER ----------------
     
-    let stockReset = localStorage.getItem("stockResetDone") === "true";
+    let stockReset = localStorage.getItem(`stockResetDone`) === `true`;
     
     function setCountDown() {
         countdownInterval = setInterval(() => {
             timeLeft--;
+            gameState.cashCount += (gameState.workerAmount * gameState.workerProfit)/60
     
             if (timeLeft <= 0) {
                 if (eventIsOn) {
                     stockReset = false;
                     stopEvent();
-                    document.body.classList.remove("event");
-                    localStorage.setItem("stockResetDone", "false");
+                    document.body.classList.remove(`event`);
+                    localStorage.setItem(`stockResetDone`, `false`);
     
                 } else {
                     stockReset = false;
                     callEvent();
-                    document.body.classList.add("event");
-                    localStorage.setItem("stockResetDone", "false");
+                    document.body.classList.add(`event`);
+                    localStorage.setItem(`stockResetDone`, `false`);
                 }
             }
             else if(timeLeft <= 300 && !stockReset){
                 stockReset = true;
-                localStorage.setItem("stockResetDone", "true");
+                localStorage.setItem(`stockResetDone`, `true`);
                 if(eventIsOn){
                     for(let key in stock){
                         stock[key] = 100;
@@ -507,22 +515,74 @@
                 saveGame()
             }
     
-            localStorage.setItem("timerSave", timeLeft);
+            localStorage.setItem(`timerSave`, timeLeft);
     
-            const el = document.getElementById("countDown");
+            const el = document.getElementById(`countDown`);
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
-            const paddedseconds = String(seconds).padStart(2, "0");
+            const paddedseconds = String(seconds).padStart(2, `0`);
             if (el) el.textContent = `You have ${minutes}m and ${paddedseconds}s left...`;
         }, 1000);
     }
-    
-    // ---------------- CRYPTO ----------------
 
-    function roundDownToDecimals(value, decimals) {
-        const m = 10 ** decimals;
-        return Math.floor((value + Number.EPSILON) * m) / m;
+    // ------------------ ALERTS -------------------
+    
+    function alert(message){
+        const alertDiv = document.getElementById(`alertDiv`);
+        const alert = document.createElement(`div`);
+        alert.textContent = message;
+        alert.classList.add(`alert`);
+        alertDiv.appendChild(alert);
+        const divCount = alertDiv.children.length;
+        if(divCount > 4){
+            alertDiv.removeChild(alertDiv.firstElementChild)
+        }
+        setTimeout(() => alertDiv.removeChild(alert), 3000)
     }
+
+    // ---------------- WORKERS ----------------
+
+    const amountBtn = document.getElementById("workerAmount");
+    const profitBtn = document.getElementById("workerProfit");
+    const amountDisplay = document.getElementById("workerAmountDisplay");
+    const profitDisplay = document.getElementById("workerProfitDisplay");
+
+    function displayWorkerUI(){
+        const price = 10**(gameState.workerAmount + 7);
+        amountBtn.textContent = `${getFormattedNumber(price)}(${getHyperE(price)})${cashSymbol}`;
+        const pricee = gameState.workerProfit*10;
+        profitBtn.textContent = `${getFormattedNumber(pricee)}(${getHyperE(pricee)})${cashSymbol}`;
+        amountDisplay.textContent = `Workers: ${gameState.workerAmount}`;
+        const profit = (gameState.workerAmount * gameState.workerProfit);
+        if(profit > 0) profitDisplay.textContent = `${getFormattedNumber(profit)}(${getHyperE(profit)})${cashSymbol}/m`
+        else profitDisplay.textContent = `0${cashSymbol}/m`;
+    }
+
+    if(amountBtn){
+        amountBtn.addEventListener('click', () => {
+            const price = 10**(gameState.workerAmount + 7)
+            if (gameState.cashCount < price) alert(`Not enough ${cashName}`);
+            else{
+                gameState.workerAmount++;
+                gameState.cashCount -= price;
+            }
+            displayWorkerUI();
+        })
+    }
+
+    if(profitBtn){
+        profitBtn.addEventListener('click', () => {
+            const price = gameState.workerProfit * 10;
+            if(gameState.cashCount < price) alert(`Not enough ${cashName}`);
+            else{
+                gameState.workerProfit *= 100;
+                gameState.cashCount -= price;
+            }
+            displayWorkerUI();
+        })
+    }
+
+    // ---------------- CRYPTO ----------------
     
     let bgup = true, lgup = true, dgup = true;
     
@@ -588,22 +648,22 @@
         gameState.DogecoinVal += dchange;
         gameState.DogecoinVal = Math.max(gameState.DogecoinVal, 50000);
 
-        const btc = document.getElementById("BitcoinDisplay");
+        const btc = document.getElementById(`BitcoinDisplay`);
         if (btc) btc.textContent = `1 BITCOIN: ${getFormattedNumber(gameState.BitcoinVal)}`;
     
-        const ltc = document.getElementById("LitecoinDisplay");
+        const ltc = document.getElementById(`LitecoinDisplay`);
         if (ltc) ltc.textContent = `1 LITECOIN: ${gameState.LitecoinVal}`;
     
-        const doge = document.getElementById("DogecoinDisplay");
+        const doge = document.getElementById(`DogecoinDisplay`);
         if (doge) doge.textContent = `1 DOGECOIN: ${getFormattedNumber(gameState.DogecoinVal)}`;
     
         saveGame();
     }
     
     function updateCryptoOwnedUI() {
-        const btc = document.getElementById("Bitcoins");
-        const ltc = document.getElementById("Litecoins");
-        const doge = document.getElementById("Dogecoins");
+        const btc = document.getElementById(`Bitcoins`);
+        const ltc = document.getElementById(`Litecoins`);
+        const doge = document.getElementById(`Dogecoins`);
     
         if (btc) btc.textContent = `Bitcoins: ${getFormattedNumber(gameState.Bitcoin)}`;
         if (ltc) ltc.textContent = `Litecoins: ${gameState.Litecoin}`;
@@ -615,13 +675,14 @@
     // -------------------- BITCOIN -----------------------
     
     function investBitcoin() {
-        const input = Number(document.getElementById("cryptoInput").value);
+        const input = Number(document.getElementById(`cryptoInput`).value);
         if (!input || input <= 0) return;
     
-        if (gameState.cashCount < input) return alert("Not enough Penties");
+        if (gameState.cashCount < input) return alert(`Not enough ${cashName}`);
     
         const amount = input / gameState.BitcoinVal;
-    
+        
+        alert(`You gained ${amount} Bitcoin`)
         gameState.cashCount -= input;
         gameState.Bitcoin += amount;
     
@@ -631,13 +692,14 @@
     }
     
     function sellBitcoin() {
-        if (gameState.Bitcoin <= 0) return alert("No Bitcoin");
+        if (gameState.Bitcoin <= 0) return alert(`No Bitcoin`);
     
         const gain = gameState.Bitcoin * gameState.BitcoinVal;
     
         gameState.cashCount += gain;
         gameState.Bitcoin = 0;
-    
+        
+        alert(`You got ${gain}${cashSymbol}`);
         saveGame();
         updateUI();
         updateCryptoOwnedUI();
@@ -646,29 +708,31 @@
     // ---------------- LITECOIN ----------------
     
     function investLitecoin() {
-        const input = Number(document.getElementById("cryptoInput").value);
+        const input = Number(document.getElementById(`cryptoInput`).value);
         if (!input || input <= 0) return;
     
-        if (gameState.cashCount < input) return alert("Not enough Penties");
+        if (gameState.cashCount < input) return alert(`Not enough ${cashName}`);
     
         const amount = input / gameState.LitecoinVal;
     
         gameState.cashCount -= input;
         gameState.Litecoin += amount;
-    
+        
+        alert(`You gained ${amount} Litecoin`);
         saveGame();
         updateUI();
         updateCryptoOwnedUI();
     }
     
     function sellLitecoin() {
-        if (gameState.Litecoin <= 0) return alert("No Litecoin");
+        if (gameState.Litecoin <= 0) return alert(`No Litecoin`);
     
         const gain = gameState.Litecoin * gameState.LitecoinVal;
     
         gameState.cashCount += gain;
         gameState.Litecoin = 0;
-    
+
+        alert(`You got ${gain}${cashSymbol}`);
         saveGame();
         updateUI();
         updateCryptoOwnedUI();
@@ -676,29 +740,31 @@
     
     // ---------------- DOGECOIN ----------------
     function investDogecoin() {
-        const input = Number(document.getElementById("cryptoInput").value);
+        const input = Number(document.getElementById(`cryptoInput`).value);
         if (!input || input <= 0) return;
     
-        if (gameState.cashCount < input) return alert("Not enough Penties");
+        if (gameState.cashCount < input) return alert(`Not enough ${cashName}`);
     
         const amount = input / gameState.DogecoinVal;
     
         gameState.cashCount -= input;
         gameState.Dogecoin += amount;
-    
+        
+        alert(`You gained ${amount} Dogecoin`)
         saveGame();
         updateUI();
         updateCryptoOwnedUI();
     }
     
     function sellDogecoin() {
-        if (gameState.Dogecoin <= 0) return alert("No Dogecoin");
+        if (gameState.Dogecoin <= 0) return alert(`No Dogecoin`);
     
         const gain = gameState.Dogecoin * gameState.DogecoinVal;
     
         gameState.cashCount += gain;
         gameState.Dogecoin = 0;
-    
+        
+        alert(`You got ${gain}${cashSymbol}`);
         saveGame();
         updateUI();
         updateCryptoOwnedUI();
@@ -706,20 +772,20 @@
     
     // ---------------- BUY ----------------
     let max = false;
-    const maxBtn = document.getElementById("maxBtn");
+    const maxBtn = document.getElementById(`maxBtn`);
     if(maxBtn){
-        maxBtn.addEventListener('click', () => {
+        maxBtn.addEventListener(`click`, () => {
             if(!max){
                 max = true;
-                maxBtn.classList.add("maxBtnYes");
-                maxBtn.classList.remove("maxBtnNo");
-                maxBtn.textContent = 'NO';
+                maxBtn.classList.add(`maxBtnYes`);
+                maxBtn.classList.remove(`maxBtnNo`);
+                maxBtn.textContent = `NO`;
             }
             else{
                 max = false;
-                maxBtn.classList.add('maxBtnNo');
-                maxBtn.classList.remove("maxBtnYes");
-                maxBtn.textContent = 'YES'
+                maxBtn.classList.add(`maxBtnNo`);
+                maxBtn.classList.remove(`maxBtnYes`);
+                maxBtn.textContent = `YES`
             }
         });
     }
@@ -753,7 +819,7 @@
                     saveGame();
                     updateUI();
                 } else {
-                    alert("Not enough penties or out of stock!");
+                    alert(`Not enough ${cashName} or out of stock!`);
                 }
             }
         }
@@ -764,75 +830,75 @@
     
     const sellAllIds = {
         // common
-        appleCount: "sell-all-apples",
-        bananaCount: "sell-all-bananas",
-        orangeCount: "sell-all-oranges",
-        yougurtCount: "sell-all-yougurts",
-        mangoCount: "sell-all-mangos",
-        breadCount: "sell-all-breads",
-        frozenAppleSlicesCount: "sell-all-frozen-apple-slices",
-        rawBananaCount: "sell-all-raw-bananas",
-        frozenOrangeCount: "sell-all-frozen-oranges",
-        frozenYougurtCount: "sell-all-frozen-yougurts",
-        frozenMangoSlicesCount: "sell-all-frozen-mango-slices",
-        toastCount: "sell-all-toasts",
-        raisinToastCount: "sell-all-raisin-toasts",
-        raisinCount: "sell-all-raisins",
+        appleCount: `sell-all-apples`,
+        bananaCount: `sell-all-bananas`,
+        orangeCount: `sell-all-oranges`,
+        yougurtCount: `sell-all-yougurts`,
+        mangoCount: `sell-all-mangos`,
+        breadCount: `sell-all-breads`,
+        frozenAppleSlicesCount: `sell-all-frozen-apple-slices`,
+        rawBananaCount: `sell-all-raw-bananas`,
+        frozenOrangeCount: `sell-all-frozen-oranges`,
+        frozenYougurtCount: `sell-all-frozen-yougurts`,
+        frozenMangoSlicesCount: `sell-all-frozen-mango-slices`,
+        toastCount: `sell-all-toasts`,
+        raisinToastCount: `sell-all-raisin-toasts`,
+        raisinCount: `sell-all-raisins`,
     
         // rare
-        chocolateCount: "sell-all-chocolates",
-        darkChocolateCount: "sell-all-dark-chocolates",
-        pizzaCount: "sell-all-pizzas",
-        cookieCount: "sell-all-cookies",
-        chickenCount: "sell-all-chickens",
-        pastaCount: "sell-all-pastas",
-        burgerCount: "sell-all-burgers",
-        donutCount: "sell-all-donuts",
-        pancakeCount: "sell-all-pancakes",
-        iceCreamCount: "sell-all-ice-creams",
-        cheesecakeCount: "sell-all-cheesecakes",
+        chocolateCount: `sell-all-chocolates`,
+        darkChocolateCount: `sell-all-dark-chocolates`,
+        pizzaCount: `sell-all-pizzas`,
+        cookieCount: `sell-all-cookies`,
+        chickenCount: `sell-all-chickens`,
+        pastaCount: `sell-all-pastas`,
+        burgerCount: `sell-all-burgers`,
+        donutCount: `sell-all-donuts`,
+        pancakeCount: `sell-all-pancakes`,
+        iceCreamCount: `sell-all-ice-creams`,
+        cheesecakeCount: `sell-all-cheesecakes`,
     
         // uncanny
-        bluecapMushroomsCount: "sell-all-bluecap-mushrooms",
-        ashenPearsCount: "sell-all-ashen-pears",
-        twighlightHoneycombsCount: "sell-all-twighlight-honeycombs",
-        petersPickledPeppersCount: "sell-all-peters-pickled-peppers",
-        twistedTurnipCount: "sell-all-twisted-turnip",
-        shadowedMelonCount: "sell-all-shadowed-melon",
-        crimsonVeinedPlumCount: "sell-all-crimson-veined-plum",
-        monsterCount: "sell-all-monsters",
-        whatCount: "sell-all-whats",
+        bluecapMushroomsCount: `sell-all-bluecap-mushrooms`,
+        ashenPearsCount: `sell-all-ashen-pears`,
+        twighlightHoneycombsCount: `sell-all-twighlight-honeycombs`,
+        petersPickledPeppersCount: `sell-all-peters-pickled-peppers`,
+        twistedTurnipCount: `sell-all-twisted-turnip`,
+        shadowedMelonCount: `sell-all-shadowed-melon`,
+        crimsonVeinedPlumCount: `sell-all-crimson-veined-plum`,
+        monsterCount: `sell-all-monsters`,
+        whatCount: `sell-all-whats`,
 
         // legendary
-        grannyAndGrampaPigCount: "sell-all-granny-and-grampa-pigs",
-        weLiveWeLoveWeDieCount: "sell-all-we-live-we-love-we-dies",
-        dogeCount: "sell-all-doges",
-        rickButRolledCount: "sell-all-rick-but-rolls",
-        pepeCount: "sell-all-pepes",
-        friedRnestCount: "sell-all-fried-rnests",
-        appaCount: "sell-all-appas",
-        undefinedItemCount: "sell-all-undefined-items",
-        overlyDefinedItemCount: "sell-all-overly-defined-items",
+        grannyAndGrampaPigCount: `sell-all-granny-and-grampa-pigs`,
+        weLiveWeLoveWeDieCount: `sell-all-we-live-we-love-we-dies`,
+        dogeCount: `sell-all-doges`,
+        rickButRolledCount: `sell-all-rick-but-rolls`,
+        pepeCount: `sell-all-pepes`,
+        friedRnestCount: `sell-all-fried-rnests`,
+        appaCount: `sell-all-appas`,
+        undefinedItemCount: `sell-all-undefined-items`,
+        overlyDefinedItemCount: `sell-all-overly-defined-items`,
 
         // supernatural
-        bettysBitterButterCount: "sell-all-bettys-bitter-butters",
-        cosmicCheeseCount: "sell-all-cosmic-cheeses",
-        livingSoccerBallCount: "sell-all-living-soccer-balls",
-        mathCount: "sell-all-maths",
-        piCount: "sell-all-pis",
-        meetCount: "sell-all-meets",
+        bettysBitterButterCount: `sell-all-bettys-bitter-butters`,
+        cosmicCheeseCount: `sell-all-cosmic-cheeses`,
+        livingSoccerBallCount: `sell-all-living-soccer-balls`,
+        mathCount: `sell-all-maths`,
+        piCount: `sell-all-pis`,
+        meetCount: `sell-all-meets`,
 
         // mythological
-        benCount: "sell-all-bens",
-        greenGiantCount: "sell-all-green-giants",
-        theFirstSpinjitsuMasterCount: "sell-all-the-first-spinjitsu-masters",
-        trueRnestCount: "sell-all-true-rnests",
-        transendantBenCount: "sell-all-transendant-bens",
+        benCount: `sell-all-bens`,
+        greenGiantCount: `sell-all-green-giants`,
+        theFirstSpinjitsuMasterCount: `sell-all-the-first-spinjitsu-masters`,
+        trueRnestCount: `sell-all-true-rnests`,
+        transendantBenCount: `sell-all-transendant-bens`,
 
         // exotic
-        sushiCount: "sell-all-sushis",
-        caviarCount: "sell-all-caviars",
-        butterChickenCount: "sell-all-butter-chickens"
+        sushiCount: `sell-all-sushis`,
+        caviarCount: `sell-all-caviars`,
+        butterChickenCount: `sell-all-butter-chickens`
     };
     
     const sellableItems = Object.keys(prices);
@@ -842,8 +908,8 @@
     }
     
     function camelToKebab(str) {
-        return str.replace(/Count$/, "")
-            .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+        return str.replace(/Count$/, ``)
+            .replace(/([a-z0-9])([A-Z])/g, `$1-$2`)
             .toLowerCase();
     }
     
@@ -862,11 +928,18 @@
                     const total = gain + gain * gameState.multiplier;
                     const tootal = total * ((gameState.prestiges/2) + 1);
 
-                    chachingsound.currentTime = 0.25;
-                    chachingsound.play();
-    
                     gameState[key]--;
                     gameState.cashCount += tootal;
+                    
+                    if(tootal > 1e6){
+                        alert(`You recieved ${getFormattedNumber(tootal)}(${getHyperE(tootal)})${cashSymbol}`);
+                    }
+                    else{
+                        alert(`You recieved ${getFormattedNumber(tootal)}${cashSymbol}`);
+                    }
+
+                    chachingsound.currentTime = 0.25;
+                    chachingsound.play();
     
                     saveGame();
                     updateUI();
@@ -881,35 +954,44 @@
                     chachingsound.currentTime = 0.25;
                     chachingsound.play();
     
-                    const totalGain =
+                    const tootalGain =
                         Math.floor(prices[key] * getRandomSellMultiplier() * count);
-    
+
+
+                    gameState.cashCount += (tootalGain + tootalGain * gameState.multiplier);
                     gameState[key] = 0;
-                    gameState.cashCount += (totalGain + totalGain * gameState.multiplier) * 1+(gameState.prestiges/2);
+
+
+                    if(tootalGain > 1e6){
+                        alert(`You recieved ${getFormattedNumber(tootalGain)}(${getHyperE(tootalGain)})${cashSymbol}`);
+                    }
+                    else{
+                        alert(`You recieved ${getFormattedNumber(tootalGain)}${cashSymbol}`);
+                    }
     
                     saveGame();
                     updateUI();
-                };
+                }
             }
         }
     }
     
     // ---------------- UI ----------------
     
-    const ui = document.querySelector(".ui");
-    const uiBtn = document.getElementById("uiBtn");
+    const ui = document.querySelector(`.ui`);
+    const uiBtn = document.getElementById(`uiBtn`);
     let uiFixed = true;
     if(uiBtn){
-        uiBtn.addEventListener('click', () => {
+        uiBtn.addEventListener(`click`, () => {
             if(uiFixed){
                 uiFixed = false;
-                ui.classList.add("ui");
-                uiBtn.textContent = 'TYPE 1';
+                ui.classList.add(`ui`);
+                uiBtn.textContent = `TYPE 1`;
             }
             else{
                 uiFixed = true;
-                ui.classList.remove("ui");
-                uiBtn.textContent = 'TYPE 2';
+                ui.classList.remove(`ui`);
+                uiBtn.textContent = `TYPE 2`;
             }
         })
     }
@@ -921,77 +1003,77 @@
     }
     function getFormattedNumber(n){
         function getNumberShortener(n){
-            let string = '';
+            let string = ``;
             const nthNum = getNthIllion(n);
             const ones = nthNum % 10;
             const tens = Math.floor(nthNum / 10);
-            if(n >= 1000 && n < 1000000) return 'K';
+            if(n >= 1000 && n < 1000000) return `K`;
             switch(ones){
                 case 1:
                     if(tens === 0){
-                        string += 'M'
+                        string += `M`
                     }
                     else{
-                        string += 'Un';
+                        string += `Un`;
                     }
                     break;
                 case 2:
                     if(tens === 0){
-                        string += 'B'
+                        string += `B`
                     }
                     else{
-                        string += 'Do';
+                        string += `Do`;
                     }
                     break;
                 case 3:
-                    string += 'T';
+                    string += `T`;
                     break;
                 case 4:
-                    string += 'Qa';
+                    string += `Qa`;
                     break;
                 case 5:
-                    string += 'Qi';
+                    string += `Qi`;
                     break;
                 case 6:
-                    string += 'Sx';
+                    string += `Sx`;
                     break;
                 case 7:
-                    string += 'Sp';
+                    string += `Sp`;
                     break;
                 case 8:
-                    string += 'Oct';
+                    string += `Oct`;
                     break;
                 case 9:
-                    string += 'No';
+                    string += `No`;
                     break;
             }
             switch(tens){
                 case 1:
-                    string += 'Dec';
+                    string += `Dec`;
                     break;
                 case 2:
-                    string += 'Vg';
+                    string += `Vg`;
                     break;
                 case 3:
-                    string += 'Trg';
+                    string += `Trg`;
                     break;
                 case 4:
-                    string += 'Qdrg';
+                    string += `Qdrg`;
                     break;
                 case 5:
-                    string += 'Qqg';
+                    string += `Qqg`;
                     break;
                 case 6:
-                    string += 'Sxg';
+                    string += `Sxg`;
                     break;
                 case 7:
-                    string += 'Spg';
+                    string += `Spg`;
                     break;
                 case 8:
-                    string += 'Ocg';
+                    string += `Ocg`;
                     break;
                 case 9:
-                    string += 'Nog';
+                    string += `Nog`;
                     break;
             }
             return string;
@@ -1015,7 +1097,7 @@
             return (n / divisor).toFixed(2);
         }
         if(isNaN(getNumberShortened(n))){
-            return 'Infinity';
+            return `Infinity`;
         }
         return `${getNumberShortened(n)}${getNumberShortener(n)}`;
     }
@@ -1027,7 +1109,7 @@
         const number = n / (10**zerosAmnt);
         const fixed = number.toFixed(2);
 
-        if(zerosAmnt >= 303) return '';
+        if(zerosAmnt >= 303) return ``;
         return `${fixed}e${zerosAmnt}`;
     }
     function updateUI() {
@@ -1110,12 +1192,14 @@
         repairStock();
         repairGameState();
         
+        gameState.cashCount = Math.floor(gameState.cashCount);
+
         // USERNAME
 
-        const usernameDisplay = document.getElementById("usernameDisplay");
+        const usernameDisplay = document.getElementById(`usernameDisplay`);
         if(usernameDisplay){
-            if(gameState.username.slice(-1).toLowerCase() === "s" || gameState.username.slice(-1).toLowerCase() === "S"){
-                usernameDisplay.textContent = `${gameState.username}' Market`;
+            if(gameState.username.slice(-1).toLowerCase() === `s` || gameState.username.slice(-1).toLowerCase() === `S`){
+                usernameDisplay.textContent = `${gameState.username}'s Market`;
             }
             else{
                 usernameDisplay.textContent = `${gameState.username}'s Market`
@@ -1123,24 +1207,24 @@
         }
 
         // CASH
-        const cash = document.getElementById("cash");
+        const cash = document.getElementById(`cash`);
         if (cash) {
-            cash.textContent = `Penties(℗): ${getFormattedNumber(gameState.cashCount)}${gameState.cashCount > 1e6 ?
-                `(` + String(getHyperE(gameState.cashCount)) + `)`:''}℗`;
+            cash.textContent = `${cashName}(${cashSymbol}): ${getFormattedNumber(gameState.cashCount)}${gameState.cashCount > 1e6 ?
+                `(` + String(getHyperE(gameState.cashCount)) + `)`:``}${cashSymbol}`;
             const string = cash.textContent;
-            const cstring = string.replaceAll("()", '');
+            const cstring = string.replaceAll(`()`, ``);
             cash.textContent = cstring;
         }
     
         // PRESTIGES
-        const prestige = document.getElementById("prestiges");
+        const prestige = document.getElementById(`prestiges`);
         if(prestige) prestige.textContent = `Prestiges: ${gameState.prestiges}`;
     
-        const cashfornext = document.getElementById("cashLevel");
+        const cashfornext = document.getElementById(`cashLevel`);
         if(cashfornext) cashfornext.textContent = `You need ${getFormattedNumber(getCashLevel(gameState.prestiges))} for the next prestige`; 
     
         // MULTIPLIER
-        const mult = document.getElementById("multiplier");
+        const mult = document.getElementById(`multiplier`);
         const multmax = (gameState.prestiges * 4) + 10;
         if(gameState.multiplier > multmax) gameState.multiplier = multmax;
         if(gameState.multiplier < 0) gameState.multiplier = 0;
@@ -1148,20 +1232,20 @@
     
         // PAY %
         const pay = 
-        document.getElementById("payPercent");
+        document.getElementById(`payPercent`);
         if(gameState.payPercent < 30) gameState.payPercent = 30;
         if (pay) pay.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
         
         // MULTIPLIER AND PAY PERCENT NEW AMOUNT GAIN
 
-        const newpaypercentdisplay = document.getElementById("newPayPercentDisplay");
-        const newmultiplierdisplay = document.getElementById("newMultiplierDisplay");
+        const newpaypercentdisplay = document.getElementById(`newPayPercentDisplay`);
+        const newmultiplierdisplay = document.getElementById(`newMultiplierDisplay`);
         const gainBase = 10 ** (2 * gameState.prestiges + 5);
         const requirement = 10** (gameState.prestiges + 5)
 
         if(gameState.cashCount < requirement){
-            newpaypercentdisplay.textContent = '...';
-            newmultiplierdisplay.textContent = 'Not Enough';
+            newpaypercentdisplay.textContent = `...`;
+            newmultiplierdisplay.textContent = `Not Enough`;
         }
         else{
             let multiplierGain =
@@ -1189,13 +1273,13 @@
 
         // MULTIPLIER MAX
 
-        document.getElementById("multipliermaxdisplay").textContent = `Your multiplier max is ${multmax}`;
-        document.getElementById("prestigemultdisplay").textContent = `Your prestige multiplier is ${(gameState.prestiges/2) + 1}`;
+        document.getElementById(`multipliermaxdisplay`).textContent = `Your multiplier max is ${multmax}`;
+        document.getElementById(`prestigemultdisplay`).textContent = `Your prestige multiplier is ${(gameState.prestiges/2) + 1}`;
         const perkneed = 10**(gameState.prestiges + 5);
-        document.getElementById("perkneed").textContent = `You Need ${getFormattedNumber(perkneed)} To Add To Perks`;
+        document.getElementById(`perkneed`).textContent = `You Need ${getFormattedNumber(perkneed)} To Add To Perks`;
 
         // COSTS
-        const costdisplays = document.querySelectorAll(".cost")
+        const costdisplays = document.querySelectorAll(`.cost`)
         const keys = Object.keys(prices);
 
         keys.forEach((key, i) => {
@@ -1204,9 +1288,9 @@
                 const display = getFormattedNumber(price);
                 costdisplays[i].textContent =
                     `${display}${price > 1e6 ?
-                         `(` + String(getHyperE(price)) + `)`:''}℗`;
+                         `(` + String(getHyperE(price)) + `)`:``}${cashSymbol}`;
                 const string = costdisplays[i].textContent;
-                const cstring = string.replaceAll("()", '');
+                const cstring = string.replaceAll(`()`, ``);
                 costdisplays[i].textContent = cstring;
                 
             }
@@ -1214,53 +1298,54 @@
 
         // ITEMS
         for (const key in gameState) {
-            if (!key.endsWith("Count")) continue;
-            if (key === "cashCount") continue;
+            if (!key.endsWith(`Count`)) continue;
+            if (key === `cashCount`) continue;
     
             const el = document.getElementById(
-                `${key.replace(/Count$/, "")}Display`
+                `${key.replace(/Count$/, ``)}Display`
             );
     
             if (el) {
                 el.textContent =
-                    `${key.replace(/Count$/, "")}: ${gameState[key]}`;
+                    `${key.replace(/Count$/, ``)}: ${gameState[key]}`;
             }
         }
     
         // STOCK
         for (const key in stock) {
-            const el = document.getElementById(`${key.replace(/Count$/, "")}Stock`);
+            const el = document.getElementById(`${key.replace(/Count$/, ``)}Stock`);
             if (el) el.textContent = `Stock: ${stock[key]}`;
         }
     
         // CRYPTO UI
-        const btc = document.getElementById("BitcoinDisplay");
+        const btc = document.getElementById(`BitcoinDisplay`);
         if (btc) btc.textContent = `1 BITCOIN: ${getFormattedNumber(gameState.BitcoinVal)}`;
     
-        const ltc = document.getElementById("LitecoinDisplay");
+        const ltc = document.getElementById(`LitecoinDisplay`);
         if (ltc) ltc.textContent = `1 LITECOIN: ${gameState.LitecoinVal}`;
     
-        const doge = document.getElementById("DogecoinDisplay");
+        const doge = document.getElementById(`DogecoinDisplay`);
         if (doge) doge.textContent = `1 DOGECOIN: ${getFormattedNumber(gameState.DogecoinVal)}`;
+
+        uploadScore();
     }
     
     // ----------------- DISPLAY RARITIES & MENU -----------------\
 
     function displayRaritiesAndMenuPages(){
-        console.log("display rarities and menu pages is runnign")
         // MENU
-        const menuBtn = document.getElementById("menuBtn");
-        const menu = document.getElementById("menu");
+        const menuBtn = document.getElementById(`menuBtn`);
+        const menu = document.getElementById(`menu`);
         
         if (menuBtn) {
-            menuBtn.addEventListener('click', () => {
-                if(menu.style.display == 'none'){
-                    menu.style.display = 'flex';
-                    menuBtn.textContent = '>';
+            menuBtn.addEventListener(`click`, () => {
+                if(menu.style.display == `none`){
+                    menu.style.display = `flex`;
+                    menuBtn.textContent = `>`;
                 }
                 else{
-                    menu.style.display = 'none';
-                    menuBtn.textContent = '<';
+                    menu.style.display = `none`;
+                    menuBtn.textContent = `<`;
                 }
             });
         }
@@ -1269,61 +1354,60 @@
             const closeBtn = document.getElementById(closeId);
             const window = document.getElementById(windowId);
             if (openBtn) {
-                openBtn.addEventListener('click', () => {
-                    if(getComputedStyle(window).display === 'none') window.style.display = 'flex';
+                openBtn.addEventListener(`click`, () => {
+                    if(getComputedStyle(window).display === `none`) window.style.display = `flex`;
                 });
             }
-            closeBtn?.addEventListener("click", () => {
-                console.log("CROSS CLICKED");
-                window.style.display = "none";
+            closeBtn?.addEventListener(`click`, () => {
+                window.style.display = `none`;
             });
         }
 
-        makeWindow("perkOpen", "removePerkScreen", "addToPerks");
-        makeWindow("openPrestigeScreen", "removePrestigeScreen", "prestigeScreen");
-        makeWindow("openSettings", "removeSettings", "settings");
-        makeWindow("openLeaderboard", "removeLeaderboard", "leaderboardWindow");
-        makeWindow("restartGameBtn", "removeRestart", 'restart');
-        makeWindow("workerBtn", "removeWorkers", "workers");
+        makeWindow(`perkOpen`, `removePerkScreen`, `addToPerks`);
+        makeWindow(`openPrestigeScreen`, `removePrestigeScreen`, `prestigeScreen`);
+        makeWindow(`openSettings`, `removeSettings`, `settings`);
+        makeWindow(`openLeaderboard`, `removeLeaderboard`, `leaderboardWindow`);
+        makeWindow(`restartGameBtn`, `removeRestart`, `restart`);
+        makeWindow(`workerBtn`, `removeWorkers`, `workers`);
 
         function setUpRarity(btnId, rarityId, need){
             const btn = document.getElementById(btnId);
             const fruits = document.getElementById(rarityId);
 
             if (btn) {
-                btn.addEventListener('click', () => {
+                btn.addEventListener(`click`, () => {
                     if(gameState.prestiges >= need){
-                        if(fruits.style.display == 'none') fruits.style.display = 'block';
-                        else fruits.style.display = 'none';
+                        if(fruits.style.display == `none`) fruits.style.display = `block`;
+                        else fruits.style.display = `none`;
                     }
                     else{
-                        window.alert(`You need ${need} prestiges to enter here`)
+                        alert(`You need ${need} prestiges to enter here`)
                     }
                 });
             }
         }
         
-        setUpRarity("commonFoodBtn", "commonFoods", 0);
-        setUpRarity("rareFoodsBtn", "rareFoods", 1);
-        setUpRarity("uncannyFoodsBtn", "uncannyFoods", 3);
-        setUpRarity("legendaryFoodsBtn", "legendaryFoods", 5);
-        setUpRarity("supernaturalFoodsBtn", "supernaturalFoods", 8);
-        setUpRarity("mythologicalFoodsBtn", "mythologicalFoods", 12);
-        setUpRarity("exoticFoodsBtn", "exoticFoods", 20)
-        const exoticBtn = document.getElementById("exoticFoodsBtn");
-        const exoticFood = document.getElementById("exoticFoods");
+        setUpRarity(`commonFoodBtn`, `commonFoods`, 0);
+        setUpRarity(`rareFoodsBtn`, `rareFoods`, 1);
+        setUpRarity(`uncannyFoodsBtn`, `uncannyFoods`, 3);
+        setUpRarity(`legendaryFoodsBtn`, `legendaryFoods`, 5);
+        setUpRarity(`supernaturalFoodsBtn`, `supernaturalFoods`, 8);
+        setUpRarity(`mythologicalFoodsBtn`, `mythologicalFoods`, 12);
+        setUpRarity(`exoticFoodsBtn`, `exoticFoods`, 20)
+        const exoticBtn = document.getElementById(`exoticFoodsBtn`);
+        const exoticFood = document.getElementById(`exoticFoods`);
         
     }
 
     // ------------------- USERNAMES AND LEADERBOARDS -------------------
-    const submitBtn = document.getElementById("submitUsernameBtn");
+    const submitBtn = document.getElementById(`submitUsernameBtn`);
 
     async function submitUsername() {
-        const username = document.getElementById("userInput").value.trim();
+        const username = document.getElementById(`userInput`).value.trim();
     
         if (!username) return;
     
-        gameState.username = username.replaceAll(" ", "_");
+        gameState.username = username.replaceAll(` `, `_`);
         gameState.username = gameState.username.trim();
         gameState.username = gameState.username.slice(0, 12);
     
@@ -1331,12 +1415,12 @@
         loadLeaderboard();
     }
 
-    if(submitBtn) submitBtn.addEventListener('click', submitUsername);
+    if(submitBtn) submitBtn.addEventListener(`click`, submitUsername);
 
     async function uploadScore() {
 
         const { error } = await supabase
-            .from("leaderboard")
+            .from(`leaderboard`)
             .upsert(
                 {
                     id: playerId,
@@ -1346,7 +1430,7 @@
                     updated_at: new Date()
                 },
                 {
-                    onConflict: "id"
+                    onConflict: `id`
                 }
             );
     
@@ -1358,10 +1442,10 @@
     async function loadLeaderboard() {
 
         const { data, error } = await supabase
-            .from("leaderboard")
-            .select("*")
-            .order("prestiges", { ascending: false })
-            .order("cash", { ascending: false })
+            .from(`leaderboard`)
+            .select(`*`)
+            .order(`prestiges`, { ascending: false })
+            .order(`cash`, { ascending: false })
             .limit(100);
     
         if (error) {
@@ -1369,14 +1453,14 @@
             return;
         }
     
-        const board = document.getElementById("leaderboard");
+        const board = document.getElementById(`leaderboard`);
     
-        board.innerHTML = "";
+        board.innerHTML = ``;
     
         data.forEach((player, index) => { 
             if(index < 10){
                 board.innerHTML += `
-                    <div class="leaderboardRow" id='row${index + 1}'>
+                    <div class='leaderboardRow' id='row${index + 1}'>
                         <div class='place'>
                             #${index + 1}
                         </div>
@@ -1407,8 +1491,8 @@
     function resetAllItems() {
         for (const key in gameState) {
             if (
-                key.endsWith("Count") &&
-                key !== "cashCount"
+                key.endsWith(`Count`) &&
+                key !== `cashCount`
             ) {
                 gameState[key] = 0;
             }
@@ -1428,13 +1512,13 @@
                 }
 
                 gameState.multiplier += Math.max(multiplierGain + 0.1, 10+(gameState.prestiges*4));
-                const multiplier = document.getElementById("multiplier");
+                const multiplier = document.getElementById(`multiplier`);
                 multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
 
                 const payPercentLoss = Math.log10(gameState.cashCount / gainBase + 1) * 2;
 
                 gameState.payPercent -= payPercentLoss;
-                const payPercent = document.getElementById("payPercent");
+                const payPercent = document.getElementById(`payPercent`);
                 payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
 
                 gameState.cashCount = 10;
@@ -1450,11 +1534,11 @@
                 uploadScore();
             }
             else{
-                window.alert("You already have max multiplier and pay percent!")
+                alert(`You already have max multiplier and pay percent!`)
             }
         }
         else{
-            window.alert("You do not have enough money");
+            alert(`You do not have enough money`);
         }
     }
     
@@ -1465,7 +1549,7 @@
     function prestige(){
         const cashLevel = getCashLevel(gameState.prestiges);
         if(gameState.cashCount < cashLevel){
-            window.alert("Not enough Penties");
+            alert(`Not enough ${cashName}`);
             return;
         };
         gameState.prestiges += 1;
@@ -1484,15 +1568,15 @@
         saveGame();
         uploadScore();
     }
-    if(document.getElementById("perkIncreaseBtn")){
-        document.getElementById("perkIncreaseBtn").addEventListener('click', perkIncrease);
+    if(document.getElementById(`perkIncreaseBtn`)){
+        document.getElementById(`perkIncreaseBtn`).addEventListener(`click`, perkIncrease);
     }
-    if(document.getElementById("prestigeBtn")){
-    document.getElementById("prestigeBtn").addEventListener('click', prestige);
+    if(document.getElementById(`prestigeBtn`)){
+    document.getElementById(`prestigeBtn`).addEventListener(`click`, prestige);
     }
     // ------------ RESTART ------------
     function restartGame() {
-        if (!confirm("Are you sure you want to restart? This will erase all progress.")) {
+        if (!confirm(`Are you sure you want to restart? This will erase all progress.`)) {
             return;
         }
     
@@ -1517,6 +1601,8 @@
         gameState.Litecoin = 0;
         gameState.Dogecoin = 0;
         gameState.prestiges = 0;
+        gameState.workerProfit = 0;
+        gameState.workerAmount = 0;
         restock();
         timeLeft = config.normalTime;
         
@@ -1531,16 +1617,16 @@
     // ---------------- INIT ----------------
     
     function initiate() {
-        console.log("INITIATE RUNNING");
         loadGame();
         loadStock();
         updateUI();
         displayRaritiesAndMenuPages();
         loadLeaderboard();
+        displayWorkerUI();
 
-        const clickables = [...document.querySelectorAll(".item"), ...document.querySelectorAll(".btn"), document.getElementById("removePerkScreen"), document.getElementById("removePrestigeScreen"), document.getElementById("removeSettings")];
+        const clickables = [...document.querySelectorAll(`.item`), ...document.querySelectorAll(`.btn`), document.getElementById(`removePerkScreen`), document.getElementById(`removePrestigeScreen`), document.getElementById(`removeSettings`)];
         clickables.forEach(click => {
-            click.addEventListener('click', () => {
+            click.addEventListener(`click`, () => {
                 clicksound.currentTime = 0.59;
                 clicksound.play();
             });
@@ -1548,13 +1634,10 @@
 
 
         window.restartGame = restartGame;
-        const restartBtn = document.getElementById("restartGame");
-        console.log(restartBtn);
+        const restartBtn = document.getElementById(`restartGame`);
 
         if (restartBtn) {
-            console.log("Restart button found");
-            restartBtn.addEventListener("click", () => {
-                console.log("Button clicked");
+            restartBtn.addEventListener(`click`, () => {
                 restartGame();
             });
         }
@@ -1573,7 +1656,6 @@
     
         setCountDown();
         cryptoInterval = setInterval(updateCrypto, 250);
-        console.log("CRYPTO INTERVAL STARTED");
     
     
         window.cashLoop = setInterval(updateUI, 500);

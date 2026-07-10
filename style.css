@@ -645,12 +645,12 @@ h1{
     /* add this */
     position: fixed;
 }
-#leaderboardWindow{
-    justify-content: right;
+#leaderboardWindow, #workers{
+    justify-content: center;
     align-items: center;
     height: none;
     min-height: 70vh;
-    transform: translateY(-10vh)
+    transform: translateY(-10vh);
 }
 #addToPerks .btn, #pre60tigeScreen .btn #settings .btn, #leaderboardWindow .btn, #restart .btn, #workers .btn{
     border: 2px solid rgb(85, 85, 85);
@@ -801,4 +801,32 @@ h1{
     text-align: left;
     width: 50px;
     border-left: none;
+}
+#workerAmountDisplay, #workerProfitDisplay{
+    padding: 15px;
+    color: white;
+}
+#alertDiv{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+
+    width: fit-content;
+    z-index: 9999;
+    pointer-events: none;
+}
+.alert{
+    color: white;
+    background-color: rgba(0, 0, 0, 0.544);
+    max-width: 500px;
+    min-width: 250px;
+    border-right: 2px solid white;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 5px;
 }
