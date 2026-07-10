@@ -30,7 +30,7 @@
     // ---------------- GAME STATE ----------------
     
     let gameState = {
-        cashCount: 10,
+        cashCount: 10e919,
         multiplier: 0,
         payPercent: 100,
     
@@ -949,24 +949,27 @@
             if (allBtn) {
                 allBtn.onclick = () => {
                     const count = gameState[key];
-                    if (!count) return;
+                    if (!count){
+                        alert(`You have none of that food`);
+                        return;
+                    }
 
                     chachingsound.currentTime = 0.25;
                     chachingsound.play();
     
-                    const tootalGain =
-                        Math.floor(prices[key] * getRandomSellMultiplier() * count);
+                    const gain = Math.floor(prices[key] * getRandomSellMultiplier() * count);
+                    const multiGain = gain+(gain*gameState.multiplier);
+                    const prestiGain = multiGain * ((gameState.prestiges/2)+1);
 
-
-                    gameState.cashCount += (tootalGain + tootalGain * gameState.multiplier);
+                    gameState.cashCount += prestiGain;
                     gameState[key] = 0;
 
 
                     if(tootalGain > 1e6){
-                        alert(`You recieved ${getFormattedNumber(tootalGain)}(${getHyperE(tootalGain)})${cashSymbol}`);
+                        alert(`You recieved ${getFormattedNumber(prestiGain)}(${getHyperE(prestiGain)})${cashSymbol}`);
                     }
                     else{
-                        alert(`You recieved ${getFormattedNumber(tootalGain)}${cashSymbol}`);
+                        alert(`You recieved ${getFormattedNumber(prestiGain)}${cashSymbol}`);
                     }
     
                     saveGame();
@@ -1521,7 +1524,7 @@
                 const payPercent = document.getElementById(`payPercent`);
                 payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
 
-                gameState.cashCount = 10;
+                gameState.cashCount = 10e919;
                 resetAllItems();
                 gameState.Bitcoin = 0;
                 gameState.Litecoin = 0;
@@ -1529,9 +1532,11 @@
                 gameState.BitcoinVal = 100000;
                 gameState.LitecoinVal = 100;
                 gameState.DogecoinVal = 10000000000;
+                gameState.workerProfit = 10 ** (Math.floor(Math.log10(gameState.workerProfit) / 3));
                 restock();
                 saveGame();
                 uploadScore();
+                displayWorkerUI();
             }
             else{
                 alert(`You already have max multiplier and pay percent!`)
@@ -1553,7 +1558,7 @@
             return;
         };
         gameState.prestiges += 1;
-        gameState.cashCount = 10;
+        gameState.cashCount = 10e919;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
@@ -1564,7 +1569,7 @@
         gameState.Litecoin = 0;
         gameState.Dogecoin = 0;
         gameState.workerProfit = 0;
-        gameState.workerAmount = 0;
+        gameState.workerAmount = (gameState.workerAmount/10)*3;
         restock();
         timeLeft = config.normalTime;
         saveGame();
@@ -1592,7 +1597,7 @@
         countdownInterval = null;
         window.cashLoop = null;
     
-        gameState.cashCount = 10;
+        gameState.cashCount = 10e919;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
