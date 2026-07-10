@@ -30,7 +30,7 @@
     // ---------------- GAME STATE ----------------
     
     let gameState = {
-        cashCount: 10e919,
+        cashCount: 10,
         multiplier: 0,
         payPercent: 100,
     
@@ -1524,7 +1524,7 @@
                 const payPercent = document.getElementById(`payPercent`);
                 payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
 
-                gameState.cashCount = 10e919;
+                gameState.cashCount = 10;
                 resetAllItems();
                 gameState.Bitcoin = 0;
                 gameState.Litecoin = 0;
@@ -1558,7 +1558,7 @@
             return;
         };
         gameState.prestiges += 1;
-        gameState.cashCount = 10e919;
+        gameState.cashCount = 10;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
@@ -1597,7 +1597,7 @@
         countdownInterval = null;
         window.cashLoop = null;
     
-        gameState.cashCount = 10e919;
+        gameState.cashCount = 10;
         gameState.multiplier = 0;
         gameState.payPercent = 100;
         resetAllItems();
