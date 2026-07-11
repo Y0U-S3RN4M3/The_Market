@@ -1550,7 +1550,7 @@
     
                     gameState.cashCount = cashResetValue;
                     resetAllItems();
-                    gameState.workerProfit = 10 ** (Math.floor(Math.log10(gameState.workerProfit) / 3));
+                    gameState.workerProfit = 10 ** (Math.floor(Math.log10(gameState.workerProfit) / 6));
                     restock();
                     saveGame();
                     uploadScore();
