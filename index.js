@@ -1197,6 +1197,7 @@
         repairGameState();
         
         gameState.cashCount = Math.floor(gameState.cashCount);
+        gameState.cashcount = Math.max(gameState.cashCount, 10)
         gameState.workerAmount = Math.round(gameState.workerAmount);
 
         // USERNAME
