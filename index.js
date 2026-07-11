@@ -22,7 +22,7 @@
     const chachingsound = new Audio(`./sounds/chaching.mp3`);
     const cashName = `Penties`;
     const cashSymbol = `𝓟`;
-    const cashResetValue = 10e919;
+    const cashResetValue = 10;
     let cryptoInterval;
     let uiInterval;
     let countdownInterval;
