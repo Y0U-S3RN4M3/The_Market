@@ -1254,11 +1254,13 @@
             newmultiplierdisplay.textContent = `Not Enough`;
         }
         else{
-            let multiplierGain =
-                Math.log10(10 * (gameState.cashCount / gainBase));
-
+            const gainBase = 10**(2*gameState.prestiges+5);
+                    const requirement = 10**(gameState.prestiges+5);
+    
+            let multiplierGain = Math.max(Math.log10(gameState.cashCount / gainBase) + 1, 0);
+            
             if(multiplierGain < gainBase && multiplierGain > requirement){
-                multiplierGain = (gameState.cashCount-requirement)/(gainBase-requirement);
+                multiplierGain = ((gameState.cashCount-requirement)/(gainBase-requirement));
             }
 
             const payPercentLoss =
