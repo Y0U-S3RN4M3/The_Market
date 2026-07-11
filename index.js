@@ -22,7 +22,7 @@
     const chachingsound = new Audio(`./sounds/chaching.mp3`);
     const cashName = `Penties`;
     const cashSymbol = `𝓟`;
-    const cashResetValue = 10;
+    const cashResetValue = 10e919;
     let cryptoInterval;
     let uiInterval;
     let countdownInterval;
@@ -1398,10 +1398,71 @@
         setUpRarity(`legendaryFoodsBtn`, `legendaryFoods`, 5);
         setUpRarity(`supernaturalFoodsBtn`, `supernaturalFoods`, 8);
         setUpRarity(`mythologicalFoodsBtn`, `mythologicalFoods`, 12);
-        setUpRarity(`exoticFoodsBtn`, `exoticFoods`, 20)
+        setUpRarity(`exoticFoodsBtn`, `exoticFoods`, 20);
+        setUpRarity(`dumbStuffBtn`, `dumbStuff`, 15);
+
         const exoticBtn = document.getElementById(`exoticFoodsBtn`);
         const exoticFood = document.getElementById(`exoticFoods`);
         
+    }
+
+    // ------------------- DUMB STUFF -----------------------
+
+    const prestigesTo14 = document.getElementById("prestigesTo14");
+    if(prestigesTo14){
+        prestigesTo14.addEventListener('click', async function(){
+            const accepted = await confirm("Are you sure you want to set your prestiges to 14?");
+            if(accepted){
+                document.getElementById("dumbStuff").style.display = 'none';
+                gameState.prestiges = 14;
+            }
+        });
+    }
+
+    const resetWorkerProgress = document.getElementById("resetWorkerProgress");
+    if(resetWorkerProgress){
+        resetWorkerProgress.addEventListener('click', async function(){
+            const accepted = await confirm("Are you sure you want to reset your worker progress");
+            if(accepted){
+                document.getElementById("dumbStuff").style.display = 'none';
+                gameState.workerProfit = 0;
+                gameState.workerAmount = 0;
+                updateUI();
+                displayWorkerUI();
+            }
+        });
+    }
+
+    const resetCash = document.getElementById("resetCash");
+    if(resetCash){
+        resetCash.addEventListener('click', async function(){
+            const accepted = await confirm("Are you sure you want to reset your cash?");
+            if(accepted){
+                document.getElementById("dumbStuff").style.display = 'none';
+                gameState.cashCount = cashResetValue;
+            }
+        });
+    }
+
+    const annoyYou = document.getElementById("annoyYou");
+
+    if(annoyYou){
+        annoyYou.addEventListener('click', async function(){
+            const accepted = await confirm("Are you sure you want to be annoyed irritably for a minute straight?");
+            if(accepted){
+                document.getElementById("dumbStuff").style.display = 'none';
+                getAnnoyed(60);
+            }
+        })
+    }
+
+    function getAnnoyed(seconds){
+        document.body.style.fontSize = '5em';
+        document.body.style.filter = 'invert(100%)';
+        setTimeout(() => {
+            document.body.style.fontSize = '1em';
+            document.body.style.filter = 'none';
+        }, seconds*1000)
     }
 
     // ------------------- USERNAMES AND LEADERBOARDS -------------------

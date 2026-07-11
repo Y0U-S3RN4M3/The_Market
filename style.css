@@ -652,12 +652,12 @@ h1{
     min-height: 70vh;
     transform: translateY(-10vh);
 }
-#addToPerks .btn, #pre60tigeScreen .btn #settings .btn, #leaderboardWindow .btn, #restart .btn, #workers .btn{
+#addToPerks .btn, #prestigeScreen .btn #settings .btn, #leaderboardWindow .btn, #restart .btn, #workers .btn{
     border: 2px solid rgb(85, 85, 85);
     margin: 30px;
 }
 
-#removePerkScreen, #removePrestigeScreen, #removeSettings, #removeLeaderboard, #removeRestart, #removeWorkers{
+.x{
     position: absolute;
     top: 10px;
     right: 10px;
@@ -889,4 +889,12 @@ h1{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+#dumbGrid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+#dumbGrid button{
+    border-radius: 15px;
 }
