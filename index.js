@@ -800,6 +800,7 @@
                 if (gameState.cashCount >= price && stock[key] > 0) {
                     if(max){
                         let amountCanBuy = Math.floor(gameState.cashCount / price);
+                        amountCanBuy = eventIsOn ? amountCanBuy*2 : amountCanBuy;
                         if(amountCanBuy > stock[key]){
                             amountCanBuy = stock[key];
                             gameState.cashCount -= eventIsOn ? (amountCanBuy*price) / 2 : (amountCanBuy*price);
@@ -1724,6 +1725,7 @@
             countdownInterval = null;
             window.cashLoop = null;        
             resetAllGameState();
+            gameState.prestiges = 0;
             gameState.workerProfit = 0;
             gameState.workerAmount = 0;
             restock();
