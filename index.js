@@ -1197,6 +1197,7 @@
         repairGameState();
         
         gameState.cashCount = Math.floor(gameState.cashCount);
+        gameState.workerAmount = Math.round(gameState.workerAmount);
 
         // USERNAME
 
