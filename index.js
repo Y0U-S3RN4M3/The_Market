@@ -1448,7 +1448,7 @@
 
     if(annoyYou){
         annoyYou.addEventListener('click', async function(){
-            const accepted = await confirm("Are you sure you want to be annoyed irritably for a minute straight?");
+            const accepted = await confirm("Are you sure you want to be annoyed irritably for a minute straight?(doesn't change values of your progress)");
             if(accepted){
                 document.getElementById("dumbStuff").style.display = 'none';
                 getAnnoyed(60);
