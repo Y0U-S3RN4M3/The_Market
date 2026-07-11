@@ -1524,71 +1524,78 @@
         }
     }
     
-    function perkIncrease() {
-        if(gameState.cashCount >= 10**(gameState.prestiges + 5)){
-            if(gameState.multiplier < 10+(gameState.prestiges*4) || gameState.payPercent > 30){
-                const gainBase = 10**(2*gameState.prestiges+5);
-                const requirement = 10**(gameState.prestiges+5);
-
-                let multiplierGain = Math.max(Math.log10(gameState.cashCount / gainBase) + 1, 0);
-                
-                if(multiplierGain < gainBase && multiplierGain > requirement){
-                    multiplierGain = ((gameState.cashCount-requirement)/(gainBase-requirement));
+    async function perkIncrease() {
+        const accepted = await confirm("Are you sure you want to add to perks?");
+        if(accepted){
+            if(gameState.cashCount >= 10**(gameState.prestiges + 5)){
+                if(gameState.multiplier < 10+(gameState.prestiges*4) || gameState.payPercent > 30){
+                    const gainBase = 10**(2*gameState.prestiges+5);
+                    const requirement = 10**(gameState.prestiges+5);
+    
+                    let multiplierGain = Math.max(Math.log10(gameState.cashCount / gainBase) + 1, 0);
+                    
+                    if(multiplierGain < gainBase && multiplierGain > requirement){
+                        multiplierGain = ((gameState.cashCount-requirement)/(gainBase-requirement));
+                    }
+    
+                    gameState.multiplier += Math.max(multiplierGain + 0.1, 10+(gameState.prestiges*4));
+                    const multiplier = document.getElementById(`multiplier`);
+                    multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
+    
+                    const payPercentLoss = Math.log10(gameState.cashCount / gainBase + 1) * 2;
+    
+                    gameState.payPercent -= payPercentLoss;
+                    const payPercent = document.getElementById(`payPercent`);
+                    payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
+    
+                    gameState.cashCount = cashResetValue;
+                    resetAllItems();
+                    gameState.workerProfit = 10 ** (Math.floor(Math.log10(gameState.workerProfit) / 3));
+                    restock();
+                    saveGame();
+                    uploadScore();
+                    displayWorkerUI();
                 }
-
-                gameState.multiplier += Math.max(multiplierGain + 0.1, 10+(gameState.prestiges*4));
-                const multiplier = document.getElementById(`multiplier`);
-                multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
-
-                const payPercentLoss = Math.log10(gameState.cashCount / gainBase + 1) * 2;
-
-                gameState.payPercent -= payPercentLoss;
-                const payPercent = document.getElementById(`payPercent`);
-                payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
-
-                gameState.cashCount = cashResetValue;
-                resetAllItems();
-                gameState.workerProfit = 10 ** (Math.floor(Math.log10(gameState.workerProfit) / 3));
-                restock();
-                saveGame();
-                uploadScore();
-                displayWorkerUI();
+                else{
+                    alert(`You already have max multiplier and pay percent!`)
+                }
             }
             else{
-                alert(`You already have max multiplier and pay percent!`)
+                alert(`You do not have enough ${cashName} to add to perks.`);
             }
-        }
-        else{
-            alert(`You do not have enough ${cashName} to add to perks.`);
-        }
+        } 
     }
     
     function getCashLevel(prestige){
         return 10 ** (11 * prestige + 9);
     }
     
-    function prestige(){
-        const cashLevel = getCashLevel(gameState.prestiges);
-        if(gameState.cashCount < cashLevel){
-            alert(`Not enough ${cashName}`);
-            return;
-        };
-        gameState.prestiges += 1;
-        resetAllGameState();
-        gameState.workerProfit = 0;
-        gameState.workerAmount = (gameState.workerAmount/10)*3;
-        restock();
-        timeLeft = config.normalTime;
-        saveGame();
-        uploadScore();
-        displayWorkerUI();
+    async function prestige(){
+        const accepted = await confirm("Are you sure you want to prestige?");
+        if(accepted){
+            const cashLevel = getCashLevel(gameState.prestiges);
+            if(gameState.cashCount < cashLevel){
+                alert(`You do not enough ${cashName} to prestige`);
+                return;
+            };
+            gameState.prestiges += 1;
+            resetAllGameState();
+            gameState.workerProfit = 0;
+            gameState.workerAmount = (gameState.workerAmount/10)*3;
+            restock();
+            timeLeft = config.normalTime;
+            saveGame();
+            uploadScore();
+            displayWorkerUI();
+        }
     }
-    if(document.getElementById(`perkIncreaseBtn`)){
-        document.getElementById(`perkIncreaseBtn`).addEventListener(`click`, perkIncrease);
-    }
-    if(document.getElementById(`prestigeBtn`)){
-    document.getElementById(`prestigeBtn`).addEventListener(`click`, prestige);
-    }
+
+        if(document.getElementById(`perkIncreaseBtn`)){
+            document.getElementById(`perkIncreaseBtn`).addEventListener(`click`, perkIncrease);
+        }
+        if(document.getElementById(`prestigeBtn`)){
+        document.getElementById(`prestigeBtn`).addEventListener(`click`, prestige);
+        }
     // ------------ RESTART ------------
 
     function confirm(message){
