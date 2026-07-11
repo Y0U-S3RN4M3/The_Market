@@ -22,6 +22,7 @@
     const chachingsound = new Audio(`./sounds/chaching.mp3`);
     const cashName = `Penties`;
     const cashSymbol = `𝓟`;
+    const cashResetValue = 10;
     let cryptoInterval;
     let uiInterval;
     let countdownInterval;
@@ -30,7 +31,7 @@
     // ---------------- GAME STATE ----------------
     
     let gameState = {
-        cashCount: 10,
+        cashCount: cashResetValue,
         multiplier: 0,
         payPercent: 100,
     
@@ -1491,7 +1492,27 @@
 
     // ----------------- PERKS/PRESTIGES -----------------
     
-    function resetAllItems() {
+    function resetAllGameState() {
+        gameState.cashCount = cashResetValue;
+        for (const key in gameState) {
+            if (
+                key.endsWith(`Count`) &&
+                key !== `cashCount`
+            ) {
+                gameState[key] = 0;
+            }
+        }
+        gameState.Bitcoin = 0;
+        gameState.Litecoin = 0;
+        gameState.Dogecoin = 0;
+        gameState.BitcoinVal = 100000;
+        gameState.LitecoinVal = 100;
+        gameState.DogecoinVal = 10000000000;
+        gameState.multiplier = 0;
+        gameState.payPercent = 100;
+        
+    }
+    function resetAllItems(){
         for (const key in gameState) {
             if (
                 key.endsWith(`Count`) &&
@@ -1524,14 +1545,8 @@
                 const payPercent = document.getElementById(`payPercent`);
                 payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
 
-                gameState.cashCount = 10;
+                gameState.cashCount = cashResetValue;
                 resetAllItems();
-                gameState.Bitcoin = 0;
-                gameState.Litecoin = 0;
-                gameState.Dogecoin = 0;
-                gameState.BitcoinVal = 100000;
-                gameState.LitecoinVal = 100;
-                gameState.DogecoinVal = 10000000000;
                 gameState.workerProfit = 10 ** (Math.floor(Math.log10(gameState.workerProfit) / 3));
                 restock();
                 saveGame();
@@ -1543,7 +1558,7 @@
             }
         }
         else{
-            alert(`You do not have enough money`);
+            alert(`You do not have enough ${cashName} to add to perks.`);
         }
     }
     
@@ -1558,22 +1573,14 @@
             return;
         };
         gameState.prestiges += 1;
-        gameState.cashCount = 10;
-        gameState.multiplier = 0;
-        gameState.payPercent = 100;
-        resetAllItems();
-        gameState.BitcoinVal = 100000;
-        gameState.LitecoinVal = 100;
-        gameState.DogecoinVal = 10000000000;
-        gameState.Bitcoin = 0;
-        gameState.Litecoin = 0;
-        gameState.Dogecoin = 0;
+        resetAllGameState();
         gameState.workerProfit = 0;
         gameState.workerAmount = (gameState.workerAmount/10)*3;
         restock();
         timeLeft = config.normalTime;
         saveGame();
         uploadScore();
+        displayWorkerUI();
     }
     if(document.getElementById(`perkIncreaseBtn`)){
         document.getElementById(`perkIncreaseBtn`).addEventListener(`click`, perkIncrease);
@@ -1582,43 +1589,85 @@
     document.getElementById(`prestigeBtn`).addEventListener(`click`, prestige);
     }
     // ------------ RESTART ------------
-    function restartGame() {
-        if (!confirm(`Are you sure you want to restart? This will erase all progress.`)) {
-            return;
-        }
-    
-        clearInterval(cryptoInterval);
-        clearInterval(uiInterval);
-        clearInterval(countdownInterval);
-        clearInterval(window.cashLoop);
-    
-        cryptoInterval = null;
-        uiInterval = null;
-        countdownInterval = null;
-        window.cashLoop = null;
-    
-        gameState.cashCount = 10;
-        gameState.multiplier = 0;
-        gameState.payPercent = 100;
-        resetAllItems();
-        gameState.BitcoinVal = 100000;
-        gameState.LitecoinVal = 100;
-        gameState.DogecoinVal = 10000000000;
-        gameState.Bitcoin = 0;
-        gameState.Litecoin = 0;
-        gameState.Dogecoin = 0;
-        gameState.prestiges = 0;
-        gameState.workerProfit = 0;
-        gameState.workerAmount = 0;
-        restock();
-        timeLeft = config.normalTime;
-        
-        localStorage.clear();
-    
-        saveGame();
-        uploadScore();
 
-        window.location.reload();
+    function confirm(message){
+        return new Promise(resolve => {
+            clearInterval(countdownInterval);
+            const overlay = document.createElement("div");
+            overlay.id = "confirmOverlay";
+
+            const confirm = document.createElement("div");
+            confirm.id = 'confirm';
+            confirm.classList.add("confirm");
+
+            const text = document.createElement("div");
+            text.textContent = message;
+
+            const btnContainer = document.createElement("div");
+            btnContainer.classList.add("allowanddeny")
+
+            const allow = document.createElement("button");
+            allow.classList.add("btn");
+            allow.classList.add("allowBtn");
+            allow.textContent = 'allow';
+            allow.addEventListener('click', () => {
+                confirm.remove();
+                overlay.remove();
+                alert("Confirmed");
+                setCountDown();
+                resolve(true);
+            });
+
+            const deny = document.createElement("button");
+            deny.classList.add("btn");
+            deny.classList.add("denyBtn");
+            deny.textContent = 'deny';
+            deny.addEventListener('click', () => {
+                confirm.remove();
+                overlay.remove();
+                setCountDown();
+                alert("rejected");
+                resolve(false);
+            });
+
+            document.body.appendChild(overlay);
+            document.body.appendChild(confirm)
+            confirm.appendChild(text);
+            confirm.appendChild(document.createElement("br"));
+            confirm.appendChild(btnContainer);
+            btnContainer.appendChild(allow);
+            btnContainer.appendChild(deny);
+        });
+    }
+
+    async function restartGame() {
+        const accepted = await confirm(
+            `Are you sure you want to restart? This will erase all progress.`
+        );
+        if (accepted) {
+            clearInterval(cryptoInterval);
+            clearInterval(uiInterval);
+            clearInterval(countdownInterval);
+            clearInterval(window.cashLoop);
+        
+            cryptoInterval = null;
+            uiInterval = null;
+            countdownInterval = null;
+            window.cashLoop = null;        
+            resetAllGameState();
+            gameState.workerProfit = 0;
+            gameState.workerAmount = 0;
+            restock();
+            timeLeft = config.normalTime;
+            
+            localStorage.clear();
+        
+            saveGame();
+            uploadScore();
+            displayWorkerUI();
+
+            window.location.reload();
+        }
     }
 
     // ---------------- INIT ----------------
