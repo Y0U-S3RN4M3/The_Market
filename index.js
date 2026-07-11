@@ -22,7 +22,7 @@
     const chachingsound = new Audio(`./sounds/chaching.mp3`);
     const cashName = `Penties`;
     const cashSymbol = `𝓟`;
-    const cashResetValue = 10;
+    const cashResetValue = 10e919;
     let cryptoInterval;
     let uiInterval;
     let countdownInterval;
@@ -1271,7 +1271,7 @@
                 Math.max(gameState.payPercent - payPercentLoss, 30);
 
             newmultiplierdisplay.textContent =
-                `Your new multiplier will be ${Math.min(newMultiplier + 0.1, 14)}`;
+                `Your new multiplier will be ${Math.min(newMultiplier + 0.1, multmax)}`;
 
             newpaypercentdisplay.textContent =
                 `Your new pay percent will be ${newPayPercent.toFixed(1)}%`;
