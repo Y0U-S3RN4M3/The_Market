@@ -1485,8 +1485,8 @@
                    `ColbeFindsHacks`];
     const rewards = [
         () => {
-            gameState.cashCount += 1e36;
-            alert(`You gained ${getFormattedNumber(1e36)}(${getHyperE(1e36)})`);
+            gameState.cashCount += 1e99;
+            alert(`You gained ${getFormattedNumber(1e99)}(${getHyperE(1e99)})`);
         },
         () => {
             gameState.multiplier = Math.min(10+(gameState.prestiges*4), gameState.multiplier + 10);
@@ -1501,12 +1501,12 @@
             alert(`You got a cosmic cheese`);
         },
         () => {
-            gameState.cashCount = Math.max(getCashLevel(gameState.prestiges), gameState.cashCount);
-            alert(`You got the amount you need to prestige!`);
+            gameState.prestiges += 1;
+            alert(`You got the a prestige!`);
         },
         () => {
-            gameState.cashCount = 9.9999e302;
-            alert(`You now have ${getFormattedNumber(9.9999e302)}(${getHyperE(9.9999e302)})`)
+            gameState.cashCount = 9.9999e99;
+            alert(`You now have ${getFormattedNumber(9.9999e99)}(${getHyperE(9.9999e99)})`)
         },
     ];
 
@@ -1519,10 +1519,10 @@
             alert("Invalid Code");
             return;
         }
-        // else if (gameState[`code${index}redeemed`]) {
-        //     alert("You've already redeemed this code.");
-        //     return;
-        // }
+        else if (gameState[`code${index}redeemed`]) {
+            alert("You've already redeemed this code.");
+            return;
+        }
         else{
             gameState[`code${index}redeemed`] = false;
         
