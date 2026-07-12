@@ -1588,40 +1588,48 @@
         }
     }
     
+    function increasePerks(){
+        const gainBase = 10**(2*gameState.prestiges+5);
+        const requirement = 10**(gameState.prestiges+5);
+
+        let multiplierGain = Math.max(Math.log10(gameState.cashCount / gainBase) + 1, 0);
+        
+        if(multiplierGain < gainBase && multiplierGain > requirement){
+            multiplierGain = ((gameState.cashCount-requirement)/(gainBase-requirement));
+        }
+
+        gameState.multiplier += Math.min(multiplierGain + 0.1, 10+(gameState.prestiges*4));
+        const multiplier = document.getElementById(`multiplier`);
+        multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
+
+        const payPercentLoss = Math.log10(gameState.cashCount / gainBase + 1) * 2;
+
+        gameState.payPercent -= payPercentLoss;
+        const payPercent = document.getElementById(`payPercent`);
+        payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
+
+        gameState.cashCount = cashResetValue;
+        resetAllItems();
+        gameState.workerProfit = 10 ** (Math.floor(Math.log10(gameState.workerProfit) / 6));
+        restock();
+        saveGame();
+        uploadScore();
+        displayWorkerUI();
+    }
+
     async function perkIncrease() {
         const accepted = await confirm("Are you sure you want to add to perks?");
         if(accepted){
             if(gameState.cashCount >= 10**(gameState.prestiges + 5)){
                 if(gameState.multiplier < 10+(gameState.prestiges*4) || gameState.payPercent > 30){
-                    const gainBase = 10**(2*gameState.prestiges+5);
-                    const requirement = 10**(gameState.prestiges+5);
-    
-                    let multiplierGain = Math.max(Math.log10(gameState.cashCount / gainBase) + 1, 0);
-                    
-                    if(multiplierGain < gainBase && multiplierGain > requirement){
-                        multiplierGain = ((gameState.cashCount-requirement)/(gainBase-requirement));
-                    }
-    
-                    gameState.multiplier += Math.min(multiplierGain + 0.1, 10+(gameState.prestiges*4));
-                    const multiplier = document.getElementById(`multiplier`);
-                    multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
-    
-                    const payPercentLoss = Math.log10(gameState.cashCount / gainBase + 1) * 2;
-    
-                    gameState.payPercent -= payPercentLoss;
-                    const payPercent = document.getElementById(`payPercent`);
-                    payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
-    
-                    gameState.cashCount = cashResetValue;
-                    resetAllItems();
-                    gameState.workerProfit = 10 ** (Math.floor(Math.log10(gameState.workerProfit) / 6));
-                    restock();
-                    saveGame();
-                    uploadScore();
-                    displayWorkerUI();
+                    increasePerks();
                 }
                 else{
-                    alert(`You already have max multiplier and pay percent!`)
+                    const acceptAgain = await confirm(`You already have max multiplier and pay percent? Are you still sure? You'll gain nothing and only lose money`);
+                    if(acceptAgain){
+                        increasePerks();
+                    }
+
                 }
             }
             else{
