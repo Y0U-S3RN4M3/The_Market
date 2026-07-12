@@ -621,7 +621,7 @@ h1{
 #menuBtn:hover::after{
     content: ''
 }
-#addToPerks, #prestigeScreen, #settings, #leaderboardWindow, #restart, #workers{
+.window{
     background-color: hsla(0, 0%, 0%, 1);
     padding: 20px;
     margin: 20px;
@@ -897,4 +897,8 @@ h1{
 }
 #dumbGrid button{
     border-radius: 15px;
+}
+#codes input, #codes button{
+    border: 2px solid rgb(90, 90, 90);
+    border-radius: 20px;
 }

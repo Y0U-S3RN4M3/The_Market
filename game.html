@@ -26,15 +26,22 @@
             <button id="openPrestigeScreen" class="btn menuItem">🪽</button>
             <button id="workerBtn" class="btn menuItem">⛏</button>
             <button id="openLeaderboard" class="btn menuItem">🜲</button>
+            <button id="openCodes" class="btn menuItem"><\></button>
             <button id="openSettings" class="btn menuItem">🛠</button>
         </div>
-        <div id="restart">
+        <div id="restart" class="window">
             <div id='removeRestart' class="x">✘</div>
             <h1>RESTART GAME</h1>
             <p style="color: white; padding: 20px;">Restarting the game will reset everything, including prestiges, multiplier, pay percent and more...</p>
             <button class="btn" id="restartGame">Restart Game</button>
         </div>
-        <div id="workers">
+        <div id="codes" class="window">
+            <div id='removeCodes' class="x">✘</div>
+            <h1>CODES</h1>
+            <input id="codeInput" placeholder="Input code">
+            <button class="btn" id="redeem">Redeem</button>
+        </div>
+        <div id="workers" class="window">
             <div id='removeWorkers' class="x">✘</div>
             <h1>WORKERS</h1>
             <h2 id="workerProfitDisplay">Worker Profit: 1M/m</h2>
@@ -44,7 +51,7 @@
             <h2>Worker Profit</h2>
             <button id="workerProfit" class="btn">100M</button>
         </div>
-        <div id="addToPerks">
+        <div id="addToPerks" class="window">
             <div id='removePerkScreen' class="x">✘</div>
             <h1 id="perkneed">YOU NEED 100K TO ADD TO PERKS</h1>
             <p style="color: white">Adding to perks will restart all of your progress except for prestiges, multiplier and pay percent, but will add to your multiplier and pay percent. The more the better.</p><br>
@@ -52,7 +59,7 @@
             <p style="color: white;" id="newPayPercentDisplay">Your new pay percent will be 100%</p>
             <button id='perkIncreaseBtn' style="border-color: rgb(35, 35, 35)" class="btn">Add To Perks</button>
         </div>
-        <div id="prestigeScreen">
+        <div id="prestigeScreen" class="window">
             <div id='removePrestigeScreen' class="x">✘</div>
             <h1 id="cashLevel">You need 100M for the next prestige...</h1>
             <p style="color: white">Adding to perks will restart all of your progress except for prestiges, which increases by 1. Prestiges will increase your multiplier max, which increases by 4 for each prestige.</p><br>
@@ -60,7 +67,7 @@
             <p style="color: white" id="prestigemultdisplay">Your prestige multiplier is 1</p>
             <button id="prestigeBtn" class="btn">Prestige</button>
         </div>
-        <div id="leaderboardWindow">
+        <div id="leaderboardWindow" class="window">
             <div id='removeLeaderboard' class="x">✘</div>
             <h2>Leaderboard</h2>
             <div id="columns">
@@ -72,7 +79,7 @@
             <div id="leaderboard">
             </div>
         </div>
-        <div id="settings">
+        <div id="settings" class="window">
             <h1>SETTINGS</h1>
             <button id='removeSettings' class="x">✘</button>
             <p style="padding: 5px">Buy Max?</p>
@@ -852,7 +859,7 @@
             
                 <!-- Green Giant -->
                 <div class="sellItem">
-                    <h2 id="cosmicCheeseDisplay">Green Giant: 0</h2>
+                    <h2 id="greenGiantDisplay">Green Giant: 0</h2>
                     <button class="sellbtn"
                         style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
                         id="sell-cosmic-cheese">Sell</button>
@@ -977,7 +984,7 @@
                 <button id="prestigesTo14" class="btn">Set Prestiges To 14</button>
                 <button id="resetWorkerProgress" class="btn">Reset Worker Progress</button>
                 <button id="resetCash" class="btn">Reset Cash</button>
-                <button id="annoyYou" class="btn">Annoy You</button>
+                <button id="annoyYou" class="btn">Annoy Y</button>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

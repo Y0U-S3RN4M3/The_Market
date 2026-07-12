@@ -120,6 +120,13 @@
         Dogecoin: 0,
 
         username: `Anonymous`,
+
+        code0redeemed: false,
+        code1redeemed: false,
+        code2redeemed: false,
+        code3redeemed: false,
+        code4redeemed: false,
+        code5redeemed: false,
     };
     
     const defaultGameState = { ...gameState };
@@ -1377,8 +1384,10 @@
         makeWindow(`openLeaderboard`, `removeLeaderboard`, `leaderboardWindow`);
         makeWindow(`restartGameBtn`, `removeRestart`, `restart`);
         makeWindow(`workerBtn`, `removeWorkers`, `workers`);
+        makeWindow(`openCodes`, `removeCodes`, `codes`)
 
-        function setUpRarity(btnId, rarityId, need){
+
+        function setUpSection(btnId, rarityId, need){
             const btn = document.getElementById(btnId);
             const fruits = document.getElementById(rarityId);
 
@@ -1395,18 +1404,14 @@
             }
         }
         
-        setUpRarity(`commonFoodBtn`, `commonFoods`, 0);
-        setUpRarity(`rareFoodsBtn`, `rareFoods`, 1);
-        setUpRarity(`uncannyFoodsBtn`, `uncannyFoods`, 3);
-        setUpRarity(`legendaryFoodsBtn`, `legendaryFoods`, 5);
-        setUpRarity(`supernaturalFoodsBtn`, `supernaturalFoods`, 8);
-        setUpRarity(`mythologicalFoodsBtn`, `mythologicalFoods`, 12);
-        setUpRarity(`exoticFoodsBtn`, `exoticFoods`, 20);
-        setUpRarity(`dumbStuffBtn`, `dumbStuff`, 15);
-
-        const exoticBtn = document.getElementById(`exoticFoodsBtn`);
-        const exoticFood = document.getElementById(`exoticFoods`);
-        
+        setUpSection(`commonFoodBtn`, `commonFoods`, 0);
+        setUpSection(`rareFoodsBtn`, `rareFoods`, 1);
+        setUpSection(`uncannyFoodsBtn`, `uncannyFoods`, 3);
+        setUpSection(`legendaryFoodsBtn`, `legendaryFoods`, 5);
+        setUpSection(`supernaturalFoodsBtn`, `supernaturalFoods`, 8);
+        setUpSection(`mythologicalFoodsBtn`, `mythologicalFoods`, 12);
+        setUpSection(`exoticFoodsBtn`, `exoticFoods`, 20);
+        setUpSection(`dumbStuffBtn`, `dumbStuff`, 15);
     }
 
     // ------------------- DUMB STUFF -----------------------
@@ -1468,7 +1473,69 @@
         }, seconds*1000)
     }
 
+    // ------------------ CODES -----------------------
+
+    const redeem = document.getElementById("redeem");
+    const input = document.getElementById("codeInput");
+    const codes = ['Trans3ndantB3n',
+                   `TruRn3st`,
+                   `MonkeIsTheBest@TheMarket`,
+                   `MonkeHasInfinite${cashName}`,
+                   `TemedireIsCool`, 
+                   `ColbeFindsHacks`];
+    const rewards = [
+        () => {
+            gameState.cashCount += 1e36;
+            alert(`You gained ${getFormattedNumber(1e36)}(${getHyperE(1e36)})`);
+        },
+        () => {
+            gameState.multiplier = Math.min(10+(gameState.prestiges*4), gameState.multiplier + 10);
+            alert(`Your multiplier is now ${gameState.multiplier}`);
+        },
+        () => {
+            gameState.greenGiantCount += 1;
+            alert(`You got a green giant`);
+        },
+        () => {
+            gameState.cosmicCheeseCount += 1;
+            alert(`You got a cosmic cheese`);
+        },
+        () => {
+            gameState.cashCount = Math.max(getCashLevel(gameState.prestiges), gameState.cashCount);
+            alert(`You got the amount you need to prestige!`);
+        },
+        () => {
+            gameState.cashCount = 9.9999e302;
+            alert(`You now have ${getFormattedNumber(9.9999e302)}(${getHyperE(9.9999e302)})`)
+        },
+    ];
+
+    redeem.addEventListener("click", () => {
+        const playerInput = input.value.trim();
+    
+        const index = codes.indexOf(playerInput);
+    
+        if (index === -1) {
+            alert("Invalid Code");
+            return;
+        }
+        // else if (gameState[`code${index}redeemed`]) {
+        //     alert("You've already redeemed this code.");
+        //     return;
+        // }
+        else{
+            gameState[`code${index}redeemed`] = false;
+        
+            rewards[index]();
+        
+            saveGame();
+        
+            alert("CODE REDEEMED");
+        }
+    });
+
     // ------------------- USERNAMES AND LEADERBOARDS -------------------
+
     const submitBtn = document.getElementById(`submitUsernameBtn`);
 
     async function submitUsername() {
