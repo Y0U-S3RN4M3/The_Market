@@ -1,1879 +1,993 @@
-(() => {
-    if (window.timerRunning) {
-        clearInterval(window.timerRunning);
-    }
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The Market</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/png" href="images/marketing.png">
+    </head>
+    <body>
+        <div id="gameContainer">
+        <div id="alertDiv"></div>
+        <h1 class="header" style="padding: 80px;">THE MARKET</h1>
+        <a href="index.html" style="text-decoration: none;">
+            <button class="btn" id="back" style="display: flex; justify-self: center;">></button>
+        </a><br>
+        <h1 id="usernameDisplay">Anonymous' Market</h1>
+        <input id="userInput" placeholder="Username">
+        <button class="btn" type="submit" id="submitUsernameBtn">SUBMIT</button>
+        <div id="menu">
+            <button class="btn menuItem" id="restartGameBtn">↻</button>
+            <button class="btn menuItem" id="perkOpen">+</button>
+            <button id="openPrestigeScreen" class="btn menuItem">🪽</button>
+            <button id="workerBtn" class="btn menuItem">⛏</button>
+            <button id="openLeaderboard" class="btn menuItem">🜲</button>
+            <button id="openCodes" class="btn menuItem"><\></button>
+            <button id="openSettings" class="btn menuItem">🛠</button>
+        </div>
+        <div id="restart" class="window">
+            <div id='removeRestart' class="x">✘</div>
+            <h1>RESTART GAME</h1>
+            <p style="color: white; padding: 20px;">Restarting the game will reset everything, including prestiges, multiplier, pay percent and more...</p>
+            <button class="btn" id="restartGame">Restart Game</button>
+        </div>
+        <div id="codes" class="window">
+            <div id='removeCodes' class="x">✘</div>
+            <h1>CODES</h1>
+            <input id="codeInput" placeholder="Input code">
+            <button class="btn" id="redeem">Redeem</button>
+        </div>
+        <div id="workers" class="window">
+            <div id='removeWorkers' class="x">✘</div>
+            <h1>WORKERS</h1>
+            <h2 id="workerProfitDisplay">Worker Profit: 1M/m</h2>
+            <h2 id="workerAmountDisplay">Worker Amount: 0</h2>
+            <h2>Worker Amount</h2>
+            <button id="workerAmount" class="btn">10M</button>
+            <h2>Worker Profit</h2>
+            <button id="workerProfit" class="btn">100M</button>
+        </div>
+        <div id="addToPerks" class="window">
+            <div id='removePerkScreen' class="x">✘</div>
+            <h1 id="perkneed">YOU NEED 100K TO ADD TO PERKS</h1>
+            <p style="color: white">Adding to perks will restart all of your progress except for prestiges, multiplier and pay percent, but will add to your multiplier and pay percent. The more the better.</p><br>
+            <p style="color: white;" id="newMultiplierDisplay">Your new multiplier will be 0</p>
+            <p style="color: white;" id="newPayPercentDisplay">Your new pay percent will be 100%</p>
+            <button id='perkIncreaseBtn' style="border-color: rgb(35, 35, 35)" class="btn">Add To Perks</button>
+        </div>
+        <div id="prestigeScreen" class="window">
+            <div id='removePrestigeScreen' class="x">✘</div>
+            <h1 id="cashLevel">You need 100M for the next prestige...</h1>
+            <p style="color: white">Adding to perks will restart all of your progress except for prestiges, which increases by 1. Prestiges will increase your multiplier max, which increases by 4 for each prestige.</p><br>
+            <p style="color: white" id="multipliermaxdisplay">Your multiplier max is 10</p>
+            <p style="color: white" id="prestigemultdisplay">Your prestige multiplier is 1</p>
+            <button id="prestigeBtn" class="btn">Prestige</button>
+        </div>
+        <div id="leaderboardWindow" class="window">
+            <div id='removeLeaderboard' class="x">✘</div>
+            <h2>Leaderboard</h2>
+            <div id="columns">
+                <div class="place"><pre> #no.</pre></div>
+                <div>username</div>
+                <div>prestiges</div>
+                <div>penties</div>
+            </div>
+            <div id="leaderboard">
+            </div>
+        </div>
+        <div id="settings" class="window">
+            <h1>SETTINGS</h1>
+            <button id='removeSettings' class="x">✘</button>
+            <p style="padding: 5px">Buy Max?</p>
+            <button class="btn maxBtnNo" style="border-color: white;" id="maxBtn">YES</button>
+            <p>UI Type:</p>
+            <button class="btn maxBtnNo" style="padding: 10px; margin: 10px" id="uiBtn">TYPE 1</button>
+        </div>
+        <button class="btn" id="menuBtn">></button>
+        <div class="ui">
+            <h2 id="cash">Penties(℗):<br> 10℗</h2>
+            <h2 id="prestiges">Prestiges:<br> 0</h2>
+            <h2 id="multiplier">Multiplier:<br> 0</h2>
+            <h2 id="payPercent">Pay Percent:<br> 100%</h2>
+        </div>
 
-    const supabaseUrl = `https://sudgrewakskphlfwbubm.supabase.co`;
-    const supabaseKey = `sb_publishable_u1nxZ4YtF2_XcvURH4AywQ_UZ-sZVlM`;
+        <h2 id="countDown">There is 10m 00s left...</h2>
 
-    const supabase = window.supabase.createClient(
-        supabaseUrl,
-        supabaseKey
-    );
-
-    let playerId = localStorage.getItem(`playerId`);
-
-    if (!playerId) {
-        playerId = crypto.randomUUID();
-        localStorage.setItem(`playerId`, playerId);
-    }
-
-    const clicksound = new Audio(`./sounds/mouseclick.mp3`);
-    const chachingsound = new Audio(`./sounds/chaching.mp3`);
-    const cashName = `Penties`;
-    const cashSymbol = `𝓟`;
-    const cashResetValue = 10;
-    let cryptoInterval;
-    let uiInterval;
-    let countdownInterval;
-    const message = `RN im in the ZONE!!! I got ${cashName}${cashSymbol}${cashSymbol}${cashSymbol} on my mind.`
-    console.log(message)
-    // ---------------- GAME STATE ----------------
-    
-    let gameState = {
-        cashCount: cashResetValue,
-        multiplier: 0,
-        payPercent: 100,
-    
-        // common
-        appleCount: 0,
-        bananaCount: 0,
-        orangeCount: 0,
-        yougurtCount: 0,
-        mangoCount: 0,
-        breadCount: 0,
-        frozenAppleSlicesCount: 0,
-        rawBananaCount: 0,
-        frozenOrangeCount: 0,
-        frozenYougurtCount: 0,
-        frozenMangoSlicesCount: 0,
-        toastCount: 0,
-        raisinToastCount: 0,
-        raisinCount: 0,
-    
-        // rare
-        chocolateCount: 0,
-        darkChocolateCount: 0,
-        pizzaCount: 0,
-        cookieCount: 0,
-        chickenCount: 0,
-        pastaCount: 0,
-        burgerCount: 0,
-        donutCount: 0,
-        pancakeCount: 0,
-        iceCreamCount: 0,
-        cheesecakeCount: 0,
-    
-        // uncanny
-        bluecapMushroomsCount: 0,
-        ashenPearsCount: 0,
-        twighlightHoneycombsCount: 0,
-        petersPickledPeppersCount: 0,
-        twistedTurnipCount: 0,
-        shadowedMelonCount: 0,
-        crimsonVeinedPlumCount: 0,
-        monsterCount: 0,
-        whatCount: 0,
-    
-        // legendary
-        grannyAndGrampaPigCount: 0,
-        weLiveWeLoveWeDieCount: 0,
-        dogeCount: 0,
-        rickButRolledCount: 0,
-        pepeCount: 0,
-        friedRnestCount: 0,
-        appaCount: 0,
-        undefinedItemCount: 0,
-        overlyDefinedItemCount: 0,
-
-        // supernatural
-        bettysBitterButterCount: 0,
-        cosmicCheeseCount: 0,
-        livingSoccerBallCount: 0,
-        mathCount: 0,
-        piCount: 0,
-        meetCount: 0,
-
-        // mythological
-        benCount: 0,
-        greenGiantCount: 0,
-        theFirstSpinjitsuMasterCount: 0,
-        trueRnestCount: 0,
-        transendantBenCount: 0,
-
-        // exotic
-        sushiCount: 0,
-        caviarCount: 0,
-        butterChickenCount: 0,
+        <button class="btn displays" id='commonFoodBtn'>COMMON FOODS</button>
+        <div id="commonFoods" class="rarity">
+        <div id="grid">
+            <div id="apples" class="iem">
+                <h4>Apples</h4>
+                <h5 class="cost">10℗</h5>
+                <h5 id="appleStock">Stock: 10</h5>
+                <img src="https://cdn.britannica.com/22/187222-050-07B17FB6/apples-on-a-tree-branch.jpg">
+            </div>
+            <div id="bananas" class="item">
+                <h4>Bananas</h4>
+                <h5 class="cost">15℗</h5>
+                <h5 id="bananaStock">Stock: 10</h5>
+                <img src="https://www.popoptiq.com/wp-content/uploads/2019/01/4-28-1-1.jpg">
+            </div>
+            <div id="oranges" class="item">
+                <h4>Oranges</h4>
+                <h5 class="cost">20℗</h5>
+                <h5 id="orangeStock">Stock: 10</h5>
+                <img src="https://www.tastingtable.com/img/gallery/are-oranges-named-after-the-color/intro-1666984048.jpg">
+            </div>
+            <div id="yougurt" class="item">
+                <h4>Yougurt</h4>
+                <h5 class="cost">100℗</h5>
+                <h5 id="yougurtStock">Stock: 10</h5>
+                <img src="https://static.toiimg.com/photo/75220490.cms">
+            </div>
+            <div id="mango" class="item">
+                <h4>Mango</h4>
+                <h5 class="cost">200℗</h5>
+                <h5 id="mangoStock">Stock: 10</h5>
+                <img src="https://harvesttotable.com/wp-content/uploads/2019/11/Mango-bigstock-Tropical-Mango-Tree-With-Big-R-288199537-scaled.jpg">
+            </div>
+            <div id="bread" class="item">
+                <h4>bread</h4>
+                <h5 class="cost">500℗</h5>
+                <h5 id="breadStock">Stock: 10</h5>
+                <img src="https://images.pexels.com/photos/209206/pexels-photo-209206.jpeg?cs=srgb&dl=baked-bread-buns-209206.jpg&fm=jpg">
+            </div>
+            <div id="frozenAppleSlices" class="item"> 
+                <h4>Frozen Apple Slices</h4>
+                <h5 class="cost">1k℗</h5>
+                <h5 id="frozenAppleSlicesStock">Stock: 10</h5>
+                <img src="https://tse2.mm.bing.net/th?id=OIP.lVCSmowSr2zVkNAaEiMsggHaHa&pid=Api&P=0&h=180">
+            </div>
+            <div id="rawBanana" class="item">
+                <h4>Raw Bananas</h4>
+                <h5 class="cost">1.5k℗</h5>
+                <h5 id="rawBananaStock">Stock: 10</h5>
+                <img src="https://www.tasteofhome.com/wp-content/uploads/2022/07/GettyImages-1141164080-green-bananas.jpg">
+            </div>
+            <div id="frozenOrange" class="item">
+                <h4>Frozen Oranges</h4>
+                <h5 class="cost">2.5k℗</h5>
+                <h5 id="frozenOrangeStock">Stock: 10</h5>
+                <img src="https://thumbs.dreamstime.com/b/frozen-orange-slice-clear-cube-wet-surface-day-encased-ice-sits-blurred-city-background-325620621.jpg">
+            </div>
+            <div id="frozenYougurt" class="item">
+                <h4>Frozen Yougurt</h4>
+                <h5 class="cost">5k℗</h5>
+                <h5 id="frozenYougurtStock">Stock: 10</h5>
+                <img src="https://www.biggerbolderbaking.com/wp-content/uploads/2016/01/BBB108-Homemade-Frozen-Yogurt-Thumbnail-FINAL.jpg">
+            </div>
+            <div id="frozenMangoSlices" class="item">
+                <h4>Frozen Mango Slices</h4>
+                <h5 class="cost">10k℗</h5>
+                <h5 id="frozenMangoSlicesStock">Stock: 10</h5>
+                <img src="https://tse2.mm.bing.net/th?id=OIP.Y6JSMqwDqUERjPUBx37MvgHaHa&pid=Api&P=0&h=180">
+            </div>
+            <div id="toast" class="item">
+                <h4>Toast</h4>
+                <h5 class="cost">20k℗</h5>
+                <h5 id="toastStock">Stock: 10</h5>
+                <img src="https://www.foodrepublic.com/img/gallery/the-quickest-way-to-toast-bread-for-an-intensely-satisfying-crunch/l-intro-1684532933.jpg">
+            </div>
+            <div id="raisinToast" class="item">
+                <h4>Raisin Toast</h4>
+                <h5 class="cost">100k℗</h5>
+                <h5 id="raisinToastStock">Stock: 10</h5>
+                <img src="https://thumbs.dreamstime.com/b/raisin-fruit-toast-polyunsaturated-margarine-25114952.jpg">
+            </div>
+            <div id="raisin" class="item">
+                <h4>Raisins</h4>
+                <h5 class="cost">5M℗</h5>
+                <h5 id="raisinStock">Stock: 10</h5>
+                <img src="https://tse1.mm.bing.net/th/id/OIP.1a6IQG34uCFxSp_u4D8nlwHaE8?pid=Api&P=0&h=180">
+            </div>
+        </div>
+        <div id="displayContainer">
+            <!-- Apples -->
+            <div class="sellItem">
+                <h2 id="appleDisplay">Apples: 0</h2>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-apple">Sell</button>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-apples">Sell All</button>
+            </div>
+            <!-- Bananas -->
+            <div class="sellItem">
+                <h2 id="bananaDisplay">Bananas: 0</h2>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-banana">Sell</button>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-bananas">Sell All</button>
+            </div>
+            <!-- Oranges -->
+            <div class="sellItem">
+                <h2 id="orangeDisplay">Oranges: 0</h2>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-orange">Sell</button>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-oranges">Sell All</button>
+            </div>
+            <!-- Yougurt -->
+            <div class="sellItem">
+                <h2 id="yougurtDisplay">Yougurt: 0</h2>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-yougurt">Sell</button>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-yougurts">Sell All</button>
+            </div> 
+            <!-- Mango -->
+                    <div class="sellItem">
+                <h2 id="mangoDisplay">Mango: 0</h2>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-mango">Sell</button>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-mangos">Sell All</button>
+            </div>
+            <!-- Bread -->
+            <div class="sellItem">
+                <h2 id="breadDisplay">Bread: 0</h2>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-bread">Sell</button>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-breads">Sell All</button>
+            </div>
+            <!-- Frozen Apple Slices -->
+            <div class="sellItem">
+                <h2 id="frozenAppleSlicesDisplay">Frozen Apple Slices: 0</h2>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-frozen-apple-slices">Sell</button>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-frozen-apple-slices">Sell All</button>
+            </div>
         
-        prestiges: 0,
-
-        BitcoinVal: 100000,
-        LitecoinVal: 100,
-        DogecoinVal: 10000000000,
-
-        workerAmount: 0,
-        workerProfit: 10e6,
-    
-        Bitcoin: 0,
-        Litecoin: 0,
-        Dogecoin: 0,
-
-        username: `Anonymous`,
-
-        code0redeemed: false,
-        code1redeemed: false,
-        code2redeemed: false,
-        code3redeemed: false,
-        code4redeemed: false,
-        code5redeemed: false,
-    };
-    
-    const defaultGameState = { ...gameState };
-    
-    function repairGameState() {
-        for (const key in defaultGameState) {
-    
-            // Recreate deleted properties
-            if (!(key in gameState)) {
-                gameState[key] = defaultGameState[key];
-            }
-    
-            // Prevent NaN and non-numbers
-            if (
-                typeof defaultGameState[key] === `number` &&
-                (
-                    typeof gameState[key] !== `number` ||
-                    isNaN(gameState[key])
-                )
-            ) {
-                gameState[key] = defaultGameState[key];
-            }
-    
-            // Prevent negative values
-            if (
-                typeof defaultGameState[key] === `number` &&
-                gameState[key] < 0
-            ) {
-                gameState[key] = 0;
-            }
-            if (gameState.workerProfit <= 0) {
-                gameState.workerProfit = 10e6;
-            }
-        }
-    }
-    
-    let prices = {
-        // common
-        appleCount: 10,
-        bananaCount: 15,
-        orangeCount: 20,
-        yougurtCount: 100,
-        mangoCount: 200,
-        breadCount: 500,
-        frozenAppleSlicesCount: 1000,
-        rawBananaCount: 1500,
-        frozenOrangeCount: 2500,
-        frozenYougurtCount: 5000,
-        frozenMangoSlicesCount: 10000,
-        toastCount: 20000,
-        raisinToastCount: 100000,
-        raisinCount: 5000000,
-    
-        // rare
-        chocolateCount: 100*10**6,       // 100M
-        darkChocolateCount: 5e10,        // 100B
-        pizzaCount: 750*10**9,           // 750B
-        cookieCount: 5*10**12,           // 5T
-        chickenCount: 15*10**15,         // 15Qa
-        pastaCount: 50*10**18,           // 50Qi
-        burgerCount: 250*10**21,         // 250Sx
-        donutCount: 10**24,              // 1Sp
-        pancakeCount: 10*10**27,         // 10Oc
-        iceCreamCount: 75*10**30,        // 75No
-        cheesecakeCount: 1*10**33,       // 1Dec
-    
-        // uncanny
-        bluecapMushroomsCount: 10**36,     // 1UnDec
-        ashenPearsCount: 10**39,           // 1DoDec
-        twighlightHoneycombsCount: 10**43, // 10TDec
-        petersPickledPeppersCount: 100*10**45, // 100QaDec
-        twistedTurnipCount: 2*10**48,      // 2QiDec
-        shadowedMelonCount: 2*10**52,      // 20SxDec
-        crimsonVeinedPlumCount: 5*10**57,  // 500SpDec
-        monsterCount: 10**58,              // 1OctDec
-        whatCount: 1e61,                   // NoDec
-
-        // legendary
-        grannyAndGrampaPigCount: 1e59,      // 1NoDec
-        weLiveWeLoveWeDieCount: 1e63,       // 1Vg
-        dogeCount: 1e67,                    // 10UnVg
-        rickButRolledCount: 1e71,           // 100DoVg
-        pepeCount: 2e74,                    // 200TVg
-        friedRnestCount: 2e78,              // 2QaVg
-        appaCount: 5e81,                    // 500QiVg
-        undefinedItemCount: 1e85,           // 10SpVg
-        overlyDefinedItemCount: 1e90,       // 1NoVg
-
-        // supernatural
-        bettysBitterButterCount: 1e93,   // 1Trg
-        cosmicCheeseCount: 1e99,         // 1DoTrg
-        livingSoccerBallCount: 1e105,    // 1QaTrg
-        mathCount: 1e111,                // 1SxTrg
-        piCount: 1e117,                  // 1NoTrg
-        meetCount: 1e123,                // 1DoQdrg
-
-        // mythological
-        benCount: 1e126,                     // 1QaQdrg
-        greenGiantCount: 1e129,              // 10OctQdrg
-        theFirstSpinjitsuMasterCount: 1e153, // 1Qqg
-        trueRnestCount: 1e159,               // 100DoQqg
-        transendantBenCount: 1e168,          // 1QiQqg
-
-        // exotic                         
-        sushiCount: 1e183,                   // 1Sxg
-        caviarCount: 1e192,                  // 1TSxg
-        butterChickenCount: 1e201,           // 1SxSxg
-    };
-    
-    let stock = {
-        // common
-        appleCount: 10,
-        bananaCount: 10,
-        orangeCount: 10,
-        yougurtCount: 10,
-        mangoCount: 10,
-        breadCount: 10,
-        frozenAppleSlicesCount: 10,
-        rawBananaCount: 10,
-        frozenOrangeCount: 10,
-        frozenYougurtCount: 10,
-        frozenMangoSlicesCount: 10,
-        toastCount: 10,
-        raisinToastCount: 10,
-        raisinCount: 10,
-    
-        // rare
-        chocolateCount: 15,
-        darkChocolateCount: 15,
-        pizzaCount: 15,
-        cookieCount: 15,
-        chickenCount: 15,
-        pastaCount: 15,
-        burgerCount: 15,
-        donutCount: 15,
-        pancakeCount: 15,
-        iceCreamCount: 15,
-        cheesecakeCount: 15,
-    
-        // uncanny
-        bluecapMushroomsCount: 15,
-        ashenPearsCount: 15,
-        twighlightHoneycombsCount: 15,
-        petersPickledPeppersCount: 15,
-        twistedTurnipCount: 15,
-        shadowedMelonCount: 15,
-        crimsonVeinedPlumCount: 15,
-        monsterCount: 15,
-        whatCount: 20,
-
-        // legendary
-        grannyAndGrampaPigCount: 20,
-        weLiveWeLoveWeDieCount: 20,
-        dogeCount: 20,
-        rickButRolledCount: 20,
-        pepeCount: 20,
-        friedRnestCount: 20,
-        appaCount: 20,
-        undefinedItemCount: 20,
-        overlyDefinedItemCount: 20,
-
-
-        // supernatural
-        bettysBitterButterCount: 25,
-        cosmicCheeseCount: 25,
-        livingSoccerBallCount: 25,
-        mathCount: 25,
-        piCount: 25,
-        meetCount: 25,
-
-        // mythological
-        benCount: 30,
-        greenGiantCount: 30,
-        theFirstSpinjitsuMasterCount: 30,
-        trueRnestCount: 30,
-        transendantBenCount: 30,
-
-        // exotic
-        sushiCount: 50,
-        caviarCount: 50,
-        butterChickenCount: 50,
-    };
-
-    function restock(){
-        for(key in stock){
-            if(prices[key] >= 100*10**6){
-                if(prices[key] >= 10**36){
-                    if(prices[key] >= 1e59 && key != `whatCount`){
-                        if(prices[key] >= 1e126){
-                            if(prices[key] >= 1e177){
-                                stock[key] = 50
-                            }
-                            else{
-                                stock[key] = 30;
-                            }
-                        }
-                        else{
-                            stock[key] = 25;
-                        }
-                    }
-                    else{
-                        stock[key] = 20;
-                    }
-                }
-                else{
-                    stock[key] = 15;
-                }
-            }
-            else{
-                stock[key] = 10;
-            }
-        }
-    }
-    
-    const defaultStock = { ...stock };
-    
-    function repairStock() {
-        let maxStock = eventIsOn ? 100 : 10;
-    
-        for (const key in defaultStock) {
-            maxStock = eventIsOn ? 100 : defaultStock[key];
-            // Recreate deleted stock
-            if (!(key in stock)) {
-                stock[key] = maxStock;
-            }
-    
-            // Prevent non-numbers
-            if (typeof stock[key] !== `number` || isNaN(stock[key])) {
-                stock[key] = maxStock;
-            }
-    
-            // Prevent negative stock
-            if (stock[key] < 0) {
-                stock[key] = 0;
-            }
-    
-            // Prevent too much stock
-            if (stock[key] > maxStock) {
-                stock[key] = maxStock;
-            }
-        }
-    }
-    
-    const buttonToKey = {
-        apples: `appleCount`,
-        bananas: `bananaCount`,
-        oranges: `orangeCount`,
-        yougurt: `yougurtCount`,
-        mango: `mangoCount`,
-        bread: `breadCount`,
-        frozenAppleSlices: `frozenAppleSlicesCount`,
-        rawBanana: `rawBananaCount`,
-        frozenOrange: `frozenOrangeCount`,
-        frozenYougurt: `frozenYougurtCount`,
-        frozenMangoSlices: `frozenMangoSlicesCount`,
-        toast: `toastCount`,
-        raisinToast: `raisinToastCount`,
-        raisin: `raisinCount`,
-    
-        chocolates: `chocolateCount`,
-        darkChocolate: `darkChocolateCount`,
-        pizzas: `pizzaCount`,
-        cookies: `cookieCount`,
-        chicken: `chickenCount`,
-        pasta: `pastaCount`,
-        burger: `burgerCount`,
-        donuts: `donutCount`,
-        pancakes: `pancakeCount`,
-        iceCream: `iceCreamCount`,
-        cheesecake: `cheesecakeCount`,
-    
-        bluecapMushrooms: `bluecapMushroomsCount`,
-        ashenPears: `ashenPearsCount`,
-        twighlightHoneycombs: `twighlightHoneycombsCount`,
-        petersPickledPeppers: `petersPickledPeppersCount`,
-        twistedTurnip: `twistedTurnipCount`,
-        shadowedMelon: `shadowedMelonCount`,
-        crimsonVeinedPlum: `crimsonVeinedPlumCount`,
-        monster: `monsterCount`,
-        what: `whatCount`,
-
-        grannyAndGrampaPig: `grannyAndGrampaPigCount`,
-        weLiveWeLoveWeDie: `weLiveWeLoveWeDieCount`,
-        doge: `dogeCount`,
-        rickButRolled: `rickButRolledCount`,
-        pepe: `pepeCount`,
-        friedRnest: `friedRnestCount`,
-        appa: `appaCount`,
-        undefinedItem: `undefinedItemCount`,
-        overlyDefinedItem: `overlyDefinedItemCount`,
-
-        bettysBitterButter: `bettysBitterButterCount`,
-        cosmicCheese: `cosmicCheeseCount`,
-        livingSoccerBall: `livingSoccerBallCount`,
-        math: `mathCount`,
-        pi: `piCount`,
-        meet: `meetCount`,
-
-        ben: `benCount`,
-        greenGiant: `greenGiantCount`,
-        theFirstSpinjitsuMaster: `theFirstSpinjitsuMasterCount`,
-        trueRnest: `trueRnestCount`,
-        transendantBen: `transendantBenCount`,
-
-        sushi: `sushiCount`,
-        caviar: `caviarCount`,
-        butterChicken: `butterChickenCount`
-    };
-    
-    // ---------------- SAVE / LOAD ----------------
-    
-    function saveGame() {
-        localStorage.setItem(`gameSave`, JSON.stringify(gameState));
-        localStorage.setItem(`stock`, JSON.stringify(stock));
-        loadLeaderboard();
-    }
-    
-    function loadGame() {
-        const saved = localStorage.getItem(`gameSave`);
-        if (saved) gameState = { ...gameState, ...JSON.parse(saved) };
-    }
-    
-    function loadStock() {
-        const saved = localStorage.getItem(`stock`);
-        if (saved) stock = JSON.parse(saved);
-    }
-    
-    // ---------------- EVENT SYSTEM ----------------
-    
-    const config = {
-        eventTime: 60,
-        normalTime: 600,
-    }
-    
-    
-    let timeLeft = Number(localStorage.getItem(`timerSave`));
-    if (!timeLeft || isNaN(timeLeft)) timeLeft = config.normalTime;
-    
-    let eventIsOn = localStorage.getItem(`eventSave`) === `true`;
-    
-    function callEvent(){
-        eventIsOn = true;
-        localStorage.setItem(`eventSave`, eventIsOn);
-        timeLeft = config.eventTime;
-        window.location.href = `event.html`;
-        for(let key in stock){
-            stock[key] = 100;
-        }
-    }
-    
-    function stopEvent(){
-        eventIsOn = false;
-        localStorage.setItem(`eventSave`, eventIsOn);
-        timeLeft = config.normalTime;
-        window.location.href = `game.html`;
-        restock();
-    }
-    
-    // ---------------- TIMER ----------------
-    
-    let stockReset = localStorage.getItem(`stockResetDone`) === `true`;
-    
-    function setCountDown() {
-        countdownInterval = setInterval(() => {
-            timeLeft--;
-            gameState.cashCount += (gameState.workerAmount * gameState.workerProfit)/60
-    
-            if (timeLeft <= 0) {
-                if (eventIsOn) {
-                    stockReset = false;
-                    stopEvent();
-                    document.body.classList.remove(`event`);
-                    localStorage.setItem(`stockResetDone`, `false`);
-    
-                } else {
-                    stockReset = false;
-                    callEvent();
-                    document.body.classList.add(`event`);
-                    localStorage.setItem(`stockResetDone`, `false`);
-                }
-            }
-            else if(timeLeft <= 300 && !stockReset){
-                stockReset = true;
-                localStorage.setItem(`stockResetDone`, `true`);
-                if(eventIsOn){
-                    for(let key in stock){
-                        stock[key] = 100;
-                    }
-                }
-                else{
-                    restock();
-                }
-                
-                saveGame()
-            }
-    
-            localStorage.setItem(`timerSave`, timeLeft);
-    
-            const el = document.getElementById(`countDown`);
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            const paddedseconds = String(seconds).padStart(2, `0`);
-            if (el) el.textContent = `You have ${minutes}m and ${paddedseconds}s left...`;
-        }, 1000);
-    }
-
-    // ------------------ ALERTS -------------------
-    
-    function alert(message){
-        const alertDiv = document.getElementById(`alertDiv`);
-        const alert = document.createElement(`div`);
-        alert.textContent = message;
-        alert.classList.add(`alert`);
-        alertDiv.appendChild(alert);
-        const divCount = alertDiv.children.length;
-        if(divCount > 4){
-            alertDiv.removeChild(alertDiv.firstElementChild)
-        }
-        setTimeout(() => alertDiv.removeChild(alert), 3000)
-    }
-
-    // ---------------- WORKERS ----------------
-
-    const amountBtn = document.getElementById("workerAmount");
-    const profitBtn = document.getElementById("workerProfit");
-    const amountDisplay = document.getElementById("workerAmountDisplay");
-    const profitDisplay = document.getElementById("workerProfitDisplay");
-
-    function displayWorkerUI(){
-        const price = 10**(gameState.workerAmount + 7);
-        amountBtn.textContent = `${getFormattedNumber(price)}(${getHyperE(price)})${cashSymbol}`;
-        const pricee = gameState.workerProfit*10;
-        profitBtn.textContent = `${getFormattedNumber(pricee)}(${getHyperE(pricee)})${cashSymbol}`;
-        amountDisplay.textContent = `Workers: ${gameState.workerAmount}`;
-        const profit = (gameState.workerAmount * gameState.workerProfit);
-        if(profit > 0) profitDisplay.textContent = `${getFormattedNumber(profit)}(${getHyperE(profit)})${cashSymbol}/m`
-        else profitDisplay.textContent = `0${cashSymbol}/m`;
-    }
-
-    if(amountBtn){
-        amountBtn.addEventListener('click', () => {
-            const price = 10**(gameState.workerAmount + 7)
-            if (gameState.cashCount < price) alert(`Not enough ${cashName}`);
-            else{
-                gameState.workerAmount++;
-                gameState.cashCount -= price;
-            }
-            displayWorkerUI();
-        })
-    }
-
-    if(profitBtn){
-        profitBtn.addEventListener('click', () => {
-            const price = gameState.workerProfit * 10;
-            if(gameState.cashCount < price) alert(`Not enough ${cashName}`);
-            else{
-                gameState.workerProfit *= 100;
-                gameState.cashCount -= price;
-            }
-            displayWorkerUI();
-        })
-    }
-
-    // ---------------- CRYPTO ----------------
-    
-    let bgup = true, lgup = true, dgup = true;
-    
-    function changeTrend() {
-        bgup = Math.random() < 0.9;
-        lgup = Math.random() < 0.9;
-        dgup = Math.random() < 0.9;
-    
-        setTimeout(changeTrend, Math.random() * (120000 - 60000) + 60000);    }
-    changeTrend();
-    
-    function updateCrypto() {
-
-        // BITCOIN CHANGE
-
-        let bmin;
-        let bmax;
-        if(bgup){
-            bmin = -25;
-            bmax = 250;
-        }
-        else{
-            bmin = -2500;
-            bmax = -25;
-        }
-
-        const bchange = Math.floor(Math.random() * (bmax - bmin + 1)) + bmin;
-        gameState.BitcoinVal += bchange;
-        gameState.BitcoinVal = Math.max(gameState.BitcoinVal, 50000);
-
-        // BITCOIN CHANGE
-
-        let lmin;
-        let lmax;
-        if(lgup){
-            lmin = -0.025;
-            lmax = 0.25;
-        }
-        else{
-            lmin = -2.500;
-            lmax = -0.025;
-        }
-
-        let lchange = (Math.random() * (lmax - lmin + 1)) + lmin;
-        lchange = Math.round(lchange * 100) / 100;
-        gameState.LitecoinVal += lchange;
-        gameState.LitecoinVal = Math.max(gameState.LitecoinVal, 50);
-
-        // DOGECOIN CHANGE
-
-        let dmin;
-        let dmax;
-        if(dgup){
-            dmin = -25e5;
-            dmax = 25e6;
-        }
-        else{
-            dmin = -25e7;
-            dmax = 25e5;
-        }
-
-        const dchange = Math.floor(Math.random() * (dmax - dmin + 1)) + dmin;
-        gameState.DogecoinVal += dchange;
-        gameState.DogecoinVal = Math.max(gameState.DogecoinVal, 50000);
-
-        const btc = document.getElementById(`BitcoinDisplay`);
-        if (btc) btc.textContent = `1 BITCOIN: ${getFormattedNumber(gameState.BitcoinVal)}`;
-    
-        const ltc = document.getElementById(`LitecoinDisplay`);
-        if (ltc) ltc.textContent = `1 LITECOIN: ${gameState.LitecoinVal}`;
-    
-        const doge = document.getElementById(`DogecoinDisplay`);
-        if (doge) doge.textContent = `1 DOGECOIN: ${getFormattedNumber(gameState.DogecoinVal)}`;
-    
-        saveGame();
-    }
-    
-    function updateCryptoOwnedUI() {
-        const btc = document.getElementById(`Bitcoins`);
-        const ltc = document.getElementById(`Litecoins`);
-        const doge = document.getElementById(`Dogecoins`);
-    
-        if (btc) btc.textContent = `Bitcoins: ${getFormattedNumber(gameState.Bitcoin)}`;
-        if (ltc) ltc.textContent = `Litecoins: ${gameState.Litecoin}`;
-        if (doge) doge.textContent = `Dogecoins: ${getFormattedNumber(gameState.Dogecoin)}`;
-    }
-    
-    // ---------------- CRYPTO BUY / SELL FIXED ----------------
-    
-    // -------------------- BITCOIN -----------------------
-    
-    function investBitcoin() {
-        const input = Number(document.getElementById(`cryptoInput`).value);
-        if (!input || input <= 0) return;
-    
-        if (gameState.cashCount < input) return alert(`Not enough ${cashName}`);
-    
-        const amount = input / gameState.BitcoinVal;
-        
-        alert(`You gained ${amount} Bitcoin`)
-        gameState.cashCount -= input;
-        gameState.Bitcoin += amount;
-    
-        saveGame();
-        updateUI();
-        updateCryptoOwnedUI();
-    }
-    
-    function sellBitcoin() {
-        if (gameState.Bitcoin <= 0) return alert(`No Bitcoin`);
-    
-        const gain = gameState.Bitcoin * gameState.BitcoinVal;
-    
-        gameState.cashCount += gain;
-        gameState.Bitcoin = 0;
-        
-        alert(`You got ${gain}${cashSymbol}`);
-        saveGame();
-        updateUI();
-        updateCryptoOwnedUI();
-    }
-    
-    // ---------------- LITECOIN ----------------
-    
-    function investLitecoin() {
-        const input = Number(document.getElementById(`cryptoInput`).value);
-        if (!input || input <= 0) return;
-    
-        if (gameState.cashCount < input) return alert(`Not enough ${cashName}`);
-    
-        const amount = input / gameState.LitecoinVal;
-    
-        gameState.cashCount -= input;
-        gameState.Litecoin += amount;
-        
-        alert(`You gained ${amount} Litecoin`);
-        saveGame();
-        updateUI();
-        updateCryptoOwnedUI();
-    }
-    
-    function sellLitecoin() {
-        if (gameState.Litecoin <= 0) return alert(`No Litecoin`);
-    
-        const gain = gameState.Litecoin * gameState.LitecoinVal;
-    
-        gameState.cashCount += gain;
-        gameState.Litecoin = 0;
-
-        alert(`You got ${gain}${cashSymbol}`);
-        saveGame();
-        updateUI();
-        updateCryptoOwnedUI();
-    }
-    
-    // ---------------- DOGECOIN ----------------
-    function investDogecoin() {
-        const input = Number(document.getElementById(`cryptoInput`).value);
-        if (!input || input <= 0) return;
-    
-        if (gameState.cashCount < input) return alert(`Not enough ${cashName}`);
-    
-        const amount = input / gameState.DogecoinVal;
-    
-        gameState.cashCount -= input;
-        gameState.Dogecoin += amount;
-        
-        alert(`You gained ${amount} Dogecoin`)
-        saveGame();
-        updateUI();
-        updateCryptoOwnedUI();
-    }
-    
-    function sellDogecoin() {
-        if (gameState.Dogecoin <= 0) return alert(`No Dogecoin`);
-    
-        const gain = gameState.Dogecoin * gameState.DogecoinVal;
-    
-        gameState.cashCount += gain;
-        gameState.Dogecoin = 0;
-        
-        alert(`You got ${gain}${cashSymbol}`);
-        saveGame();
-        updateUI();
-        updateCryptoOwnedUI();
-    }
-    
-    // ---------------- BUY ----------------
-    let max = false;
-    const maxBtn = document.getElementById(`maxBtn`);
-    if(maxBtn){
-        maxBtn.addEventListener(`click`, () => {
-            if(!max){
-                max = true;
-                maxBtn.classList.add(`maxBtnYes`);
-                maxBtn.classList.remove(`maxBtnNo`);
-                maxBtn.textContent = `NO`;
-            }
-            else{
-                max = false;
-                maxBtn.classList.add(`maxBtnNo`);
-                maxBtn.classList.remove(`maxBtnYes`);
-                maxBtn.textContent = `YES`
-            }
-        });
-    }
-    function setupBuyButtons() {
-        for (const [btnId, key] of Object.entries(buttonToKey)) {
-            const btn = document.getElementById(btnId);
-            if (!btn) continue;
-    
-            btn.onclick = () => {
-                const price = prices[key] * (gameState.payPercent / 100);
-                if (gameState.cashCount >= price && stock[key] > 0) {
-                    if(max){
-                        let amountCanBuy = Math.floor(gameState.cashCount / price);
-                        amountCanBuy = eventIsOn ? amountCanBuy*2 : amountCanBuy;
-                        if(amountCanBuy > stock[key]){
-                            amountCanBuy = stock[key];
-                            gameState.cashCount -= eventIsOn ? (amountCanBuy*price) / 2 : (amountCanBuy*price);
-                            gameState[key] += amountCanBuy;
-                            stock[key] = 0;
-                        }
-                        else{
-                            gameState.cashCount -=  eventIsOn ? (amountCanBuy*price) / 2 : (amountCanBuy*price);
-                            gameState[key] += amountCanBuy;
-                            stock[key] -= amountCanBuy;
-                        }
-                    }
-                    else{
-                        gameState.cashCount -= eventIsOn ? price / 2 : price;
-                        gameState[key]++;
-                        stock[key]--;
-                    }
-                    saveGame();
-                    updateUI();
-                } else {
-                    alert(`Not enough ${cashName} or out of stock!`);
-                }
-            }
-        }
-    }
-    
-    
-    // ---------------- SELL ----------------
-    
-    const sellAllIds = {
-        // common
-        appleCount: `sell-all-apples`,
-        bananaCount: `sell-all-bananas`,
-        orangeCount: `sell-all-oranges`,
-        yougurtCount: `sell-all-yougurts`,
-        mangoCount: `sell-all-mangos`,
-        breadCount: `sell-all-breads`,
-        frozenAppleSlicesCount: `sell-all-frozen-apple-slices`,
-        rawBananaCount: `sell-all-raw-bananas`,
-        frozenOrangeCount: `sell-all-frozen-oranges`,
-        frozenYougurtCount: `sell-all-frozen-yougurts`,
-        frozenMangoSlicesCount: `sell-all-frozen-mango-slices`,
-        toastCount: `sell-all-toasts`,
-        raisinToastCount: `sell-all-raisin-toasts`,
-        raisinCount: `sell-all-raisins`,
-    
-        // rare
-        chocolateCount: `sell-all-chocolates`,
-        darkChocolateCount: `sell-all-dark-chocolates`,
-        pizzaCount: `sell-all-pizzas`,
-        cookieCount: `sell-all-cookies`,
-        chickenCount: `sell-all-chickens`,
-        pastaCount: `sell-all-pastas`,
-        burgerCount: `sell-all-burgers`,
-        donutCount: `sell-all-donuts`,
-        pancakeCount: `sell-all-pancakes`,
-        iceCreamCount: `sell-all-ice-creams`,
-        cheesecakeCount: `sell-all-cheesecakes`,
-    
-        // uncanny
-        bluecapMushroomsCount: `sell-all-bluecap-mushrooms`,
-        ashenPearsCount: `sell-all-ashen-pears`,
-        twighlightHoneycombsCount: `sell-all-twighlight-honeycombs`,
-        petersPickledPeppersCount: `sell-all-peters-pickled-peppers`,
-        twistedTurnipCount: `sell-all-twisted-turnip`,
-        shadowedMelonCount: `sell-all-shadowed-melon`,
-        crimsonVeinedPlumCount: `sell-all-crimson-veined-plum`,
-        monsterCount: `sell-all-monsters`,
-        whatCount: `sell-all-whats`,
-
-        // legendary
-        grannyAndGrampaPigCount: `sell-all-granny-and-grampa-pigs`,
-        weLiveWeLoveWeDieCount: `sell-all-we-live-we-love-we-dies`,
-        dogeCount: `sell-all-doges`,
-        rickButRolledCount: `sell-all-rick-but-rolls`,
-        pepeCount: `sell-all-pepes`,
-        friedRnestCount: `sell-all-fried-rnests`,
-        appaCount: `sell-all-appas`,
-        undefinedItemCount: `sell-all-undefined-items`,
-        overlyDefinedItemCount: `sell-all-overly-defined-items`,
-
-        // supernatural
-        bettysBitterButterCount: `sell-all-bettys-bitter-butters`,
-        cosmicCheeseCount: `sell-all-cosmic-cheeses`,
-        livingSoccerBallCount: `sell-all-living-soccer-balls`,
-        mathCount: `sell-all-maths`,
-        piCount: `sell-all-pis`,
-        meetCount: `sell-all-meets`,
-
-        // mythological
-        benCount: `sell-all-bens`,
-        greenGiantCount: `sell-all-green-giants`,
-        theFirstSpinjitsuMasterCount: `sell-all-the-first-spinjitsu-masters`,
-        trueRnestCount: `sell-all-true-rnests`,
-        transendantBenCount: `sell-all-transendant-bens`,
-
-        // exotic
-        sushiCount: `sell-all-sushis`,
-        caviarCount: `sell-all-caviars`,
-        butterChickenCount: `sell-all-butter-chickens`
-    };
-    
-    const sellableItems = Object.keys(prices);
-    
-    function getRandomSellMultiplier() {
-        return 1 + Math.floor(Math.random() * 70) / 100;
-    }
-    
-    function camelToKebab(str) {
-        return str.replace(/Count$/, ``)
-            .replace(/([a-z0-9])([A-Z])/g, `$1-$2`)
-            .toLowerCase();
-    }
-    
-    function setupSellButtons() {
-        for (const key of sellableItems) {
-            const itemName = camelToKebab(key);
-    
-            const singleBtn = document.getElementById(`sell-${itemName}`);
-            const allBtn = document.getElementById(sellAllIds[key]);
-    
-            if (singleBtn) {
-                singleBtn.onclick = () => {
-                    if (gameState[key] <= 0) return;
-    
-                    const gain = Math.floor(prices[key] * getRandomSellMultiplier());
-                    const total = gain + gain * gameState.multiplier;
-                    const tootal = total * ((gameState.prestiges/2) + 1);
-
-                    gameState[key]--;
-                    gameState.cashCount += tootal;
-                    
-                    if(tootal > 1e6){
-                        alert(`You recieved ${getFormattedNumber(tootal)}(${getHyperE(tootal)})${cashSymbol}`);
-                    }
-                    else{
-                        alert(`You recieved ${getFormattedNumber(tootal)}${cashSymbol}`);
-                    }
-
-                    chachingsound.currentTime = 0.25;
-                    chachingsound.play();
-    
-                    saveGame();
-                    updateUI();
-                };
-            }
-    
-            if (allBtn) {
-                allBtn.onclick = () => {
-                    const count = gameState[key];
-                    if (!count){
-                        alert(`You have none of that food`);
-                        return;
-                    }
-
-                    chachingsound.currentTime = 0.25;
-                    chachingsound.play();
-    
-                    const gain = Math.floor(prices[key] * getRandomSellMultiplier() * count);
-                    const multiGain = gain+(gain*gameState.multiplier);
-                    const prestiGain = multiGain * ((gameState.prestiges/2)+1);
-
-                    gameState.cashCount += prestiGain;
-                    gameState[key] = 0;
-
-
-                    if(tootalGain > 1e6){
-                        alert(`You recieved ${getFormattedNumber(prestiGain)}(${getHyperE(prestiGain)})${cashSymbol}`);
-                    }
-                    else{
-                        alert(`You recieved ${getFormattedNumber(prestiGain)}${cashSymbol}`);
-                    }
-    
-                    saveGame();
-                    updateUI();
-                }
-            }
-        }
-    }
-    
-    // ---------------- UI ----------------
-    
-    const ui = document.querySelector(`.ui`);
-    const uiBtn = document.getElementById(`uiBtn`);
-    let uiFixed = true;
-    if(uiBtn){
-        uiBtn.addEventListener(`click`, () => {
-            if(uiFixed){
-                uiFixed = false;
-                ui.classList.add(`ui`);
-                uiBtn.textContent = `TYPE 1`;
-            }
-            else{
-                uiFixed = true;
-                ui.classList.remove(`ui`);
-                uiBtn.textContent = `TYPE 2`;
-            }
-        })
-    }
-    
-    function getNthIllion(n){
-        if(n < 1_000_000) return 0;
-    
-        return Math.floor(Math.log10(n) / 3) - 1;
-    }
-    function getFormattedNumber(n){
-        function getNumberShortener(n){
-            let string = ``;
-            const nthNum = getNthIllion(n);
-            const ones = nthNum % 10;
-            const tens = Math.floor(nthNum / 10);
-            if(n >= 1000 && n < 1000000) return `K`;
-            switch(ones){
-                case 1:
-                    if(tens === 0){
-                        string += `M`
-                    }
-                    else{
-                        string += `Un`;
-                    }
-                    break;
-                case 2:
-                    if(tens === 0){
-                        string += `B`
-                    }
-                    else{
-                        string += `Do`;
-                    }
-                    break;
-                case 3:
-                    string += `T`;
-                    break;
-                case 4:
-                    string += `Qa`;
-                    break;
-                case 5:
-                    string += `Qi`;
-                    break;
-                case 6:
-                    string += `Sx`;
-                    break;
-                case 7:
-                    string += `Sp`;
-                    break;
-                case 8:
-                    string += `Oct`;
-                    break;
-                case 9:
-                    string += `No`;
-                    break;
-            }
-            switch(tens){
-                case 1:
-                    string += `Dec`;
-                    break;
-                case 2:
-                    string += `Vg`;
-                    break;
-                case 3:
-                    string += `Trg`;
-                    break;
-                case 4:
-                    string += `Qdrg`;
-                    break;
-                case 5:
-                    string += `Qqg`;
-                    break;
-                case 6:
-                    string += `Sxg`;
-                    break;
-                case 7:
-                    string += `Spg`;
-                    break;
-                case 8:
-                    string += `Ocg`;
-                    break;
-                case 9:
-                    string += `Nog`;
-                    break;
-            }
-            return string;
-        }
-        function getNumberShortened(n) {
-            if (n < 1000) {
-                return n.toFixed(0);
-            }
-        
-            if (n < 1_000_000 && n >= 1000) {
-                return (n / 1000).toFixed(2);
-            }
-        
-            const nth = getNthIllion(n);
-            const divisor = 10 ** ((nth + 1) * 3);
-            
-            if(isNaN((n / divisor))){
-
-            }
-
-            return (n / divisor).toFixed(2);
-        }
-        if(isNaN(getNumberShortened(n))){
-            return `Infinity`;
-        }
-        return `${getNumberShortened(n)}${getNumberShortener(n)}`;
-    }
-    function getHyperE(n){
-        if(n < 1e6){
-            return n;
-        }
-        const zerosAmnt = Math.floor(Math.log10(n));
-        const number = n / (10**zerosAmnt);
-        const fixed = number.toFixed(2);
-
-        if(zerosAmnt >= 303) return ``;
-        return `${fixed}e${zerosAmnt}`;
-    }
-    function updateUI() {
-        // FIX FROM CONSOLE
-        const defaultPrices = {
-            // common
-            appleCount: 10,
-            bananaCount: 15,
-            orangeCount: 20,
-            yougurtCount: 100,
-            mangoCount: 200,
-            breadCount: 500,
-            frozenAppleSlicesCount: 1000,
-            rawBananaCount: 1500,
-            frozenOrangeCount: 2500,
-            frozenYougurtCount: 5000,
-            frozenMangoSlicesCount: 10000,
-            toastCount: 20000,
-            raisinToastCount: 100000,
-            raisinCount: 5000000,
-        
-            // rare
-            chocolateCount: 100*10**6,       // 100M
-            darkChocolateCount: 5e10,        // 100B
-            pizzaCount: 750*10**9,           // 750B
-            cookieCount: 5*10**12,           // 5T
-            chickenCount: 15*10**15,         // 15Qa
-            pastaCount: 50*10**18,           // 50Qi
-            burgerCount: 250*10**21,         // 250Sx
-            donutCount: 10**24,              // 1Sp
-            pancakeCount: 10*10**27,         // 10Oc
-            iceCreamCount: 75*10**30,        // 75No
-            cheesecakeCount: 1*10**33,       // 1Dec
-        
-            // uncanny
-            bluecapMushroomsCount: 10**36,     // 1UnDec
-            ashenPearsCount: 10**39,           // 1DoDec
-            twighlightHoneycombsCount: 10**43, // 10TDec
-            petersPickledPeppersCount: 100*10**45, // 100QaDec
-            twistedTurnipCount: 2*10**48,      // 2QiDec
-            shadowedMelonCount: 2*10**52,      // 20SxDec
-            crimsonVeinedPlumCount: 5*10**57,  // 500SpDec
-            monsterCount: 10**58,              // 1OctDec
-            whatCount: 1e61,                   // NoDec
-
-            // legendary
-            grannyAndGrampaPigCount: 1e59,      // 1NoDec
-            weLiveWeLoveWeDieCount: 1e63,       // 1Vg
-            dogeCount: 1e67,                    // 10UnVg
-            rickButRolledCount: 1e71,           // 100DoVg
-            pepeCount: 2e74,                    // 200TVg
-            friedRnestCount: 2e78,              // 2QaVg
-            appaCount: 5e81,                    // 500QiVg
-            undefinedItemCount: 1e85,           // 10SpVg
-            overlyDefinedItemCount: 1e90,       // 1NoVg
-
-            // supernatural
-            bettysBitterButterCount: 1e93,   // 1Trg
-            cosmicCheeseCount: 1e99,         // 1DoTrg
-            livingSoccerBallCount: 1e105,    // 1QaTrg
-            mathCount: 1e111,                // 1SxTrg
-            piCount: 1e117,                  // 1NoTrg
-            meetCount: 1e123,                // 1DoQdrg
-
-            // mythological
-            benCount: 1e126,                     // 1QaQdrg
-            greenGiantCount: 1e129,              // 10OctQdrg
-            theFirstSpinjitsuMasterCount: 1e153, // 1Qqg
-            trueRnestCount: 1e159,               // 100DoQqg
-            transendantBenCount: 1e168,          // 1QiQqg
-
-            // exotic                         
-            sushiCount: 1e183,                   // 1Sxg
-            caviarCount: 1e192,                  // 1TSxg
-            butterChickenCount: 1e201,           // 1SxSxg
-        };
-        
-        Object.assign(prices, defaultPrices);
-    
-        repairStock();
-        repairGameState();
-        
-        gameState.cashCount = Math.floor(gameState.cashCount);
-        gameState.workerAmount = Math.round(gameState.workerAmount);
-
-        // USERNAME
-
-        const usernameDisplay = document.getElementById(`usernameDisplay`);
-        if(usernameDisplay){
-            if(gameState.username.slice(-1).toLowerCase() === `s` || gameState.username.slice(-1).toLowerCase() === `S`){
-                usernameDisplay.textContent = `${gameState.username}'s Market`;
-            }
-            else{
-                usernameDisplay.textContent = `${gameState.username}'s Market`
-            }
-        }
-
-        // CASH
-        const cash = document.getElementById(`cash`);
-        if (cash) {
-            cash.textContent = `${cashName}(${cashSymbol}): ${getFormattedNumber(gameState.cashCount)}${gameState.cashCount > 1e6 ?
-                `(` + String(getHyperE(gameState.cashCount)) + `)`:``}${cashSymbol}`;
-            const string = cash.textContent;
-            const cstring = string.replaceAll(`()`, ``);
-            cash.textContent = cstring;
-        }
-    
-        // PRESTIGES
-        const prestige = document.getElementById(`prestiges`);
-        if(prestige) prestige.textContent = `Prestiges: ${gameState.prestiges}`;
-    
-        const cashfornext = document.getElementById(`cashLevel`);
-        if(cashfornext) cashfornext.textContent = `You need ${getFormattedNumber(getCashLevel(gameState.prestiges))} for the next prestige`; 
-    
-        // MULTIPLIER
-        const mult = document.getElementById(`multiplier`);
-        const multmax = (gameState.prestiges * 4) + 10;
-        if(gameState.multiplier > multmax) gameState.multiplier = multmax;
-        if(gameState.multiplier < 0) gameState.multiplier = 0;
-        if (mult) mult.textContent = `Multiplier: ${gameState.multiplier.toFixed(3)}`;
-    
-        // PAY %
-        const pay = 
-        document.getElementById(`payPercent`);
-        if(gameState.payPercent < 30) gameState.payPercent = 30;
-        if (pay) pay.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
-        
-        // MULTIPLIER AND PAY PERCENT NEW AMOUNT GAIN
-
-        const newpaypercentdisplay = document.getElementById(`newPayPercentDisplay`);
-        const newmultiplierdisplay = document.getElementById(`newMultiplierDisplay`);
-        const gainBase = 10 ** (2 * gameState.prestiges + 5);
-        const requirement = 10** (gameState.prestiges + 5)
-
-        if(gameState.cashCount < requirement){
-            newpaypercentdisplay.textContent = `...`;
-            newmultiplierdisplay.textContent = `Not Enough`;
-        }
-        else{
-            const gainBase = 10**(2*gameState.prestiges+5);
-                    const requirement = 10**(gameState.prestiges+5);
-    
-            let multiplierGain = Math.max(Math.log10(gameState.cashCount / gainBase) + 1, 0);
-            
-            if(multiplierGain < gainBase && multiplierGain > requirement){
-                multiplierGain = ((gameState.cashCount-requirement)/(gainBase-requirement));
-            }
-
-            const payPercentLoss =
-                Math.log10(gameState.cashCount / gainBase + 1) * 2;
-
-            const newMultiplier =
-                Math.min(gameState.multiplier + multiplierGain, multmax);
-
-            const newPayPercent =
-                Math.max(gameState.payPercent - payPercentLoss, 30);
-
-            newmultiplierdisplay.textContent =
-                `Your new multiplier will be ${Math.min(newMultiplier + 0.1, multmax)}`;
-
-            newpaypercentdisplay.textContent =
-                `Your new pay percent will be ${newPayPercent.toFixed(1)}%`;
-        }
-
-        // MULTIPLIER MAX
-
-        document.getElementById(`multipliermaxdisplay`).textContent = `Your multiplier max is ${multmax}`;
-        document.getElementById(`prestigemultdisplay`).textContent = `Your prestige multiplier is ${(gameState.prestiges/2) + 1}`;
-        const perkneed = 10**(gameState.prestiges + 5);
-        document.getElementById(`perkneed`).textContent = `You Need ${getFormattedNumber(perkneed)} To Add To Perks`;
-
-        // COSTS
-        const costdisplays = document.querySelectorAll(`.cost`)
-        const keys = Object.keys(prices);
-
-        keys.forEach((key, i) => {
-            if (costdisplays[i]) {
-                const price = prices[key] * (gameState.payPercent / 100)
-                const display = getFormattedNumber(price);
-                costdisplays[i].textContent =
-                    `${display}${price > 1e6 ?
-                         `(` + String(getHyperE(price)) + `)`:``}${cashSymbol}`;
-                const string = costdisplays[i].textContent;
-                const cstring = string.replaceAll(`()`, ``);
-                costdisplays[i].textContent = cstring;
-                
-            }
-        });
-
-        // ITEMS
-        for (const key in gameState) {
-            if (!key.endsWith(`Count`)) continue;
-            if (key === `cashCount`) continue;
-    
-            const el = document.getElementById(
-                `${key.replace(/Count$/, ``)}Display`
-            );
-    
-            if (el) {
-                el.textContent =
-                    `${key.replace(/Count$/, ``)}: ${gameState[key]}`;
-            }
-        }
-    
-        // STOCK
-        for (const key in stock) {
-            const el = document.getElementById(`${key.replace(/Count$/, ``)}Stock`);
-            if (el) el.textContent = `Stock: ${stock[key]}`;
-        }
-    
-        // CRYPTO UI
-        const btc = document.getElementById(`BitcoinDisplay`);
-        if (btc) btc.textContent = `1 BITCOIN: ${getFormattedNumber(gameState.BitcoinVal)}`;
-    
-        const ltc = document.getElementById(`LitecoinDisplay`);
-        if (ltc) ltc.textContent = `1 LITECOIN: ${gameState.LitecoinVal}`;
-    
-        const doge = document.getElementById(`DogecoinDisplay`);
-        if (doge) doge.textContent = `1 DOGECOIN: ${getFormattedNumber(gameState.DogecoinVal)}`;
-
-        uploadScore();
-    }
-    
-    // ----------------- DISPLAY RARITIES & MENU -----------------\
-
-    function displayRaritiesAndMenuPages(){
-        // MENU
-        const menuBtn = document.getElementById(`menuBtn`);
-        const menu = document.getElementById(`menu`);
-        
-        if (menuBtn) {
-            menuBtn.addEventListener(`click`, () => {
-                if(menu.style.display == `none`){
-                    menu.style.display = `flex`;
-                    menuBtn.textContent = `>`;
-                }
-                else{
-                    menu.style.display = `none`;
-                    menuBtn.textContent = `<`;
-                }
-            });
-        }
-        function makeWindow(openId, closeId, windowId){
-            const openBtn = document.getElementById(openId);
-            const closeBtn = document.getElementById(closeId);
-            const window = document.getElementById(windowId);
-            if (openBtn) {
-                openBtn.addEventListener(`click`, () => {
-                    if(getComputedStyle(window).display === `none`) window.style.display = `flex`;
-                });
-            }
-            closeBtn?.addEventListener(`click`, () => {
-                window.style.display = `none`;
-            });
-        }
-
-        makeWindow(`perkOpen`, `removePerkScreen`, `addToPerks`);
-        makeWindow(`openPrestigeScreen`, `removePrestigeScreen`, `prestigeScreen`);
-        makeWindow(`openSettings`, `removeSettings`, `settings`);
-        makeWindow(`openLeaderboard`, `removeLeaderboard`, `leaderboardWindow`);
-        makeWindow(`restartGameBtn`, `removeRestart`, `restart`);
-        makeWindow(`workerBtn`, `removeWorkers`, `workers`);
-        makeWindow(`openCodes`, `removeCodes`, `codes`)
-
-
-        function setUpSection(btnId, rarityId, need){
-            const btn = document.getElementById(btnId);
-            const fruits = document.getElementById(rarityId);
-
-            if (btn) {
-                btn.addEventListener(`click`, () => {
-                    if(gameState.prestiges >= need){
-                        if(fruits.style.display == `none`) fruits.style.display = `block`;
-                        else fruits.style.display = `none`;
-                    }
-                    else{
-                        alert(`You need ${need} prestiges to enter here`)
-                    }
-                });
-            }
-        }
-        
-        setUpSection(`commonFoodBtn`, `commonFoods`, 0);
-        setUpSection(`rareFoodsBtn`, `rareFoods`, 1);
-        setUpSection(`uncannyFoodsBtn`, `uncannyFoods`, 3);
-        setUpSection(`legendaryFoodsBtn`, `legendaryFoods`, 5);
-        setUpSection(`supernaturalFoodsBtn`, `supernaturalFoods`, 8);
-        setUpSection(`mythologicalFoodsBtn`, `mythologicalFoods`, 12);
-        setUpSection(`exoticFoodsBtn`, `exoticFoods`, 20);
-        setUpSection(`dumbStuffBtn`, `dumbStuff`, 15);
-    }
-
-    // ------------------- DUMB STUFF -----------------------
-
-    const prestigesTo14 = document.getElementById("prestigesTo14");
-    if(prestigesTo14){
-        prestigesTo14.addEventListener('click', async function(){
-            const accepted = await confirm("Are you sure you want to set your prestiges to 14?");
-            if(accepted){
-                document.getElementById("dumbStuff").style.display = 'none';
-                gameState.prestiges = 14;
-            }
-        });
-    }
-
-    const resetWorkerProgress = document.getElementById("resetWorkerProgress");
-    if(resetWorkerProgress){
-        resetWorkerProgress.addEventListener('click', async function(){
-            const accepted = await confirm("Are you sure you want to reset your worker progress");
-            if(accepted){
-                document.getElementById("dumbStuff").style.display = 'none';
-                gameState.workerProfit = 0;
-                gameState.workerAmount = 0;
-                updateUI();
-                displayWorkerUI();
-            }
-        });
-    }
-
-    const resetCash = document.getElementById("resetCash");
-    if(resetCash){
-        resetCash.addEventListener('click', async function(){
-            const accepted = await confirm("Are you sure you want to reset your cash?");
-            if(accepted){
-                document.getElementById("dumbStuff").style.display = 'none';
-                gameState.cashCount = cashResetValue;
-            }
-        });
-    }
-
-    const annoyYou = document.getElementById("annoyYou");
-
-    if(annoyYou){
-        annoyYou.addEventListener('click', async function(){
-            const accepted = await confirm("Are you sure you want to be annoyed irritably for a minute straight?(doesn't change values of your progress)");
-            if(accepted){
-                document.getElementById("dumbStuff").style.display = 'none';
-                getAnnoyed(60);
-            }
-        })
-    }
-
-    function getAnnoyed(seconds){
-        document.body.style.fontSize = '5em';
-        document.body.style.filter = 'invert(100%)';
-        setTimeout(() => {
-            document.body.style.fontSize = '1em';
-            document.body.style.filter = 'none';
-        }, seconds*1000)
-    }
-
-    // ------------------ CODES -----------------------
-
-    const redeem = document.getElementById("redeem");
-    const input = document.getElementById("codeInput");
-    const codes = ['Trans3ndantB3n',
-                   `TruRn3st`,
-                   `MonkeIsTheBest@TheMarket`,
-                   `MonkeHasInfinite${cashName}`,
-                   `TemedireIsCool`, 
-                   `ColbeFindsHacks`];
-    const rewards = [
-        () => {
-            gameState.cashCount += 1e99;
-            alert(`You gained ${getFormattedNumber(1e99)}(${getHyperE(1e99)})`);
-        },
-        () => {
-            gameState.multiplier = Math.min(10+(gameState.prestiges*4), gameState.multiplier + 10);
-            alert(`Your multiplier is now ${gameState.multiplier}`);
-        },
-        () => {
-            gameState.greenGiantCount += 1;
-            alert(`You got a green giant`);
-        },
-        () => {
-            gameState.cosmicCheeseCount += 1;
-            alert(`You got a cosmic cheese`);
-        },
-        () => {
-            gameState.prestiges += 1;
-            alert(`You got the a prestige!`);
-        },
-        () => {
-            gameState.cashCount = 9.9999e99;
-            alert(`You now have ${getFormattedNumber(9.9999e99)}(${getHyperE(9.9999e99)})`)
-        },
-    ];
-
-    redeem.addEventListener("click", () => {
-        const playerInput = input.value.trim();
-    
-        const index = codes.indexOf(playerInput);
-    
-        if (index === -1) {
-            alert("Invalid Code");
-            return;
-        }
-        else if (gameState[`code${index}redeemed`]) {
-            alert("You've already redeemed this code.");
-            return;
-        }
-        else{
-            gameState[`code${index}redeemed`] = true;
-        
-            rewards[index]();
-        
-            saveGame();
-        
-            alert("CODE REDEEMED");
-        }
-    });
-
-    // ------------------- USERNAMES AND LEADERBOARDS -------------------
-
-    const submitBtn = document.getElementById(`submitUsernameBtn`);
-
-    async function submitUsername() {
-        const username = document.getElementById(`userInput`).value.trim();
-    
-        if (!username) return;
-    
-        gameState.username = username.replaceAll(` `, `_`);
-        gameState.username = gameState.username.trim();
-        gameState.username = gameState.username.slice(0, 12);
-    
-        saveGame();
-        loadLeaderboard();
-    }
-
-    if(submitBtn) submitBtn.addEventListener(`click`, submitUsername);
-
-    async function uploadScore() {
-
-        const { error } = await supabase
-            .from(`leaderboard`)
-            .upsert(
-                {
-                    id: playerId,
-                    username: gameState.username,
-                    cash: gameState.cashCount,
-                    prestiges: gameState.prestiges,
-                    updated_at: new Date()
-                },
-                {
-                    onConflict: `id`
-                }
-            );
-    
-        if (error) {
-            console.error(error);
-        }
-    }
-
-    async function loadLeaderboard() {
-
-        const { data, error } = await supabase
-            .from(`leaderboard`)
-            .select(`*`)
-            .order(`prestiges`, { ascending: false })
-            .order(`cash`, { ascending: false })
-            .limit(100);
-    
-        if (error) {
-            console.error(error);
-            return;
-        }
-    
-        const board = document.getElementById(`leaderboard`);
-    
-        board.innerHTML = ``;
-    
-        data.forEach((player, index) => { 
-            if(index < 10){
-                board.innerHTML += `
-                    <div class='leaderboardRow' id='row${index + 1}'>
-                        <div class='place'>
-                            #${index + 1}
-                        </div>
+            <!-- Raw Bananas -->
+            <div class="sellItem">
+                <h2 id="rawBananaDisplay">Raw Bananas: 0</h2>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-raw-banana">Sell</button>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-raw-bananas">Sell All</button>
+            </div>
+            <!-- Frozen Oranges -->
+            <div class="sellItem">
+                <h2 id="frozenOrangeDisplay">Frozen Oranges: 0</h2>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-frozen-orange">Sell</button>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-frozen-oranges">Sell All</button>
+            </div>
+            <!-- Frozen Yougurt -->
+            <div class="sellItem">
+                <h2 id="frozenYougurtDisplay">Frozen Yougurt: 0</h2>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-frozen-yougurt">Sell</button>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-frozen-yougurts">Sell All</button>
+            </div>
+            <!-- Frozen Mango Slices -->
+            <div class="sellItem">
+                <h2 id="frozenMangoSlicesDisplay">Frozen Mango Slices: 0</h2>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-frozen-mango-slices">Sell</button>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-frozen-mango-slices">Sell All</button>
+            </div>
+            <!-- Toast -->
+            <div class="sellItem">
+                <h2 id="toastDisplay">Toast: 0</h2>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-toast">Sell</button>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-toasts">Sell All</button>
+            </div>
+            <!-- Raisin Toast -->
+            <div class="sellItem">
+                <h2 id="raisinToastDisplay">Raisin Toast: 0</h2>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-raisin-toast">Sell</button>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-raisin-toasts">Sell All</button>
+            </div>
+            <div class="sellItem">
+                <h2 id="raisinDisplay">Raisin: 0</h2>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-raisins">Sell</button>
+                <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-raisins">Sell All</button>
+            </div>
+        </div>
+        </div>
+        <button class="btn displays" id="rareFoodsBtn">RARE FOODS</button>
+        <div id="rareFoods" class="rarity">
+            <div id="grid">
+                <div id="chocolates" class="item">
+                    <h4>Chocolate</h4>
+                    <h5 class="cost">100M℗</h5>
+                    <h5 id="chocolateStock">Stock: 10</h5>
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.rhMaSOkeUV-oyeeg_RnSvwHaEJ?pid=Api&P=0&h=180">
+                </div>
+                <div id="darkChocolate" class="item">
+                    <h4>Dark Chocolate</h4>
+                    <h5 class="cost">100M℗</h5>
+                    <h5 id="darkChocolateStock">Stock: 10</h5>
+                    <img src="data:image/jpeg;base64,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">
+                </div>
+                <div id="pizzas" class="item">
+                    <h4>Pizza</h4>
+                    <h5 class="cost">750B℗</h5>
+                    <h5 id="pizzaStock">Stock: 10</h5>
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.8UeIFPMYwIErE1ShRYB9QAHaEo?pid=Api&P=0&h=180">
+                </div>
+                <div id="cookies" class="item">
+                    <h4>Cookies</h4>
+                    <h5 class="cost">5T℗</h5>
+                    <h5 id="cookieStock">Stock: 10</h5>
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.LrIdCWcX2BPHAlyhBSzFVQHaE6?pid=Api&P=0&h=180">
+                </div>
+                <div id="chicken" class="item">
+                    <h4>Chicken</h4>
+                    <h5 class="cost">15Qa℗</h5>
+                    <h5 id="chickenStock">Stock: 10</h5>
+                    <img src="https://tse2.mm.bing.net/th/id/OIP.yEwTHioLe2--BqL7WLFZ3QHaE8?pid=Api&P=0&h=180">
+                </div>
+                <div id="pasta" class="item">
+                    <h4>Pasta</h4>
+                    <h5 class="cost">50Qi℗</h5>
+                    <h5 id="pastaStock">Stock: 10</h5>
+                    <img src="https://tse2.mm.bing.net/th/id/OIP.8YtMP9tELOtelc-f0rQ-6QHaEp?pid=Api&P=0&h=180">
+                </div>
+                <div id="burger" class="item">
+                    <h4>Burger</h4>
+                    <h5 class="cost">250Sx℗</h5>
+                    <h5 id="burgerStock">Stock: 10</h5>
+                    <img src="https://brookrest.com/wp-content/uploads/2020/05/AdobeStock_282247995-scaled.jpeg">
+                </div>
+                <div id="donuts" class="item"> 
+                    <h4>Donuts</h4>
+                    <h5 class="cost">1Sp℗</h5>
+                    <h5 id="donutStock">Stock: 10</h5>
+                    <img src="https://cdn.britannica.com/38/230838-050-D0173E79/doughnuts-donuts.jpg">
+                </div>
+                <div id="pancakes" class="item">
+                    <h4>Pancake</h4>
+                    <h5 class="cost">10Oct℗</h5>
+                    <h5 id="pancakeStock">Stock: 10</h5>
+                    <img src="https://www.realsimple.com/thmb/Fi3e-DS5Duo4WPqX-l5RGNOtNeE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/how-to-make-pancakes-step-by-step-bf45f02d4b3c4392bddf92e05c9e17eb.jpg">
+                </div>
+                <div id="iceCream" class="item">
+                    <h4>Ice Cream</h4>
+                    <h5 class="cost">75No℗</h5>
+                    <h5 id="iceCreamStock">Stock: 10</h5>
+                    <img src="https://cdn.britannica.com/50/80550-050-5D392AC7/Scoops-kinds-ice-cream.jpg">
+                </div>
+                <div id="cheesecake" class="item">
+                    <h4>Cheesecake</h4>
+                    <h5 class="cost">1Dec℗</h5>
+                    <h5 id="cheesecakeStock">Stock: 10</h5>
+                    <img src="https://yummyrecipes.woochiens.com/wp-content/uploads/2025/06/kawtarhandali_New_York_Style_Cherry_Cheesecake_0be46d12-498e-4236-afda-93672440b258.png">
+                </div>
+            </div>
+            <div id="displayContainer">
+                <!-- Chocolate -->
+                <div class="sellItem">
+                    <h2 id="chocolateDisplay">Chocolate: 0</h2>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-chocolate">Sell</button>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-chocolates">Sell All</button>
+                </div>
+
+                <!-- Dark Chocolate -->
+                <div class="sellItem">
+                    <h2 id="darkChocolateDisplay">Dark Chocolate: 0</h2>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-dark-chocolate">Sell</button>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-dark-chocolates">Sell All</button>
+                </div>
+
+                <!-- Pizza -->
+                <div class="sellItem">
+                    <h2 id="pizzaDisplay">Pizza: 0</h2>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-pizza">Sell</button>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-pizzas">Sell All</button>
+                </div>
+
+                <!-- Cookies -->
+                <div class="sellItem">
+                    <h2 id="cookieDisplay">Cookies: 0</h2>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-cookie">Sell</button>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-cookies">Sell All</button>
+                </div>
+
+                <!-- Chicken -->
+                <div class="sellItem">
+                    <h2 id="chickenDisplay">Chicken: 0</h2>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-chicken">Sell</button>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-chickens">Sell All</button>
+                </div>
+
+                <!-- Pasta -->
+                <div class="sellItem">
+                    <h2 id="pastaDisplay">Pasta: 0</h2>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-pasta">Sell</button>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-pastas">Sell All</button>
+                </div>
+
+                <!-- Burger -->
+                <div class="sellItem">
+                    <h2 id="burgerDisplay">Burger: 0</h2>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-burger">Sell</button>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-burgers">Sell All</button>
+                </div>
+
+                <!-- Donuts -->
+                <div class="sellItem">
+                    <h2 id="donutDisplay">Donuts: 0</h2>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-donut">Sell</button>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-donuts">Sell All</button>
+                </div>
+
+                <!-- Pancakes -->
+                <div class="sellItem">
+                    <h2 id="pancakeDisplay">Pancakes: 0</h2>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-pancake">Sell</button>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-pancakes">Sell All</button>
+                </div>
+
+                <!-- Ice Cream -->
+                <div class="sellItem">
+                    <h2 id="iceCreamDisplay">Ice Cream: 0</h2>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-ice-cream">Sell</button>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-ice-creams">Sell All</button>
+                </div>
+
+                <!-- Cheesecake -->
+                <div class="sellItem">
+                    <h2 id="cheesecakeDisplay">Cheesecake: 0</h2>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-cheesecake">Sell</button>
+                    <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-cheesecakes">Sell All</button>
+                </div>
+            </div>
+        </div>
+        <button class="btn displays" id="uncannyFoodsBtn">UNCANNY FOODS</button>
+        <div id="uncannyFoods" class="rarity">
+            <div id="grid">
+                <div id="bluecapMushrooms" class="item">
+                    <h4>Bluecap Mushrooms</h4>
+                    <h5>An eerie scent of darkness and gloom...</h5>
+                    <h5 class="cost">1UnDec℗</h5>
+                    <h5 id="bluecapMushroomsStock">Stock: 10</h5>
+                    <img src="https://getwallpapers.com/wallpaper/full/c/2/3/1174611-neon-mushroom-wallpaper-1920x1080-retina.jpg">
+                </div>
+                <div id="ashenPears" class="item">
+                    <h4>Ashen Pears</h4>
+                    <h5>Burned in the hottest of coals, juicy as ever...</h5>
+                    <h5 class="cost">1DoDec℗</h5>
+                    <h5 id="ashenPearsStock">Stock: 10</h5>
+                    <img src="https://d39ai5mk5cpjgw.cloudfront.net/generation/6a2939f73498d452dee217ee/d49c0d0e.png">
+                </div>
+                <div id="twighlightHoneycombs" class="item">
+                    <h4>Twighlight Honeycombs</h4>
+                    <h5>The honeycombs that only taste like honey in twighlight</h5>
+                    <h5 class="cost">10TDec℗</h5>
+                    <h5 id="twighlightHoneycombsStock">Stock: 10</h5>
+                    <img src="https://d39ai5mk5cpjgw.cloudfront.net/generation/6a293ac461a751ba8eabaafe/edca3274.webp">
+                </div>
+                <div id="petersPickledPeppers" class="item">
+                    <h4>Peter's Pickled Peppers</h4>
+                    <h5>Peter's pickled peppers, picked by Peter himself</h5>
+                    <h5 class="cost">100QaDec℗</h5>
+                    <h5 id="petersPickledPeppersStock">Stock: 10</h5>
+                    <img src="https://static.wixstatic.com/media/c546d5_4cc39938d260447a8b111d96229005c2~mv2.jpg/v1/fill/w_480,h_902,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/c546d5_4cc39938d260447a8b111d96229005c2~mv2.jpg">
+                </div>
+                <div id="twistedTurnip" class="item">
+                    <h4>Twisted Turnip</h4>
+                    <h5>The turnip that grow in spirals, found in the twisted grove</h5>
+                    <h5 class="cost">2QiDec℗</h5>
+                    <h5 id="twistedTurnipStock">Stock: 10</h5>
+                    <img src="https://d39ai5mk5cpjgw.cloudfront.net/generation/6a2a37148eb2ab18e7f96d6b/4a81e495.webp">
+                </div>
+                <div id="shadowedMelon" class="item">
+                    <h4>Shadowed Melon</h4>
+                    <h5>Its shadow is one of the only to take form...</h5>
+                    <h5 class="cost">20SxDec℗</h5>
+                    <h5 id="shadowedMelonStock">Stock: 10</h5>
+                    <img src="https://d39ai5mk5cpjgw.cloudfront.net/generation/6a2a37e3ee741ea72e4de534/dc35dda0.webp">
+                </div>
+                <div id="crimsonVeinedPlum" class="item"> 
+                    <h4>Crimson-Veined Plum</h4>
+                    <h5>Its crimson veins bleed into the fabric of space and time...</h5>
+                    <h5 class="cost">500SpDec℗</h5>
+                    <h5 id="crimsonVeinedPlumStock">Stock: 10</h5>
+                    <img src="https://d39ai5mk5cpjgw.cloudfront.net/generation/6a2a40446395ae896ba70131/76db950b.webp">
+                </div>
+                <div id="monster" class="item"> 
+                    <h4>Monster</h4>
+                    <h5>No one dares to drink this drink, this is the monsters origin...</h5>
+                    <h5 class="cost">1OctDec℗</h5>
+                    <h5 id="monsterStock">Stock: 10</h5>
+                    <img src="https://mir-s3-cdn-cf.behance.net/projects/404/c2e92a156656955.Y3JvcCwyMTYwLDE2ODksMCw0NDM.png">
+                </div>
+                <div id="what" class="item"> 
+                    <h4>What</h4>
+                    <h5>All you need to know, the items get insane from here, the equivalent of bacon strips from a little someone...</h5>
+                    <h5 class="cost">1NoDec℗</h5>
+                    <h5 id="whatStock">Stock: 10</h5>
+                    <img src="data:image/jpeg;base64,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">
+                </div>
+            </div>
+            <div id="displayContainer">
+                <div id="displayContainer">
+
+                    <!-- Bluecap Mushrooms -->
+                    <div class="sellItem">
+                        <h2 id="bluecapMushroomsDisplay">Bluecap Mushrooms: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-bluecap-mushrooms">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-bluecap-mushrooms">Sell All</button>
                     </div>
-                `;
-                const row = document.getElementById(`row${index+1}`);
-                row.innerHTML += `<div>${(player.username)}</div>`;
-                row.innerHTML += `<div>${((String(player.prestiges)))}</div>`
-                row.innerHTML += `<div>${((String(getFormattedNumber(player.cash))))}</div>`;
+                
+                    <!-- Ashen Pears -->
+                    <div class="sellItem">
+                        <h2 id="ashenPearsDisplay">Ashen Pears: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"id="sell-ashen-pears">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"id="sell-all-ashen-pears">Sell All</button>
+                    </div>
+                
+                    <!-- Twighlight Honeycombs -->
+                    <div class="sellItem">
+                        <h2 id="twighlightHoneycombsDisplay">Twighlight Honeycombs: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-twighlight-honeycombs">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-twighlight-honeycombs">Sell All</button>
+                    </div>
+                
+                    <!-- Peter's Pickled Peppers -->
+                    <div class="sellItem">
+                        <h2 id="petersPickledPeppersDisplay">Peter's Pickled Peppers: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-peters-pickled-peppers">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-peters-pickled-peppers">Sell All</button>
+                    </div>
+                
+                    <!-- Twisted Turnip -->
+                    <div class="sellItem">
+                        <h2 id="twistedTurnipDisplay">Twisted Turnip: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-twisted-turnip">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-twisted-turnip">Sell All</button>
+                    </div>
+                
+                    <!-- Shadowed Melon -->
+                    <div class="sellItem">
+                        <h2 id="shadowedMelonDisplay">Shadowed Melon: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-shadowed-melon">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-shadowed-melon">Sell All</button>
+                    </div>
+                
+                    <!-- Crimson-Veined Plum -->
+                    <div class="sellItem">
+                        <h2 id="crimsonVeinedPlumDisplay">Crimson-Veined Plum: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-crimson-veined-plum">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-crimson-veined-plum">Sell All</button>
+                    </div>
+                
+                    <!-- Monster -->
+                    <div class="sellItem">
+                        <h2 id="monsterDisplay">Monster: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-monster">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-monsters">Sell All</button>
+                    </div>
 
-                if(index === 0){
-                    row.style.border = `2px solid rgb(219, 164, 0)`;
-                }
-                else if(index === 1){
-                    row.style.border = `2px solid rgb(128, 128, 128)`;
-                }
-                else if(index === 2){
-                    row.style.border = `2px solid rgb(143, 52, 0)`;
-                }
-            }
-        });
+                    <!-- What -->
+                    <div class="sellItem">
+                        <h2 id="whatDisplay">Monster: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-what">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-whats">Sell All</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn displays" id="legendaryFoodsBtn">LEGENDARY FOODS</button>
+        <div id="legendaryFoods" class="rarity">
+            <div id="grid">
+                <div id="grannyAndGrampaPig" class="item">
+                    <h4>Granny and Grampa Pig</h4>
+                    <h5>Perfectly cooked to the right temperature, pork with the richest taste...</h5>
+                    <h5 class="cost">1NoDec℗</h5>
+                    <h5 id="grannyAndGrampaPigStock">Stock: 20</h5>
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.K-n74PmR-jP8M0Tl55QYywHaHa?pid=Api&P=0&h=180">
+                </div>
+                <div id="weLiveWeLoveWeDie" class="item">
+                    <h4>We Live, We Love, We Die</h4>
+                    <h5>Strangely blue wings of the extinct smurf cats</h5>
+                    <h5 class="cost">1Vg℗</h5>
+                    <h5 id="weLiveWeLoveWeDieStock">Stock: 20</h5>
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.9JIFA0VAD6HpszrQWksH9QHaEK?pid=Api&P=0&h=180">
+                </div>
+                <div id="doge" class="item">
+                    <h4>Doge</h4>
+                    <h5>What did poor lil' doge ever do???</h5>
+                    <h5 class="cost">10UnVg℗</h5>
+                    <h5 id="dogeStock">Stock: 20</h5>
+                    <img src="https://up.yimg.com/ib/th/id/OIP.-0nnT8bRhK2BEB2XT26rCAHaHs?pid=Api&rs=1&c=1&qlt=95&w=118&h=123">
+                </div>
+                <div id="rickButRolled" class="item">
+                    <h4>Rick BUT Rolled</h4>
+                    <h5>Hmm, you wonder, how is rick with flakes deep fried?</h5>
+                    <h5 class="cost">100DoVg℗</h5>
+                    <h5 id="rickButRolledStock">Stock: 20</h5>
+                    <img src="https://media.tenor.com/jjS3qI3VFX4AAAA1/rick-astley.webp">
+                </div>
+                <div id="pepe" class="item">
+                    <h4>Pepe the Frog</h4>
+                    <h5>Pepe the Fries, now the owner officially promotes animal cruelty</h5>
+                    <h5 class="cost">200TVg℗</h5>
+                    <h5 id="pepeStock">Stock: 20</h5>
+                    <img src="https://tse2.mm.bing.net/th/id/OIP.HQxkWnYK22R7yAOmgq3J5wAAAA?pid=Api&P=0&h=180">
+                </div>
+                <div id="friedRnest" class="item">
+                    <h4>Fried Rnest</h4>
+                    <h5>It is only a joke to my classmate...</h5>
+                    <h5 class="cost">2QaVg℗</h5>
+                    <h5 id="friedRnestStock">Stock: 20</h5>
+                    <img src="https://images.squarespace-cdn.com/content/v1/5d03e904285c420001b75db0/6347803d-ce7c-4196-b023-dd385abad107/Ernest-FB-ProfilePic-01.png">
+                </div>
+                <div id="appa" class="item"> 
+                    <h4>Appa</h4>
+                    <h5>APPA YIP YIP!!! The avatar's one and only flying bison, gone...</h5>
+                    <h5 class="cost">500QiVg℗</h5>
+                    <h5 id="appaStock">Stock: 20</h5>
+                    <img src="https://comicbook.com/wp-content/uploads/sites/4/2025/03/Avatar-The-Last-Airbender-Appas-Lost-Days.jpg?resize=425">
+                </div>
+                <div id="undefinedItem" class="item"> 
+                    <h4>Undefined Item</h4>
+                    <h5>...</h5>
+                    <h5 class="cost">10SpVg℗</h5>
+                    <h5 id="undefinedItemStock">Stock: 20</h5>
+                    <img src="">
+                </div>
+                <div id="overlyDefinedItem" class="item"> 
+                    <h4>Overly Defined Item</h4>
+                    <h5>The overly defined item is overly defined because the overly defined item has overly defined in its name! This means the overly defined item is overly defined! Why do you think the overly defined item has overly defined in its name? Yes, because it is overly defined. Obviously! Why do you think it is overly defined???</h5>
+                    <h5 class="cost">1NoVg℗</h5>
+                    <h5 id="overlyDefinedItemStock">Stock: 20</h5>
+                    <img src="">
+                </div>
+            </div>
+            <div id="displayContainer">
+                <div id="displayContainer">
+                    <!-- Granny and Grampa Pig -->
+                    <div class="sellItem">
+                        <h2 id="grannyAndGrampaPigDisplay">Granny and Grampa Pig: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-granny-and-grampa-pig">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-granny-and-grampa-pigs">Sell All</button>
+                    </div>
 
-        uploadScore();
-    }
+                    <!-- We Live, We Love, We Die -->
+                    <div class="sellItem">
+                        <h2 id="weLiveWeLoveWeDieDisplay">We Live, We Love, We Die: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-we-live-we-love-we-die">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-we-live-we-love-we-dies">Sell All</button>
+                    </div>
 
-    // ----------------- PERKS/PRESTIGES -----------------
-    
-    function resetAllGameState() {
-        gameState.cashCount = cashResetValue;
-        for (const key in gameState) {
-            if (
-                key.endsWith(`Count`) &&
-                key !== `cashCount`
-            ) {
-                gameState[key] = 0;
-            }
-        }
-        gameState.Bitcoin = 0;
-        gameState.Litecoin = 0;
-        gameState.Dogecoin = 0;
-        gameState.BitcoinVal = 100000;
-        gameState.LitecoinVal = 100;
-        gameState.DogecoinVal = 10000000000;
-        gameState.multiplier = 0;
-        gameState.payPercent = 100;
-        
-    }
-    function resetAllItems(){
-        for (const key in gameState) {
-            if (
-                key.endsWith(`Count`) &&
-                key !== `cashCount`
-            ) {
-                gameState[key] = 0;
-            }
-        }
-    }
-    
-    function increasePerks(){
-        const gainBase = 10**(2*gameState.prestiges+5);
-        const requirement = 10**(gameState.prestiges+5);
+                    <!-- Doge -->
+                    <div class="sellItem">
+                        <h2 id="dogeDisplay">Doge: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-doge">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-doges">Sell All</button>
+                    </div>
 
-        let multiplierGain = Math.max(Math.log10(gameState.cashCount / gainBase) + 1, 0);
-        
-        if(multiplierGain < gainBase && multiplierGain > requirement){
-            multiplierGain = ((gameState.cashCount-requirement)/(gainBase-requirement));
-        }
+                    <!-- Rick BUT Rolled -->
+                    <div class="sellItem">
+                        <h2 id="rickButRolledDisplay">Rick BUT Rolled: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-rick-but-rolled">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-rick-but-rolls">Sell All</button>
+                    </div>
 
-        gameState.multiplier += Math.min(multiplierGain + 0.1, 10+(gameState.prestiges*4));
-        const multiplier = document.getElementById(`multiplier`);
-        multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
+                    <!-- Pepe -->
+                    <div class="sellItem">
+                        <h2 id="pepeDisplay">Pepe the Frog: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-pepe">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-pepes">Sell All</button>
+                    </div>
 
-        const payPercentLoss = Math.log10(gameState.cashCount / gainBase + 1) * 2;
+                    <!-- Fried Rnest -->
+                    <div class="sellItem">
+                        <h2 id="friedRnestDisplay">Fried Rnest: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-fried-rnest">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-fried-rnests">Sell All</button>
+                    </div>
 
-        gameState.payPercent -= payPercentLoss;
-        const payPercent = document.getElementById(`payPercent`);
-        payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
+                    <!-- Appa -->
+                    <div class="sellItem">
+                        <h2 id="appaDisplay">Appa: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-appa">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-appas">Sell All</button>
+                    </div>
 
-        gameState.cashCount = cashResetValue;
-        resetAllItems();
-        gameState.workerProfit = 10 ** (Math.floor(Math.log10(gameState.workerProfit) / 6));
-        restock();
-        saveGame();
-        uploadScore();
-        displayWorkerUI();
-    }
+                    <!-- Undefined Item -->
+                    <div class="sellItem">
+                        <h2 id="undefinedItemDisplay">Appa: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-undefined-item">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-undefined-items">Sell All</button>
+                    </div>
 
-    async function perkIncrease() {
-        const accepted = await confirm("Are you sure you want to add to perks?");
-        if(accepted){
-            if(gameState.cashCount >= 10**(gameState.prestiges + 5)){
-                if(gameState.multiplier < 10+(gameState.prestiges*4) || gameState.payPercent > 30){
-                    increasePerks();
-                }
-                else{
-                    const acceptAgain = await confirm(`You already have max multiplier and pay percent? Are you still sure? You'll gain nothing and only lose money`);
-                    if(acceptAgain){
-                        increasePerks();
-                    }
+                    <!-- Overly Defined Item -->
+                    <div class="sellItem">
+                        <h2 id="overlyDefinedItemDisplay">Appa: 0</h2>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-overly-defined-item">Sell</button>
+                        <button class="sellbtn" style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;" id="sell-all-overly-defined-items">Sell All</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn displays" id="supernaturalFoodsBtn">SUPERNATURAL FOODS</button>
+        <div id="supernaturalFoods" class="rarity">
+            <div id="grid">
+                <div id="bettysBitterButter" class="item">
+                    <h4>Betty's Bitter Butter</h4>
+                    <h5>Betty's Bitter Butter, Bought By Betty By Blundering</h5>
+                    <h5 class="cost">1Trg℗</h5>
+                    <h5 id="bettysBitterButterStock">Stock: 25</h5>
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.XJ7JYAR5TT7Y2wjgGNUyWgHaEo?pid=Api&P=0&h=180">
+                </div>
+                <div id="cosmicCheese" class="item">
+                    <h4>Cosmic Cheese</h4>
+                    <h5>The Cosmos' structure has been shifted to a strange substance. CHEESE...</h5>
+                    <h5 class="cost">1DoTrg℗</h5>
+                    <h5 id="cosmicCheeseStock">Stock: 25</h5>
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.dXU43ZekPqBJ-mD3WFxnKAHaEL?pid=Api&P=0&h=180">
+                </div>
+                <div id="livingSoccerBall" class="item">
+                    <h4>Living Soccer Ball</h4>
+                    <h5>Is there any way anyone would eat that thing?</h5>
+                    <h5 class="cost">1QaTrg℗</h5>
+                    <h5 id="livingSoccerBallStock">Stock: 25</h5>
+                    <img src="https://d39ai5mk5cpjgw.cloudfront.net/generation/6a3778c5c7c357006bb64f7b/65adde34.webp">
+                </div>
+                <div id="math" class="item">
+                    <h4>Math</h4>
+                    <h5>The entire concept of math, all in your palm, and you just, eat it???</h5>
+                    <h5 class="cost">1SxTrg℗</h5>
+                    <h5 id="mathStock">Stock: 25</h5>
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.Nbtbz-eBUXThVJ8vsQbzXgHaEo?pid=Api&P=0&h=180">
+                </div>
+                <div id="pi" class="item">
+                    <h4>Pi</h4>
+                    <h5>3.14159265358979323846264338327950288<br>4197169399375105820974944592307<br>8164062862089986280348253421170679...</h5>
+                    <h5 class="cost">1NoTrg℗</h5>
+                    <h5 id="piStock">Stock: 25</h5>
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.ch1DMDvM9SmGl-RY5gUh0AHaEK?pid=Api&P=0&h=180">
+                </div>
+                <div id="meet" class="item">
+                    <h4>Meet</h4>
+                    <h5>Your joking...</h5>
+                    <h5 class="cost">1DoQdrg℗</h5>
+                    <h5 id="meetStock">Stock: 25</h5>
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.E1Y6Ld0HqzigvMUTGupN9wHaD6?pid=Api&P=0&h=180">
+                </div>
+            </div>
+            <div id="displayContainer">
 
-                }
-            }
-            else{
-                alert(`You do not have enough ${cashName} to add to perks.`);
-            }
-        } 
-    }
-    
-    function getCashLevel(prestige){
-        return 10 ** (11 * prestige + 9);
-    }
-    
-    async function prestige(){
-        const accepted = await confirm("Are you sure you want to prestige?");
-        if(accepted){
-            const cashLevel = getCashLevel(gameState.prestiges);
-            if(gameState.cashCount < cashLevel){
-                alert(`You do not enough ${cashName} to prestige`);
-                return;
-            };
-            gameState.prestiges += 1;
-            resetAllGameState();
-            gameState.workerProfit = 0;
-            gameState.workerAmount = (gameState.workerAmount/10)*3;
-            restock();
-            timeLeft = config.normalTime;
-            saveGame();
-            uploadScore();
-            displayWorkerUI();
-        }
-    }
-
-        if(document.getElementById(`perkIncreaseBtn`)){
-            document.getElementById(`perkIncreaseBtn`).addEventListener(`click`, perkIncrease);
-        }
-        if(document.getElementById(`prestigeBtn`)){
-        document.getElementById(`prestigeBtn`).addEventListener(`click`, prestige);
-        }
-    // ------------ RESTART ------------
-
-    function confirm(message){
-        return new Promise(resolve => {
-            clearInterval(countdownInterval);
-            const overlay = document.createElement("div");
-            overlay.id = "confirmOverlay";
-
-            const confirm = document.createElement("div");
-            confirm.id = 'confirm';
-            confirm.classList.add("confirm");
-
-            const text = document.createElement("div");
-            text.textContent = message;
-
-            const btnContainer = document.createElement("div");
-            btnContainer.classList.add("allowanddeny")
-
-            const allow = document.createElement("button");
-            allow.classList.add("btn");
-            allow.classList.add("allowBtn");
-            allow.textContent = 'allow';
-            allow.addEventListener('click', () => {
-                confirm.remove();
-                overlay.remove();
-                alert("Confirmed");
-                setCountDown();
-                resolve(true);
-            });
-
-            const deny = document.createElement("button");
-            deny.classList.add("btn");
-            deny.classList.add("denyBtn");
-            deny.textContent = 'deny';
-            deny.addEventListener('click', () => {
-                confirm.remove();
-                overlay.remove();
-                setCountDown();
-                alert("rejected");
-                resolve(false);
-            });
-
-            document.body.appendChild(overlay);
-            document.body.appendChild(confirm)
-            confirm.appendChild(text);
-            confirm.appendChild(document.createElement("br"));
-            confirm.appendChild(btnContainer);
-            btnContainer.appendChild(allow);
-            btnContainer.appendChild(deny);
-        });
-    }
-
-    async function restartGame() {
-        const accepted = await confirm(
-            `Are you sure you want to restart? This will erase all progress.`
-        );
-        if (accepted) {
-            clearInterval(cryptoInterval);
-            clearInterval(uiInterval);
-            clearInterval(countdownInterval);
-            clearInterval(window.cashLoop);
-        
-            cryptoInterval = null;
-            uiInterval = null;
-            countdownInterval = null;
-            window.cashLoop = null;        
-            resetAllGameState();
-            gameState.prestiges = 0;
-            gameState.workerProfit = 0;
-            gameState.workerAmount = 0;
-            restock();
-            timeLeft = config.normalTime;
+                <!-- Betty's Bitter Butter -->
+                <div class="sellItem">
+                    <h2 id="bettysBitterButterDisplay">Betty's Bitter Butter: 0</h2>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-bettys-bitter-butter">Sell</button>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-all-bettys-bitter-butters">Sell All</button>
+                </div>
             
-            localStorage.clear();
-        
-            saveGame();
-            uploadScore();
-            displayWorkerUI();
+                <!-- Cosmic Cheese -->
+                <div class="sellItem">
+                    <h2 id="cosmicCheeseDisplay">Cosmic Cheese: 0</h2>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-cosmic-cheese">Sell</button>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-all-cosmic-cheeses">Sell All</button>
+                </div>
+            
+                <!-- Living Soccer Ball -->
+                <div class="sellItem">
+                    <h2 id="livingSoccerBallDisplay">Living Soccer Ball: 0</h2>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-living-soccer-ball">Sell</button>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-all-living-soccer-balls">Sell All</button>
+                </div>
+            
+                <!-- Math -->
+                <div class="sellItem">
+                    <h2 id="mathDisplay">Math: 0</h2>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-math">Sell</button>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-all-maths">Sell All</button>
+                </div>
+            
+                <!-- Pi -->
+                <div class="sellItem">
+                    <h2 id="piDisplay">Pi: 0</h2>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-pi">Sell</button>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-all-pis">Sell All</button>
+                </div>
+            
+                <!-- Meet -->
+                <div class="sellItem">
+                    <h2 id="meetDisplay">Meet: 0</h2>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-meet">Sell</button>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-all-meets">Sell All</button>
+                </div>
+            </div>
+        </div>
+        <button class="btn displays" id="mythologicalFoodsBtn">MYTHOLOGICAL FOODS</button>
+        <div id="mythologicalFoods" class="rarity">
+            <div id="grid">
+                <div id="ben" class="item">
+                    <h4>Ben</h4>
+                    <h5>Ben, a specialised civilian.</h5>
+                    <h5 class="cost">1QaQdrg℗</h5>
+                    <h5 id="benStock">Stock: 25</h5>
+                    <img src="https://mail.google.com/mail/u/0?ui=2&ik=2b0b9b94c0&attid=0.1&permmsgid=msg-a:r-6046550821872795114&th=19ef415b6ad4b67e&view=fimg&fur=ip&permmsgid=msg-a:r-6046550821872795114&sz=s0-l75-ft&attbid=ANGjdJ84jnP9zwvYyGd2jVZx0NUJ77odAgIRKGtV-5tzf6Rn8gsBS7kS8TbWpYXExMXCQuArptP7XN3NqQdVVtuBhml3yIrzLur8jAKPf8pZ6aK30IXhWHcIar613es&disp=emb&realattid=BA0DDADA-A6EB-4233-8C17-AD054E2F7D70&zw">
+                </div>
+                <div id="greenGiant" class="item">
+                    <h4>Green Giant</h4>
+                    <h5>Ho Ho Ho, Green Giant</h5>
+                    <h5 class="cost">10OctQdrg℗</h5>
+                    <h5 id="greenGiantStock">Stock: 25</h5>
+                    <img src="https://tse2.mm.bing.net/th/id/OIP.Z-q2lKwM1tQw1lQDU1tyvQHaEo?pid=Api&P=0&h=180">
+                </div>
+                <div id="theFirstSpinjitsuMaster" class="item">
+                    <h4>The First Spinjitsu Master</h4>
+                    <h5>No, it was the first spinjitsu master who created ninjago.</h5>
+                    <h5 class="cost">1Qqg℗</h5>
+                    <h5 id="theFirstSpinjitsuMasterStock">Stock: 25</h5>
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.lPDsdBckhRQyDCOa8uccAAHaEK?pid=Api&P=0&h=180">
+                </div>
+                <div id="trueRnest" class="item">
+                    <h4>True Rnest</h4>
+                    <h5>What is going on?</h5>
+                    <h5 class="cost">100DoQqg℗</h5>
+                    <h5 id="trueRnestStock">Stock: 25</h5>
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.lUPqgLi6paK1cVz9ZUDHaQHaEK?pid=Api&P=0&h=180">
+                </div>
+                <div id="transendantBen" class="item">
+                    <h4>Transendant Ben</h4>
+                    <h5>An extremely specialized civilian...</h5>
+                    <h5 class="cost">1QiQqg℗</h5>
+                    <h5 id="transendantBenStock">Stock: 25</h5>
+                    <img src="./images/auraBen.png" style="height: 150px;">
+                </div>
+            </div>
+            <div id="displayContainer">
 
-            window.location.reload();
-        }
-    }
+                <!-- Ben -->
+                <div class="sellItem">
+                    <h2 id="benDisplay">Ben: 0</h2>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-ben">Sell</button>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-all-bens">Sell All</button>
+                </div>
+            
+                <!-- Green Giant -->
+                <div class="sellItem">
+                    <h2 id="greenGiantDisplay">Green Giant: 0</h2>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-green-giant">Sell</button>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-all-green-giants">Sell All</button>
+                </div>
+            
+                <!-- The First Spinjitsu Master -->
+                <div class="sellItem">
+                    <h2 id="theFirstSpinjitsuMasterDisplay">The First Spinjitsu Master: 0</h2>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-the-first-spinjitsu-master">Sell</button>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-all-the-first-spinjitsu-masters">Sell All</button>
+                </div>
+            
+                <!-- True Rnest -->
+                <div class="sellItem">
+                    <h2 id="trueRnestDisplay">True Rnest: 0</h2>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-true-rnest">Sell</button>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-all-true-rnests">Sell All</button>
+                </div>
+            
+                <!-- Transendant Ben -->
+                <div class="sellItem">
+                    <h2 id="transendantBenDisplay">Aura Ben: 0</h2>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-transendant-ben">Sell</button>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-all-transendant-bens">Sell All</button>
+                </div>
+            
+            </div>
+        </div>
+        <button class="btn displays" id="exoticFoodsBtn">EXOTIC FOODS</button>
+        <div id="exoticFoods" class="rarity">
+            <div id="grid">
+                <div id="sushi" class="item lasttwo" style="height: 500px;">
+                    <h4 class="glitch">SUSHI</h4>
+                    <h5>...</h5>
+                    <h5 class="cost">1Sxg℗</h5>
+                    <h5 id="sushiStock">Stock: 50</h5>
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.fUqznaoe0UyCSONo4Zx8OAHaE7?pid=Api&P=0&h=180">
+                </div>
+                <div id="caviar" class="item lasttwo" style="height: 500px;">
+                    <h4 class="glitch">CAVIAR</h4>
+                    <h5>...</h5>
+                    <h5 class="cost">1TSxg℗</h5>
+                    <h5 id="caviarStock">Stock: 50</h5>
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.MrK2y1Y4QC27iZM5ChPM8QHaEK?pid=Api&P=0&h=180">
+                </div>
+            </div>
+            <div id="butterChicken" class="item lastitem">
+                <h4 id="butterChickenHeader" style="color: white;" class="glitch" style="padding: 15px;">Butter Chicken</h4>
+                <h5 style="color: white;" style="padding: 15px;">...</h5>
+                <h5 style="color: white;" style="padding: 15px;" class="cost">1SxSxg℗</h5>
+                <h5 id="butterChickenStock" style="color: white;">Stock: 50</h5>
+                <img style="border-radius: 15px; margin: 30px; width: 200px; height: 250px;" src="https://www.cookingclassy.com/wp-content/uploads/2021/01/butter-chicken-20.jpg">
+            </div>
+            <div id="displayContainer">
 
-    // ---------------- INIT ----------------
-    
-    function initiate() {
-        loadGame();
-        loadStock();
-        updateUI();
-        displayRaritiesAndMenuPages();
-        loadLeaderboard();
-        displayWorkerUI();
-
-        const clickables = [...document.querySelectorAll(`.item`), ...document.querySelectorAll(`.btn`), document.getElementById(`removePerkScreen`), document.getElementById(`removePrestigeScreen`), document.getElementById(`removeSettings`)];
-        clickables.forEach(click => {
-            click.addEventListener(`click`, () => {
-                clicksound.currentTime = 0.59;
-                clicksound.play();
-            });
-        });
-
-
-        window.restartGame = restartGame;
-        const restartBtn = document.getElementById(`restartGame`);
-
-        if (restartBtn) {
-            restartBtn.addEventListener(`click`, () => {
-                restartGame();
-            });
-        }
-
-        window.uploadScore - uploadScore;
-        uploadScore();
-    
-        setTimeout(() => {
-            setupBuyButtons();
-            setupSellButtons();
-        }, 50);
-
-        setInterval(() => {
-            gameState.LitecoinVal = Math.floor(gameState.LitecoinVal);
-        }, 100)
-    
-        setCountDown();
-        cryptoInterval = setInterval(updateCrypto, 250);
-    
-    
-        window.cashLoop = setInterval(updateUI, 500);
-    }
-    
-    window.onload = initiate();    
-
-    window.investBitcoin = investBitcoin;
-    window.sellBitcoin = sellBitcoin;
-    
-    window.investLitecoin = investLitecoin;
-    window.sellLitecoin = sellLitecoin;
-    
-    window.investDogecoin = investDogecoin;
-    window.sellDogecoin = sellDogecoin;
-    
-})();
+                <!-- Sushi -->
+                <div class="sellItem">
+                    <h2 id="sushiDisplay">Ben: 0</h2>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-sushi">Sell</button>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-all-sushis">Sell All</button>
+                </div>
+            
+                <!-- Caviar -->
+                <div class="sellItem">
+                    <h2 id="caviarDisplay">Green Giant: 0</h2>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-caviar">Sell</button>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-all-caviars">Sell All</button>
+                </div>
+            
+                <!-- Butter Chicken -->
+                <div class="sellItem">
+                    <h2 id="butterChickenDisplay">The First Spinjitsu Master: 0</h2>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-butter-chicken">Sell</button>
+                    <button class="sellbtn"
+                        style="background-color: hsl(0, 100%, 26%); display: flex; justify-content: center; font-size: 1em;"
+                        id="sell-all-butter-chickens">Sell All</button>
+                </div>
+            </div>
+        </div>
+        <h1 style="margin-top: 20px;">CRYPTO</h1>
+        <input type="number" id="cryptoInput" placeholder="input a penty amount">
+        <h2 id="BitcoinDisplay">1 BITCOIN: 100000℗</h2>
+        <h3 id="Bitcoins">Bitcoins: 0</h3>
+        <button class="btn" onclick="investBitcoin()">INVEST</button>
+        <button class="btn" onclick="sellBitcoin()">SELL</button>
+        <h2 id="LitecoinDisplay">1 LITECOIN: 100℗</h2>
+        <h3 id="Litecoins">Litecoins: 0</h3>
+        <button class="btn" onclick="investLitecoin()">INVEST</button>
+        <button class="btn" onclick="sellLitecoin()">SELL</button>
+        <h2 id="DogecoinDisplay">1 DOGECOIN: 0.0001℗</h2>
+        <h3 id="Dogecoins">Dogecoins: 0</h3>
+        <button class="btn" onclick="investDogecoin()">INVEST</button>
+        <button class="btn" onclick="sellDogecoin()">SELL</button>
+        <button class="btn displays" id="dumbStuffBtn">DUMB STUFF 🤣</button>
+        <div id="dumbStuff" class="rarity" style="padding: 50px;">
+            <div id="dumbGrid">
+                <button id="prestigesTo14" class="btn">Set Prestiges To 14</button>
+                <button id="resetWorkerProgress" class="btn">Reset Worker Progress</button>
+                <button id="resetCash" class="btn">Reset Cash</button>
+                <button id="annoyYou" class="btn">Annoy Y</button>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <script src="./index.js"></script>
+    </body>
+</html>
