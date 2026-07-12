@@ -1524,7 +1524,7 @@
             return;
         }
         else{
-            gameState[`code${index}redeemed`] = false;
+            gameState[`code${index}redeemed`] = true;
         
             rewards[index]();
         
