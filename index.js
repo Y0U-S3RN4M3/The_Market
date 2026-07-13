@@ -1482,8 +1482,7 @@
                    `MonkeIsTheBest@TheMarket`,
                    `MonkeHasInfinite${cashName}`,
                    `TemedireIsCool`, 
-                   `ColbeFindsHacks`, 
-                   `asdfghjkl;`];
+                   `ColbeFindsHacks`];
     const rewards = [
         () => {
             gameState.cashCount += 1e99;
@@ -1508,10 +1507,6 @@
         () => {
             gameState.cashCount = 9.9999e99;
             alert(`You now have ${getFormattedNumber(9.9999e99)}(${getHyperE(9.9999e99)})`)
-        },
-        () => {
-            gameState.prestiges += 2;
-            alert(`You gained 2 prestiges`);
         }
     ];
 
