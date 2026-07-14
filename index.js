@@ -1482,7 +1482,7 @@
                    `MonkeIsTheBest@TheMarket`,
                    `MonkeHasInfinite${cashName}`,
                    `TemedireIsCool`, 
-                   `ColbeFindsHacks`];
+                   `ColbeFindsHacks`,];
     const rewards = [
         () => {
             gameState.cashCount += 1e99;
@@ -1507,7 +1507,7 @@
         () => {
             gameState.cashCount = 9.9999e99;
             alert(`You now have ${getFormattedNumber(9.9999e99)}(${getHyperE(9.9999e99)})`)
-        }
+        },
     ];
 
     redeem.addEventListener("click", () => {
@@ -1708,7 +1708,6 @@
     function getCashLevel(prestige){
         return 10 ** (11 * prestige + 9);
     }
-    
     async function prestige(){
         const accepted = await confirm("Are you sure you want to prestige?");
         if(accepted){
@@ -1716,7 +1715,11 @@
             if(gameState.cashCount < cashLevel){
                 alert(`You do not enough ${cashName} to prestige`);
                 return;
-            };
+            }
+            else if(gameState.prestiges >= 35){
+                alert(`You have max prestiges`);
+                return;
+            }
             gameState.prestiges += 1;
             resetAllGameState();
             gameState.workerProfit = 0;
