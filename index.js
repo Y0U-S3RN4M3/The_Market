@@ -1088,11 +1088,14 @@
                     string += `Nog`;
                     break;
             }
+            if(tens === 10){
+                
+            }
             return string;
         }
         function getNumberShortened(n) {
             if (n < 1000) {
-                return n.toFixed(0);
+                return Math.round(n);
             }
         
             if (n < 1_000_000 && n >= 1000) {
@@ -1101,10 +1104,6 @@
         
             const nth = getNthIllion(n);
             const divisor = 10 ** ((nth + 1) * 3);
-            
-            if(isNaN((n / divisor))){
-
-            }
 
             return (n / divisor).toFixed(2);
         }
@@ -1482,7 +1481,7 @@
                    `MonkeIsTheBest@TheMarket`,
                    `MonkeHasInfinite${cashName}`,
                    `TemedireIsCool`, 
-                   `ColbeFindsHacks`];
+                   `ColbeFindsHacks`,];
     const rewards = [
         () => {
             gameState.cashCount += 1e99;
@@ -1708,7 +1707,6 @@
     function getCashLevel(prestige){
         return 10 ** (11 * prestige + 9);
     }
-    
     async function prestige(){
         const accepted = await confirm("Are you sure you want to prestige?");
         if(accepted){
@@ -1716,7 +1714,7 @@
             if(gameState.cashCount < cashLevel){
                 alert(`You do not enough ${cashName} to prestige`);
                 return;
-            };
+            }
             gameState.prestiges += 1;
             resetAllGameState();
             gameState.workerProfit = 0;
