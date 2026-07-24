@@ -1340,8 +1340,6 @@
     
         const doge = document.getElementById(`DogecoinDisplay`);
         if (doge) doge.textContent = `1 DOGECOIN: ${getFormattedNumber(gameState.DogecoinVal)}`;
-
-        uploadScore();
     }
     
     // ----------------- DISPLAY RARITIES & MENU -----------------\
@@ -1617,8 +1615,6 @@
                 }
             }
         });
-
-        uploadScore();
     }
 
     // ----------------- PERKS/PRESTIGES -----------------
@@ -1844,7 +1840,7 @@
             });
         }
 
-        window.uploadScore - uploadScore;
+        window.uploadScore = uploadScore;
         uploadScore();
     
         setTimeout(() => {
