@@ -1552,7 +1552,6 @@
     if(submitBtn) submitBtn.addEventListener(`click`, submitUsername);
 
     async function uploadScore() {
-        console.log("FAAAAAAAAAAAAAAAAAAAAAAAAA")
         const { error } = await supabase
             .from(`leaderboard`)
             .upsert(
@@ -1612,8 +1611,8 @@
             `;
             const row = document.getElementById(`row${index+1}`);
             row.innerHTML += `<div>${(player.username)}</div>`;
-            row.innerHTML += `<div>${((String(player.prestiges)))}</div>`
-            row.innerHTML += `<div>${((String(player.cash)))}</div>`;
+            row.innerHTML += `<div>${(String(player.prestiges))}</div>`
+            row.innerHTML += `<div>${(String(getFormattedNumber(player.cash)))}</div>`;
 
             if(index === 0){
                 row.style.border = `2px solid rgb(219, 164, 0)`;
