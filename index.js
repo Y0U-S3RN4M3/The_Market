@@ -3,8 +3,8 @@
         clearInterval(window.timerRunning);
     }
 
-    const supabaseUrl = `https://sudgrewakskphlfwbubm.supabase.co`;
-    const supabaseKey = `sb_publishable_u1nxZ4YtF2_XcvURH4AywQ_UZ-sZVlM`;
+    const supabaseUrl = `https://xcqkljurfuloskpaqmip.supabase.co`;
+    const supabaseKey = `sb_publishable_Po0qIlCYETGizrewPvsgsg_RPw6Rd5C`;
 
     const supabase = window.supabase.createClient(
         supabaseUrl,
@@ -438,10 +438,11 @@
     
     // ---------------- SAVE / LOAD ----------------
     
-    function saveGame() {
+    async function saveGame() {
         localStorage.setItem(`gameSave`, JSON.stringify(gameState));
         localStorage.setItem(`stock`, JSON.stringify(stock));
-        loadLeaderboard();
+        await loadLeaderboard();
+        await uploadScore();
     }
     
     function loadGame() {
@@ -1551,7 +1552,7 @@
     if(submitBtn) submitBtn.addEventListener(`click`, submitUsername);
 
     async function uploadScore() {
-
+        console.log("FAAAAAAAAAAAAAAAAAAAAAAAAA")
         const { error } = await supabase
             .from(`leaderboard`)
             .upsert(
@@ -1574,45 +1575,54 @@
 
     async function loadLeaderboard() {
 
-        const { data, error } = await supabase
-            .from(`leaderboard`)
-            .select(`*`)
-            .order(`prestiges`, { ascending: false })
-            .order(`cash`, { ascending: false })
-            .limit(100);
-    
-        if (error) {
-            console.error(error);
-            return;
+        const { data: ranked } = await supabase
+            .from("leaderboard")
+            .select("*")
+            .order("prestiges", { ascending: false })
+            .order("cash", { ascending: false });
+
+        for (let i = 0; i < ranked.length; i++) {
+            await supabase
+                .from("leaderboard")
+                .update({ place: i + 1 })
+                .eq("id", ranked[i].id);
         }
-    
+
+        const { data, error } = await supabase
+            .from("leaderboard")
+            .select("*")
+            .lte("place", 10)
+            .order("place");
+        
+        console.log(data);
+        console.log(error);
+
         const board = document.getElementById(`leaderboard`);
     
         board.innerHTML = ``;
     
-        data.forEach((player, index) => { 
-            if(index < 10){
-                board.innerHTML += `
-                    <div class='leaderboardRow' id='row${index + 1}'>
-                        <div class='place'>
-                            #${index + 1}
-                        </div>
+        data.forEach(async function(player, index){ 
+            
+            board.innerHTML += `
+                <div class='leaderboardRow' id='row${index + 1}'>
+                    <div class='place'>
+                        #${index + 1}
                     </div>
-                `;
-                const row = document.getElementById(`row${index+1}`);
-                row.innerHTML += `<div>${(player.username)}</div>`;
-                row.innerHTML += `<div>${((String(player.prestiges)))}</div>`
-                row.innerHTML += `<div>${((String(getFormattedNumber(player.cash))))}</div>`;
+                </div>
+            `;
+            const row = document.getElementById(`row${index+1}`);
+            row.innerHTML += `<div>${(player.username)}</div>`;
+            row.innerHTML += `<div>${((String(player.prestiges)))}</div>`
+            row.innerHTML += `<div>${((String(player.cash)))}</div>`;
 
-                if(index === 0){
-                    row.style.border = `2px solid rgb(219, 164, 0)`;
-                }
-                else if(index === 1){
-                    row.style.border = `2px solid rgb(128, 128, 128)`;
-                }
-                else if(index === 2){
-                    row.style.border = `2px solid rgb(143, 52, 0)`;
-                }
+            if(index === 0){
+                row.style.border = `2px solid rgb(219, 164, 0)`;
+            }
+            else if(index === 1){
+                row.style.border = `2px solid rgb(128, 128, 128)`;
+            }
+            else if(index === 2){
+                row.style.border = `2px solid rgb(143, 52, 0)`;
             }
         });
     }
