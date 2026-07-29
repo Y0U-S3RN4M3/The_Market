@@ -1896,8 +1896,8 @@
         displayRaritiesAndMenuPages();
         loadLeaderboard();
         displayWorkerUI();
-
         music.play();
+        setTimeout(() => music.play(), 500)
 
         if(gameState.musicPlaying){
             music.play();
