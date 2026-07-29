@@ -23,6 +23,14 @@
     const cashName = `Penties`;
     const cashSymbol = `𝓟`;
     const cashResetValue = 10;
+
+    const music = new Audio("sounds/music.mp3");
+
+    music.loop = true;
+    music.volume = 0.01;
+
+    music.play();
+
     let cryptoInterval;
     let uiInterval;
     let countdownInterval;
@@ -114,6 +122,7 @@
 
         workerAmount: 0,
         workerProfit: 10e6,
+        workerProfitPrice: 10**((Math.log10(this.workerProfit)/7)*8),
     
         Bitcoin: 0,
         Litecoin: 0,
@@ -127,6 +136,8 @@
         code3redeemed: false,
         code4redeemed: false,
         code5redeemed: false,
+
+        musicPlaying: true,
     };
     
     const defaultGameState = { ...gameState };
@@ -557,7 +568,7 @@
     const profitDisplay = document.getElementById("workerProfitDisplay");
 
     function displayWorkerUI(){
-        const price = 10**(gameState.workerAmount + 7);
+        const price = gameState.workerProfitPrice;
         amountBtn.textContent = `${getFormattedNumber(price)}(${getHyperE(price)})${cashSymbol}`;
         const pricee = gameState.workerProfit*10;
         profitBtn.textContent = `${getFormattedNumber(pricee)}(${getHyperE(pricee)})${cashSymbol}`;
@@ -569,7 +580,7 @@
 
     if(amountBtn){
         amountBtn.addEventListener('click', () => {
-            const price = 10**(gameState.workerAmount + 7)
+            const price = gameState.workerProfitPrice
             if (gameState.cashCount < price) alert(`Not enough ${cashName}`);
             else{
                 gameState.workerAmount++;
@@ -584,11 +595,36 @@
             const price = gameState.workerProfit * 10;
             if(gameState.cashCount < price) alert(`Not enough ${cashName}`);
             else{
-                gameState.workerProfit *= 100;
+                gameState.workerProfit *= 10;
                 gameState.cashCount -= price;
             }
             displayWorkerUI();
         })
+    }
+
+    // ----------------- MUSIC -----------------
+
+    const musicBtn = document.getElementById("musicBtn");
+    if(musicBtn){
+        musicBtn.addEventListener('click', () => {
+            const musicplaying = gameState.musicPlaying
+            if(musicplaying){
+                gameState.musicPlaying = false;
+                music.pause();
+                music.currentTime = 0;
+                musicBtn.classList.add("maxBtnYes");
+                musicBtn.classList.remove("maxBtnNo");
+                musicBtn.textContent = 'NO'
+    
+            }
+            else{
+                gameState.musicPlaying = true;
+                music.play();
+                musicBtn.classList.add("maxBtnNo");
+                musicBtn.classList.remove("maxBtnYes");
+                musicBtn.textContent = 'YES'
+            }
+        });
     }
 
     // ---------------- CRYPTO ----------------
@@ -1480,15 +1516,22 @@
                    `MonkeIsTheBest@TheMarket`,
                    `MonkeHasInfinite${cashName}`,
                    `TemedireIsCool`, 
-                   `ColbeFindsHacks`,];
+                   `ColbeFindsHacks`,
+                   `JudeIsDABest`,
+                   `DylanSaysHelloHello`,
+                   `LukaIsLucky`,
+                   `TobyBegsMe`,
+                   `DavidExists`];
     const rewards = [
         () => {
             gameState.cashCount += 1e99;
-            alert(`You gained ${getFormattedNumber(1e99)}(${getHyperE(1e99)})`);
+            gameState.transendantBenCount += 1;
+            alert(`You gained ${getFormattedNumber(1e99)}(${getHyperE(1e99)}) and a transendant ben`);
         },
         () => {
             gameState.multiplier = Math.min(10+(gameState.prestiges*4), gameState.multiplier + 10);
-            alert(`Your multiplier is now ${gameState.multiplier}`);
+            gameState.trueRnestCount += 1;
+            alert(`Your multiplier is now ${gameState.multiplier} and a True Rnest`);
         },
         () => {
             gameState.greenGiantCount += 1;
@@ -1506,6 +1549,29 @@
             gameState.cashCount = 9.9999e99;
             alert(`You now have ${getFormattedNumber(9.9999e99)}(${getHyperE(9.9999e99)})`)
         },
+        () => {
+            gameState.cashCount += 10**(gameState.prestiges * 10 + 10);
+            alert(`You gained ${getFormattedNumber(10**(gameState.prestiges * 10 + 10))}${cashSymbol}`);
+        },
+        () => {
+            gameState.prestiges += 1;
+            alert(`You got a prestige`);
+        },
+        () => {
+            gameState.Dogecoin += 1e50;
+            alert(`You got ${getFormattedNumber(1e50)} Dogecoin`);
+            updateCryptoOwnedUI();
+        },
+        () => {
+            gameState.Bitcoin += 1e75;
+            alert(`You got ${getFormattedNumber(1e75)} Bitcoin`);
+            updateCryptoOwnedUI();
+        },
+        () => {
+            gameState.Litecoin += 1e125;
+            alert(`You got ${getFormattedNumber(1e125)} Litecoin`)
+            updateCryptoOwnedUI();
+        },
     ];
 
     redeem.addEventListener("click", () => {
@@ -1518,6 +1584,7 @@
             return;
         }
         else if (gameState[`code${index}redeemed`]) {
+            gameState[`code${index}redeemed`] = false;
             alert("You've already redeemed this code.");
             return;
         }
@@ -1592,9 +1659,6 @@
             .select("*")
             .lte("place", 10)
             .order("place");
-        
-        console.log(data);
-        console.log(error);
 
         const board = document.getElementById(`leaderboard`);
     
@@ -1831,6 +1895,9 @@
         loadLeaderboard();
         displayWorkerUI();
 
+        if(gameState.musicPlaying){
+            music.play();
+        }
         const clickables = [...document.querySelectorAll(`.item`), ...document.querySelectorAll(`.btn`), document.getElementById(`removePerkScreen`), document.getElementById(`removePrestigeScreen`), document.getElementById(`removeSettings`)];
         clickables.forEach(click => {
             click.addEventListener(`click`, () => {
@@ -1868,7 +1935,7 @@
         window.cashLoop = setInterval(updateUI, 500);
     }
     
-    window.onload = initiate();    
+    window.onload = initiate();   
 
     window.investBitcoin = investBitcoin;
     window.sellBitcoin = sellBitcoin;
