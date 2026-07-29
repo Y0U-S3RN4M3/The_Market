@@ -594,7 +594,7 @@
             const price = gameState.workerProfit * 10;
             if(gameState.cashCount < price) alert(`Not enough ${cashName}`);
             else{
-                gameState.workerProfit *= 10;
+                gameState.workerProfit *= 1000000;
                 gameState.cashCount -= price;
             }
             displayWorkerUI();
@@ -1896,7 +1896,9 @@
         displayRaritiesAndMenuPages();
         loadLeaderboard();
         displayWorkerUI();
+
         music.play();
+
         setTimeout(() => music.play(), 500)
 
         if(gameState.musicPlaying){
