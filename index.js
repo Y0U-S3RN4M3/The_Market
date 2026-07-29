@@ -569,7 +569,7 @@
     function displayWorkerUI(){
         const price = 10**(gameState.workerAmount + 7);
         amountBtn.textContent = `${getFormattedNumber(price)}(${getHyperE(price)})${cashSymbol}`;
-        const pricee = gameState.workerProfit*10;
+        const pricee = gameState.workerProfit*1000000;
         profitBtn.textContent = `${getFormattedNumber(pricee)}(${getHyperE(pricee)})${cashSymbol}`;
         amountDisplay.textContent = `Workers: ${gameState.workerAmount}`;
         const profit = (gameState.workerAmount * gameState.workerProfit);
