@@ -122,7 +122,6 @@
 
         workerAmount: 0,
         workerProfit: 10e6,
-        workerProfitPrice: 10**((Math.log10(this.workerProfit)/7)*8),
     
         Bitcoin: 0,
         Litecoin: 0,
@@ -568,7 +567,7 @@
     const profitDisplay = document.getElementById("workerProfitDisplay");
 
     function displayWorkerUI(){
-        const price = gameState.workerProfitPrice;
+        const price = 10**(gameState.workerAmount + 7);
         amountBtn.textContent = `${getFormattedNumber(price)}(${getHyperE(price)})${cashSymbol}`;
         const pricee = gameState.workerProfit*10;
         profitBtn.textContent = `${getFormattedNumber(pricee)}(${getHyperE(pricee)})${cashSymbol}`;
@@ -580,7 +579,7 @@
 
     if(amountBtn){
         amountBtn.addEventListener('click', () => {
-            const price = gameState.workerProfitPrice
+            const price = 10**(gameState.workerAmount + 7)
             if (gameState.cashCount < price) alert(`Not enough ${cashName}`);
             else{
                 gameState.workerAmount++;
@@ -1584,7 +1583,7 @@
             return;
         }
         else if (gameState[`code${index}redeemed`]) {
-            gameState[`code${index}redeemed`] = false;
+            gameState[`code${index}redeemed`] = true;
             alert("You've already redeemed this code.");
             return;
         }
@@ -1659,6 +1658,9 @@
             .select("*")
             .lte("place", 10)
             .order("place");
+        
+        console.log(data);
+        console.log(error);
 
         const board = document.getElementById(`leaderboard`);
     
@@ -1894,6 +1896,8 @@
         displayRaritiesAndMenuPages();
         loadLeaderboard();
         displayWorkerUI();
+
+        music.play();
 
         if(gameState.musicPlaying){
             music.play();
