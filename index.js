@@ -27,7 +27,7 @@
     const music = new Audio("sounds/music.mp3");
 
     music.loop = true;
-    music.volume = 0.01;
+    music.volume = 0.05;
 
     music.play();
 
