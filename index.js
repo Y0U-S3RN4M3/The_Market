@@ -20,6 +20,8 @@
 
     const clicksound = new Audio(`./sounds/mouseclick.mp3`);
     const chachingsound = new Audio(`./sounds/chaching.mp3`);
+    chachingsound.volume = 0.25;
+    
     const cashName = `Penties`;
     const cashSymbol = `𝓟`;
     const cashResetValue = 10;
