@@ -484,6 +484,7 @@
         eventIsOn = true;
         localStorage.setItem(`eventSave`, eventIsOn);
         timeLeft = config.eventTime;
+        saveGame();
         window.location.href = `event.html`;
         for(let key in stock){
             stock[key] = 100;
@@ -494,6 +495,7 @@
         eventIsOn = false;
         localStorage.setItem(`eventSave`, eventIsOn);
         timeLeft = config.normalTime;
+        saveGame();
         window.location.href = `game.html`;
         restock();
     }
