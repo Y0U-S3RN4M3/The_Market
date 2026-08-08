@@ -30,7 +30,7 @@
     const music = new Audio("sounds/music.mp3");
 
     music.loop = true;
-    music.volume = 0.05;
+    music.volume = 0.1;
 
     music.play();
 
@@ -744,7 +744,7 @@
         if (doge) doge.textContent = `Dogecoins: ${getFormattedNumber(gameState.Dogecoin)}`;
     }
     
-    // ---------------- CRYPTO BUY / SELL FIXED ----------------
+    // ---------------- CRYPTO BUY / SELL ----------------
     
     // -------------------- BITCOIN -----------------------
     
