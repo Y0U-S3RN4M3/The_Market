@@ -143,7 +143,7 @@
     
         musicPlaying: true,
     
-        worldTwoUnlocked: true,
+        worldTwoUnlocked: false,
     };
     
     const defaultGameState = { ...gameState };
