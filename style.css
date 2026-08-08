@@ -903,3 +903,35 @@ h1{
     border: 2px solid rgb(90, 90, 90);
     border-radius: 20px;
 }
+#worldTwoCutseneBody {
+    margin: 0;
+    overflow: hidden;
+    background: black;
+}
+
+#cutscene {
+    position: fixed;
+    inset: 0;
+}
+
+#backgroundAnimation {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+}
+
+#backgroundAnimation svg {
+    width: 100%;
+    height: 100%;
+}
+
+.cutseneText {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    color: rgb(51, 51, 51);
+
+    z-index: 2;
+}

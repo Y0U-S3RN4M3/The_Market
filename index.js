@@ -3,6 +3,8 @@
         clearInterval(window.timerRunning);
     }
 
+    console.log(Decimal);
+
     const supabaseUrl = `https://xcqkljurfuloskpaqmip.supabase.co`;
     const supabaseKey = `sb_publishable_Po0qIlCYETGizrewPvsgsg_RPw6Rd5C`;
 
@@ -24,8 +26,7 @@
     
     const cashName = `Penties`;
     const cashSymbol = `𝓟`;
-    const cashResetValue = 10;
-
+    const cashResetValue = new Decimal("10");
     const music = new Audio("sounds/music.mp3");
 
     music.loop = true;
@@ -38,107 +39,111 @@
     let countdownInterval;
     const message = `RN im in the ZONE!!! I got ${cashName}${cashSymbol}${cashSymbol}${cashSymbol} on my mind.`
     console.log(message)
+
+
     // ---------------- GAME STATE ----------------
     
     let gameState = {
-        cashCount: cashResetValue,
-        multiplier: 0,
-        payPercent: 100,
+        cashCount: new Decimal(cashResetValue),
+        multiplier: new Decimal(0),
+        payPercent: new Decimal(100),
     
         // common
-        appleCount: 0,
-        bananaCount: 0,
-        orangeCount: 0,
-        yougurtCount: 0,
-        mangoCount: 0,
-        breadCount: 0,
-        frozenAppleSlicesCount: 0,
-        rawBananaCount: 0,
-        frozenOrangeCount: 0,
-        frozenYougurtCount: 0,
-        frozenMangoSlicesCount: 0,
-        toastCount: 0,
-        raisinToastCount: 0,
-        raisinCount: 0,
+        appleCount: new Decimal(0),
+        bananaCount: new Decimal(0),
+        orangeCount: new Decimal(0),
+        yougurtCount: new Decimal(0),
+        mangoCount: new Decimal(0),
+        breadCount: new Decimal(0),
+        frozenAppleSlicesCount: new Decimal(0),
+        rawBananaCount: new Decimal(0),
+        frozenOrangeCount: new Decimal(0),
+        frozenYougurtCount: new Decimal(0),
+        frozenMangoSlicesCount: new Decimal(0),
+        toastCount: new Decimal(0),
+        raisinToastCount: new Decimal(0),
+        raisinCount: new Decimal(0),
     
         // rare
-        chocolateCount: 0,
-        darkChocolateCount: 0,
-        pizzaCount: 0,
-        cookieCount: 0,
-        chickenCount: 0,
-        pastaCount: 0,
-        burgerCount: 0,
-        donutCount: 0,
-        pancakeCount: 0,
-        iceCreamCount: 0,
-        cheesecakeCount: 0,
+        chocolateCount: new Decimal(0),
+        darkChocolateCount: new Decimal(0),
+        pizzaCount: new Decimal(0),
+        cookieCount: new Decimal(0),
+        chickenCount: new Decimal(0),
+        pastaCount: new Decimal(0),
+        burgerCount: new Decimal(0),
+        donutCount: new Decimal(0),
+        pancakeCount: new Decimal(0),
+        iceCreamCount: new Decimal(0),
+        cheesecakeCount: new Decimal(0),
     
         // uncanny
-        bluecapMushroomsCount: 0,
-        ashenPearsCount: 0,
-        twighlightHoneycombsCount: 0,
-        petersPickledPeppersCount: 0,
-        twistedTurnipCount: 0,
-        shadowedMelonCount: 0,
-        crimsonVeinedPlumCount: 0,
-        monsterCount: 0,
-        whatCount: 0,
+        bluecapMushroomsCount: new Decimal(0),
+        ashenPearsCount: new Decimal(0),
+        twighlightHoneycombsCount: new Decimal(0),
+        petersPickledPeppersCount: new Decimal(0),
+        twistedTurnipCount: new Decimal(0),
+        shadowedMelonCount: new Decimal(0),
+        crimsonVeinedPlumCount: new Decimal(0),
+        monsterCount: new Decimal(0),
+        whatCount: new Decimal(0),
     
         // legendary
-        grannyAndGrampaPigCount: 0,
-        weLiveWeLoveWeDieCount: 0,
-        dogeCount: 0,
-        rickButRolledCount: 0,
-        pepeCount: 0,
-        friedRnestCount: 0,
-        appaCount: 0,
-        undefinedItemCount: 0,
-        overlyDefinedItemCount: 0,
-
-        // supernatural
-        bettysBitterButterCount: 0,
-        cosmicCheeseCount: 0,
-        livingSoccerBallCount: 0,
-        mathCount: 0,
-        piCount: 0,
-        meetCount: 0,
-
-        // mythological
-        benCount: 0,
-        greenGiantCount: 0,
-        theFirstSpinjitsuMasterCount: 0,
-        trueRnestCount: 0,
-        transendantBenCount: 0,
-
-        // exotic
-        sushiCount: 0,
-        caviarCount: 0,
-        butterChickenCount: 0,
-        
-        prestiges: 0,
-
-        BitcoinVal: 100000,
-        LitecoinVal: 100,
-        DogecoinVal: 10000000000,
-
-        workerAmount: 0,
-        workerProfit: 10e6,
+        grannyAndGrampaPigCount: new Decimal(0),
+        weLiveWeLoveWeDieCount: new Decimal(0),
+        dogeCount: new Decimal(0),
+        rickButRolledCount: new Decimal(0),
+        pepeCount: new Decimal(0),
+        friedRnestCount: new Decimal(0),
+        appaCount: new Decimal(0),
+        undefinedItemCount: new Decimal(0),
+        overlyDefinedItemCount: new Decimal(0),
     
-        Bitcoin: 0,
-        Litecoin: 0,
-        Dogecoin: 0,
-
-        username: `Anonymous`,
-
+        // supernatural
+        bettysBitterButterCount: new Decimal(0),
+        cosmicCheeseCount: new Decimal(0),
+        livingSoccerBallCount: new Decimal(0),
+        mathCount: new Decimal(0),
+        piCount: new Decimal(0),
+        meetCount: new Decimal(0),
+    
+        // mythological
+        benCount: new Decimal(0),
+        greenGiantCount: new Decimal(0),
+        theFirstSpinjitsuMasterCount: new Decimal(0),
+        trueRnestCount: new Decimal(0),
+        transendantBenCount: new Decimal(0),
+    
+        // exotic
+        sushiCount: new Decimal(0),
+        caviarCount: new Decimal(0),
+        butterChickenCount: new Decimal(0),
+    
+        prestiges: 0,
+    
+        BitcoinVal: new Decimal(100000),
+        LitecoinVal: new Decimal(100),
+        DogecoinVal: new Decimal(10000000000),
+    
+        workerProfit: new Decimal("1e7"),
+        workerAmount: new Decimal(0),
+    
+        Bitcoin: new Decimal(0),
+        Litecoin: new Decimal(0),
+        Dogecoin: new Decimal(0),
+    
+        username: "Anonymous",
+    
         code0redeemed: false,
         code1redeemed: false,
         code2redeemed: false,
         code3redeemed: false,
         code4redeemed: false,
         code5redeemed: false,
-
+    
         musicPlaying: true,
+    
+        worldTwoUnlocked: true,
     };
     
     const defaultGameState = { ...gameState };
@@ -151,7 +156,7 @@
                 gameState[key] = defaultGameState[key];
             }
     
-            // Prevent NaN and non-numbers
+           // Prevent NaN and non-numbers
             if (
                 typeof defaultGameState[key] === `number` &&
                 (
@@ -161,7 +166,7 @@
             ) {
                 gameState[key] = defaultGameState[key];
             }
-    
+
             // Prevent negative values
             if (
                 typeof defaultGameState[key] === `number` &&
@@ -169,83 +174,80 @@
             ) {
                 gameState[key] = 0;
             }
-            if (gameState.workerProfit <= 0) {
-                gameState.workerProfit = 10e6;
-            }
         }
     }
     
     let prices = {
         // common
-        appleCount: 10,
-        bananaCount: 15,
-        orangeCount: 20,
-        yougurtCount: 100,
-        mangoCount: 200,
-        breadCount: 500,
-        frozenAppleSlicesCount: 1000,
-        rawBananaCount: 1500,
-        frozenOrangeCount: 2500,
-        frozenYougurtCount: 5000,
-        frozenMangoSlicesCount: 10000,
-        toastCount: 20000,
-        raisinToastCount: 100000,
-        raisinCount: 5000000,
+        appleCount: new Decimal(10),
+        bananaCount: new Decimal(15),
+        orangeCount: new Decimal(20),
+        yougurtCount: new Decimal(100),
+        mangoCount: new Decimal(200),
+        breadCount: new Decimal(500),
+        frozenAppleSlicesCount: new Decimal(1000),
+        rawBananaCount: new Decimal(1500),
+        frozenOrangeCount: new Decimal(2500),
+        frozenYougurtCount: new Decimal(5000),
+        frozenMangoSlicesCount: new Decimal(10000),
+        toastCount: new Decimal(20000),
+        raisinToastCount: new Decimal(100000),
+        raisinCount: new Decimal(5000000),
     
         // rare
-        chocolateCount: 100*10**6,       // 100M
-        darkChocolateCount: 5e10,        // 100B
-        pizzaCount: 750*10**9,           // 750B
-        cookieCount: 5*10**12,           // 5T
-        chickenCount: 15*10**15,         // 15Qa
-        pastaCount: 50*10**18,           // 50Qi
-        burgerCount: 250*10**21,         // 250Sx
-        donutCount: 10**24,              // 1Sp
-        pancakeCount: 10*10**27,         // 10Oc
-        iceCreamCount: 75*10**30,        // 75No
-        cheesecakeCount: 1*10**33,       // 1Dec
+        chocolateCount: new Decimal(100*10**6),       // 100M
+        darkChocolateCount: new Decimal(5e10),        // 100B
+        pizzaCount: new Decimal(750*10**9),           // 750B
+        cookieCount: new Decimal(5*10**12),           // 5T
+        chickenCount: new Decimal(15*10**15),         // 15Qa
+        pastaCount: new Decimal(50*10**18),           // 50Qi
+        burgerCount: new Decimal(250*10**21),         // 250Sx
+        donutCount: new Decimal(10**24),              // 1Sp
+        pancakeCount: new Decimal(10*10**27),         // 10Oc
+        iceCreamCount: new Decimal(75*10**30),        // 75No
+        cheesecakeCount: new Decimal(1*10**33),       // 1Dec
     
         // uncanny
-        bluecapMushroomsCount: 10**36,     // 1UnDec
-        ashenPearsCount: 10**39,           // 1DoDec
-        twighlightHoneycombsCount: 10**43, // 10TDec
-        petersPickledPeppersCount: 100*10**45, // 100QaDec
-        twistedTurnipCount: 2*10**48,      // 2QiDec
-        shadowedMelonCount: 2*10**52,      // 20SxDec
-        crimsonVeinedPlumCount: 5*10**57,  // 500SpDec
-        monsterCount: 10**58,              // 1OctDec
-        whatCount: 1e61,                   // NoDec
+        bluecapMushroomsCount: new Decimal(10**36),     // 1UnDec
+        ashenPearsCount: new Decimal(10**39),           // 1DoDec
+        twighlightHoneycombsCount: new Decimal(10**43), // 10TDec
+        petersPickledPeppersCount: new Decimal(100*10**45), // 100QaDec
+        twistedTurnipCount: new Decimal(2*10**48),      // 2QiDec
+        shadowedMelonCount: new Decimal(2*10**52),      // 20SxDec
+        crimsonVeinedPlumCount: new Decimal(5*10**57),  // 500SpDec
+        monsterCount: new Decimal(10**58),              // 1OctDec
+        whatCount: new Decimal(1e61),                   // NoDec
 
         // legendary
-        grannyAndGrampaPigCount: 1e59,      // 1NoDec
-        weLiveWeLoveWeDieCount: 1e63,       // 1Vg
-        dogeCount: 1e67,                    // 10UnVg
-        rickButRolledCount: 1e71,           // 100DoVg
-        pepeCount: 2e74,                    // 200TVg
-        friedRnestCount: 2e78,              // 2QaVg
-        appaCount: 5e81,                    // 500QiVg
-        undefinedItemCount: 1e85,           // 10SpVg
-        overlyDefinedItemCount: 1e90,       // 1NoVg
+        grannyAndGrampaPigCount: new Decimal(1e59),      // 1NoDec
+        weLiveWeLoveWeDieCount: new Decimal(1e63),       // 1Vg
+        dogeCount: new Decimal(1e67),                    // 10UnVg
+        rickButRolledCount: new Decimal(1e71),           // 100DoVg
+        pepeCount: new Decimal(2e74),                    // 200TVg
+        friedRnestCount: new Decimal(2e78),              // 2QaVg
+        appaCount: new Decimal(5e81),                    // 500QiVg
+        undefinedItemCount: new Decimal(1e85),           // 10SpVg
+        overlyDefinedItemCount: new Decimal(1e90),       // 1NoVg
 
         // supernatural
-        bettysBitterButterCount: 1e93,   // 1Trg
-        cosmicCheeseCount: 1e99,         // 1DoTrg
-        livingSoccerBallCount: 1e105,    // 1QaTrg
-        mathCount: 1e111,                // 1SxTrg
-        piCount: 1e117,                  // 1NoTrg
-        meetCount: 1e123,                // 1DoQdrg
+        bettysBitterButterCount: new Decimal(1e93),   // 1Trg
+        cosmicCheeseCount: new Decimal(1e99),         // 1DoTrg
+        livingSoccerBallCount: new Decimal(1e105),    // 1QaTrg
+        mathCount: new Decimal(1e111),                // 1SxTrg
+        piCount: new Decimal(1e117),                  // 1NoTrg
+        meetCount: new Decimal(1e123),                // 1DoQdrg
 
         // mythological
-        benCount: 1e126,                     // 1QaQdrg
-        greenGiantCount: 1e129,              // 10OctQdrg
-        theFirstSpinjitsuMasterCount: 1e153, // 1Qqg
-        trueRnestCount: 1e159,               // 100DoQqg
-        transendantBenCount: 1e168,          // 1QiQqg
+        benCount: new Decimal(1e126),                     // 1QaQdrg
+        greenGiantCount: new Decimal(1e129),              // 10OctQdrg
+        theFirstSpinjitsuMasterCount: new Decimal(1e153), // 1Qqg
+        trueRnestCount: new Decimal(1e159),               // 100DoQqg
+        transendantBenCount: new Decimal(1e168),          // 1QiQqg
 
         // exotic                         
-        sushiCount: 1e183,                   // 1Sxg
-        caviarCount: 1e192,                  // 1TSxg
-        butterChickenCount: 1e201,           // 1SxSxg
+        sushiCount: new Decimal(1e183),                   // 1Sxg
+        caviarCount: new Decimal(1e192),                  // 1TSxg
+        butterChickenCount: new Decimal(1e201),           // 1SxSxg
     };
     
     let stock = {
@@ -324,11 +326,11 @@
 
     function restock(){
         for(key in stock){
-            if(prices[key] >= 100*10**6){
-                if(prices[key] >= 10**36){
-                    if(prices[key] >= 1e59 && key != `whatCount`){
-                        if(prices[key] >= 1e126){
-                            if(prices[key] >= 1e177){
+            if(prices[key].gte("1e8")){
+                if(prices[key].gte("1e36")){
+                    if(prices[key].gte("1e59") && key != `whatCount`){
+                        if(prices[key].gte(1e126)){
+                            if(prices[key].gte(1e177)){
                                 stock[key] = 50
                             }
                             else{
@@ -458,8 +460,29 @@
     }
     
     function loadGame() {
-        const saved = localStorage.getItem(`gameSave`);
-        if (saved) gameState = { ...gameState, ...JSON.parse(saved) };
+        const savedGame = JSON.parse(localStorage.getItem("gameSave"));
+    
+        if (savedGame) {
+            Object.assign(gameState, savedGame);
+        }
+    
+        // Convert all Decimal values back to Decimals
+        const decimalKeys = [
+            "cashCount",
+            "workerProfit",
+    
+            "Bitcoin",
+            "Litecoin",
+            "Dogecoin",
+    
+            "BitcoinVal",
+            "LitecoinVal",
+            "DogecoinVal"
+        ];
+    
+        decimalKeys.forEach(key => {
+            gameState[key] = toDecimal(gameState[key]);
+        });
     }
     
     function loadStock() {
@@ -507,7 +530,11 @@
     function setCountDown() {
         countdownInterval = setInterval(() => {
             timeLeft--;
-            gameState.cashCount += (gameState.workerAmount * gameState.workerProfit)/60
+            gameState.cashCount = gameState.cashCount.plus(
+                gameState.workerProfit
+                    .times(gameState.workerAmount)
+                    .div(60)
+            );
     
             if (timeLeft <= 0) {
                 if (eventIsOn) {
@@ -571,23 +598,21 @@
     const profitDisplay = document.getElementById("workerProfitDisplay");
 
     function displayWorkerUI(){
-        const price = 10**(gameState.workerAmount + 7);
-        amountBtn.textContent = `${getFormattedNumber(price)}(${getHyperE(price)})${cashSymbol}`;
-        const pricee = gameState.workerProfit*1000000;
-        profitBtn.textContent = `${getFormattedNumber(pricee)}(${getHyperE(pricee)})${cashSymbol}`;
+        const price = Decimal.pow(10, gameState.workerAmount + 7);        amountBtn.textContent = `${getFormattedNumber(price)}(${getHyperE(price)})${cashSymbol}`;
+        const pricee = gameState.workerProfit.times(1000000);        profitBtn.textContent = `${getFormattedNumber(pricee)}(${getHyperE(pricee)})${cashSymbol}`;
         amountDisplay.textContent = `Workers: ${gameState.workerAmount}`;
-        const profit = (gameState.workerAmount * gameState.workerProfit);
-        if(profit > 0) profitDisplay.textContent = `${getFormattedNumber(profit)}(${getHyperE(profit)})${cashSymbol}/m`
+        const profit = gameState.workerProfit.times(gameState.workerAmount);        
+        if(profit.gt(0)) profitDisplay.textContent = `${getFormattedNumber(profit)}(${getHyperE(profit)})${cashSymbol}/m`
         else profitDisplay.textContent = `0${cashSymbol}/m`;
     }
 
     if(amountBtn){
         amountBtn.addEventListener('click', () => {
-            const price = 10**(gameState.workerAmount + 7)
-            if (gameState.cashCount < price) alert(`Not enough ${cashName}`);
+            const price = Decimal.pow(10, gameState.workerAmount + 7);            
+            if (gameState.cashCount.lt(price)) alert(`Not enough ${cashName}`);
             else{
                 gameState.workerAmount++;
-                gameState.cashCount -= price;
+                gameState.cashCount = gameState.cashCount.minus(price);
             }
             displayWorkerUI();
         })
@@ -595,11 +620,10 @@
 
     if(profitBtn){
         profitBtn.addEventListener('click', () => {
-            const price = gameState.workerProfit * 10;
-            if(gameState.cashCount < price) alert(`Not enough ${cashName}`);
+            const price = gameState.workerProfit.times(10);            
+            if (gameState.cashCount.lt(price)) alert(`Not enough ${cashName}`);
             else{
-                gameState.workerProfit *= 1000000;
-                gameState.cashCount -= price;
+                gameState.workerProfit = gameState.workerProfit.times(1000000);                gameState.cashCount = gameState.cashCount.minus(price);
             }
             displayWorkerUI();
         })
@@ -658,9 +682,10 @@
         }
 
         const bchange = Math.floor(Math.random() * (bmax - bmin + 1)) + bmin;
-        gameState.BitcoinVal += bchange;
-        gameState.BitcoinVal = Math.max(gameState.BitcoinVal, 50000);
-
+        gameState.BitcoinVal = gameState.BitcoinVal.plus(bchange);
+        if (gameState.BitcoinVal.lt(50000)) {
+            gameState.BitcoinVal = new Decimal(50000);
+        }
         // BITCOIN CHANGE
 
         let lmin;
@@ -676,9 +701,10 @@
 
         let lchange = (Math.random() * (lmax - lmin + 1)) + lmin;
         lchange = Math.round(lchange * 100) / 100;
-        gameState.LitecoinVal += lchange;
-        gameState.LitecoinVal = Math.max(gameState.LitecoinVal, 50);
-
+        gameState.LitecoinVal = gameState.LitecoinVal.plus(lchange);
+        if (gameState.LitecoinVal.lt(50)) {
+            gameState.LitecoinVal = new Decimal(50);
+        }
         // DOGECOIN CHANGE
 
         let dmin;
@@ -693,15 +719,15 @@
         }
 
         const dchange = Math.floor(Math.random() * (dmax - dmin + 1)) + dmin;
-        gameState.DogecoinVal += dchange;
-        gameState.DogecoinVal = Math.max(gameState.DogecoinVal, 50000);
-
+        gameState.DogecoinVal = gameState.DogecoinVal.plus(dchange);        
+        if (gameState.DogecoinVal.lt(50000)) {
+            gameState.DogecoinVal = new Decimal(50000);
+        }
         const btc = document.getElementById(`BitcoinDisplay`);
         if (btc) btc.textContent = `1 BITCOIN: ${getFormattedNumber(gameState.BitcoinVal)}`;
     
         const ltc = document.getElementById(`LitecoinDisplay`);
-        if (ltc) ltc.textContent = `1 LITECOIN: ${gameState.LitecoinVal}`;
-    
+        if (ltc) ltc.textContent = `Litecoins: ${getFormattedNumber(gameState.Litecoin)}`;    
         const doge = document.getElementById(`DogecoinDisplay`);
         if (doge) doge.textContent = `1 DOGECOIN: ${getFormattedNumber(gameState.DogecoinVal)}`;
     
@@ -726,13 +752,12 @@
         const input = Number(document.getElementById(`cryptoInput`).value);
         if (!input || input <= 0) return;
     
-        if (gameState.cashCount < input) return alert(`Not enough ${cashName}`);
+        if (gameState.cashCount.lt(input)) return alert(`Not enough ${cashName}`);
     
-        const amount = input / gameState.BitcoinVal;
-        
+        const amount = new Decimal(input).div(gameState.BitcoinVal);        
         alert(`You gained ${amount} Bitcoin`)
-        gameState.cashCount -= input;
-        gameState.Bitcoin += amount;
+        gameState.cashCount = gameState.cashCount.minus(input);
+        gameState.Bitcoin = gameState.Bitcoin.plus(amount);
     
         saveGame();
         updateUI();
@@ -740,13 +765,11 @@
     }
     
     function sellBitcoin() {
-        if (gameState.Bitcoin <= 0) return alert(`No Bitcoin`);
+        if (gameState.Bitcoin.lte(0)) return alert(`No Bitcoin`);
     
-        const gain = gameState.Bitcoin * gameState.BitcoinVal;
-    
-        gameState.cashCount += gain;
-        gameState.Bitcoin = 0;
-        
+        const gain = gameState.Bitcoin.times(gameState.BitcoinVal);    
+        gameState.cashCount = gameState.cashCount.plus(gain);
+        gameState.Bitcoin = new Decimal(0);        
         alert(`You got ${gain}${cashSymbol}`);
         saveGame();
         updateUI();
@@ -759,12 +782,11 @@
         const input = Number(document.getElementById(`cryptoInput`).value);
         if (!input || input <= 0) return;
     
-        if (gameState.cashCount < input) return alert(`Not enough ${cashName}`);
+        if (gameState.cashCount.lt(input)) return alert(`Not enough ${cashName}`);
     
-        const amount = input / gameState.LitecoinVal;
-    
-        gameState.cashCount -= input;
-        gameState.Litecoin += amount;
+        const amount = new Decimal(input).div(gameState.LitecoinVal);    
+        gameState.cashCount = gameState.cashCount.minus(input);
+        gameState.Litecoin = gameState.Litecoin.plus(amount);
         
         alert(`You gained ${amount} Litecoin`);
         saveGame();
@@ -773,13 +795,11 @@
     }
     
     function sellLitecoin() {
-        if (gameState.Litecoin <= 0) return alert(`No Litecoin`);
+        if (gameState.Litecoin.lte(0)) return alert(`No Litecoin`);
     
-        const gain = gameState.Litecoin * gameState.LitecoinVal;
-    
-        gameState.cashCount += gain;
-        gameState.Litecoin = 0;
-
+        const gain = gameState.Litecoin.times(gameState.LitecoinVal);    
+        gameState.cashCount = gameState.cashCount.plus(gain);
+        gameState.Litecoin = new Decimal(0);
         alert(`You got ${gain}${cashSymbol}`);
         saveGame();
         updateUI();
@@ -791,13 +811,11 @@
         const input = Number(document.getElementById(`cryptoInput`).value);
         if (!input || input <= 0) return;
     
-        if (gameState.cashCount < input) return alert(`Not enough ${cashName}`);
+        if (gameState.cashCount.lt(input)) return alert(`Not enough ${cashName}`);
     
-        const amount = input / gameState.DogecoinVal;
-    
-        gameState.cashCount -= input;
-        gameState.Dogecoin += amount;
-        
+        const amount = new Decimal(input).div(gameState.DogecoinVal);    
+        gameState.cashCount = gameState.cashCount.minus(input);
+        gameState.Dogecoin = gameState.Dogecoin.plus(amount);        
         alert(`You gained ${amount} Dogecoin`)
         saveGame();
         updateUI();
@@ -805,13 +823,11 @@
     }
     
     function sellDogecoin() {
-        if (gameState.Dogecoin <= 0) return alert(`No Dogecoin`);
+        if (gameState.Dogecoin.lte(0)) return alert(`No Dogecoin`);
     
-        const gain = gameState.Dogecoin * gameState.DogecoinVal;
-    
-        gameState.cashCount += gain;
-        gameState.Dogecoin = 0;
-        
+        const gain = gameState.Dogecoin.times(gameState.DogecoinVal);    
+        gameState.cashCount = gameState.cashCount.plus(gain);
+        gameState.Dogecoin = new Decimal(0);        
         alert(`You got ${gain}${cashSymbol}`);
         saveGame();
         updateUI();
@@ -837,44 +853,89 @@
             }
         });
     }
+
     function setupBuyButtons() {
         for (const [btnId, key] of Object.entries(buttonToKey)) {
             const btn = document.getElementById(btnId);
             if (!btn) continue;
     
             btn.onclick = () => {
-                const price = prices[key] * (gameState.payPercent / 100);
-                if (gameState.cashCount >= price && stock[key] > 0) {
-                    if(max){
-                        let amountCanBuy = Math.floor(gameState.cashCount / price);
-                        amountCanBuy = eventIsOn ? amountCanBuy*2 : amountCanBuy;
-                        if(amountCanBuy > stock[key]){
-                            amountCanBuy = stock[key];
-                            gameState.cashCount -= eventIsOn ? (amountCanBuy*price) / 2 : (amountCanBuy*price);
-                            gameState[key] += amountCanBuy;
-                            stock[key] = 0;
+                const price = toDecimal(prices[key])
+                    .times(gameState.payPercent)
+                    .div(100);
+            
+                gameState.cashCount = toDecimal(gameState.cashCount);
+            
+                gameState[key] = toDecimal(gameState[key]);
+            
+                if (gameState.cashCount.gte(price) && stock[key] > 0) {
+            
+                    if (max) {
+            
+                        let amountCanBuy = gameState.cashCount
+                            .div(price)
+                            .floor()
+                            .toNumber();
+            
+                        if (eventIsOn) {
+                            amountCanBuy *= 2;
                         }
-                        else{
-                            gameState.cashCount -=  eventIsOn ? (amountCanBuy*price) / 2 : (amountCanBuy*price);
-                            gameState[key] += amountCanBuy;
+            
+                        if (amountCanBuy > stock[key]) {
+            
+                            amountCanBuy = stock[key];
+            
+                            const totalCost = eventIsOn
+                                ? price.times(amountCanBuy).div(2)
+                                : price.times(amountCanBuy);
+            
+                            gameState.cashCount =
+                                gameState.cashCount.minus(totalCost);
+            
+                            gameState[key] =
+                                gameState[key].plus(amountCanBuy);
+            
+                            stock[key] = 0;
+            
+                        } else {
+            
+                            const totalCost = eventIsOn
+                                ? price.times(amountCanBuy).div(2)
+                                : price.times(amountCanBuy);
+            
+                            gameState.cashCount =
+                                gameState.cashCount.minus(totalCost);
+            
+                            gameState[key] =
+                                gameState[key].plus(amountCanBuy);
+            
                             stock[key] -= amountCanBuy;
                         }
-                    }
-                    else{
-                        gameState.cashCount -= eventIsOn ? price / 2 : price;
-                        gameState[key]++;
+            
+                    } else {
+            
+                        const cost = eventIsOn
+                            ? price.div(2)
+                            : price;
+            
+                        gameState.cashCount =
+                            gameState.cashCount.minus(cost);
+            
+                        gameState[key] =
+                            gameState[key].plus(1);
+            
                         stock[key]--;
                     }
+            
                     saveGame();
                     updateUI();
+            
                 } else {
                     alert(`Not enough ${cashName} or out of stock!`);
                 }
-            }
+            };
         }
     }
-    
-    
     // ---------------- SELL ----------------
     
     const sellAllIds = {
@@ -971,22 +1032,22 @@
     
             if (singleBtn) {
                 singleBtn.onclick = () => {
-                    if (gameState[key] <= 0) return;
     
-                    const gain = Math.floor(prices[key] * getRandomSellMultiplier());
-                    const total = gain + gain * gameState.multiplier;
-                    const tootal = total * ((gameState.prestiges/2) + 1);
-
-                    gameState[key]--;
-                    gameState.cashCount += tootal;
-                    
-                    if(tootal > 1e6){
+                    if (gameState[key].lte(0)) return;
+    
+                    const gain = prices[key].times(getRandomSellMultiplier()).floor();
+                    const total = gain.plus(gain.times(gameState.multiplier));
+                    const tootal = total.times((gameState.prestiges / 2) + 1);
+    
+                    gameState[key] = gameState[key].minus(1);
+                    gameState.cashCount = gameState.cashCount.plus(tootal);
+    
+                    if (tootal.gt(1e6)) {
                         alert(`You recieved ${getFormattedNumber(tootal)}(${getHyperE(tootal)})${cashSymbol}`);
-                    }
-                    else{
+                    } else {
                         alert(`You recieved ${getFormattedNumber(tootal)}${cashSymbol}`);
                     }
-
+    
                     chachingsound.currentTime = 0.25;
                     chachingsound.play();
     
@@ -997,902 +1058,1688 @@
     
             if (allBtn) {
                 allBtn.onclick = () => {
+    
                     const count = gameState[key];
-                    if (!count){
+    
+                    if (count.lte(0)) {
                         alert(`You have none of that food`);
                         return;
                     }
-
+    
                     chachingsound.currentTime = 0.25;
                     chachingsound.play();
     
-                    const gain = Math.floor(prices[key] * getRandomSellMultiplier() * count);
-                    const multiGain = gain+(gain*gameState.multiplier);
-                    const prestiGain = multiGain * ((gameState.prestiges/2)+1);
-
-                    gameState.cashCount += prestiGain;
-                    gameState[key] = 0;
-
-
-                    if(tootalGain > 1e6){
+                    const gain = prices[key]
+                        .times(getRandomSellMultiplier())
+                        .times(count)
+                        .floor();
+    
+                    const multiGain = gain.plus(gain.times(gameState.multiplier));
+                    const prestiGain = multiGain.times((gameState.prestiges / 2) + 1);
+    
+                    gameState.cashCount = gameState.cashCount.plus(prestiGain);
+                    gameState[key] = new Decimal(0);
+    
+                    if (prestiGain.gt(1e6)) {
                         alert(`You recieved ${getFormattedNumber(prestiGain)}(${getHyperE(prestiGain)})${cashSymbol}`);
-                    }
-                    else{
+                    } else {
                         alert(`You recieved ${getFormattedNumber(prestiGain)}${cashSymbol}`);
                     }
     
                     saveGame();
                     updateUI();
-                }
+                };
             }
         }
     }
-    
+
     // ---------------- UI ----------------
-    
+
     const ui = document.querySelector(`.ui`);
     const uiBtn = document.getElementById(`uiBtn`);
+
     let uiFixed = true;
-    if(uiBtn){
+
+    if(uiBtn && ui){
         uiBtn.addEventListener(`click`, () => {
+            uiFixed = !uiFixed;
+
             if(uiFixed){
-                uiFixed = false;
-                ui.classList.add(`ui`);
-                uiBtn.textContent = `TYPE 1`;
-            }
-            else{
-                uiFixed = true;
-                ui.classList.remove(`ui`);
+                ui.classList.add(`uiFixed`);
                 uiBtn.textContent = `TYPE 2`;
             }
-        })
+            else{
+                ui.classList.remove(`uiFixed`);
+                uiBtn.textContent = `TYPE 1`;
+            }
+        });
     }
-    
-    function getNthIllion(n){
-        if(n < 1_000_000) return 0;
-    
-        return Math.floor(Math.log10(n) / 3) - 1;
+
+
+    // ---------------- NUMBER FORMATTING ----------------
+
+    function toDecimal(value){
+        if(value instanceof Decimal) return value;
+
+        if(value === undefined || value === null || isNaN(value)){
+            return new Decimal(0);
+        }
+
+        return new Decimal(value);
     }
+
+
+    function getNthIllion(n) {
+        n = toDecimal(n);
+    
+        if (n.lt(1_000_000)) return 0;
+    
+        return Math.floor(n.exponent / 3) - 1;
+    }
+
     function getFormattedNumber(n){
+        if(!(n instanceof Decimal)){
+            n = new Decimal(n)
+        }
+
+
         function getNumberShortener(n){
+
+            n = toDecimal(n);
+
             let string = ``;
+
             const nthNum = getNthIllion(n);
+
             const ones = nthNum % 10;
             const tens = Math.floor(nthNum / 10);
-            if(n >= 1000 && n < 1000000) return `K`;
+            const hundreds = Math.floor(nthNum / 100);
+
+
+            if(n.gte(1000) && n.lt(1000000)){
+                return `K`;
+            }
+
+
             switch(ones){
+
                 case 1:
                     if(tens === 0){
-                        string += `M`
+                        string += `M`;
                     }
                     else{
                         string += `Un`;
                     }
                     break;
+
+
                 case 2:
                     if(tens === 0){
-                        string += `B`
+                        string += `B`;
                     }
                     else{
                         string += `Do`;
                     }
                     break;
+
+
                 case 3:
                     string += `T`;
                     break;
+
+
                 case 4:
                     string += `Qa`;
                     break;
+
+
                 case 5:
                     string += `Qi`;
                     break;
+
+
                 case 6:
                     string += `Sx`;
                     break;
+
+
                 case 7:
                     string += `Sp`;
                     break;
+
+
                 case 8:
                     string += `Oct`;
                     break;
+
+
                 case 9:
                     string += `No`;
                     break;
             }
+
+
             switch(tens){
+
                 case 1:
                     string += `Dec`;
                     break;
+
                 case 2:
                     string += `Vg`;
                     break;
+
                 case 3:
                     string += `Trg`;
                     break;
+
                 case 4:
                     string += `Qdrg`;
                     break;
+
                 case 5:
                     string += `Qqg`;
                     break;
+
                 case 6:
                     string += `Sxg`;
                     break;
+
                 case 7:
                     string += `Spg`;
                     break;
+
                 case 8:
                     string += `Ocg`;
                     break;
+
                 case 9:
                     string += `Nog`;
                     break;
             }
-            if(tens === 10){
-                
+
+
+            switch(hundreds){
+
+                case 1:
+                    string += `Cnt`;
+                    break;
+
+                case 2:
+                    string += `Dcnt`;
+                    break;
+
+                case 3:
+                    string += `Tcnt`;
+                    break;
+
+                case 4:
+                    string += `Qdgnt`;
+                    break;
+
+                case 5:
+                    string += `Qqgnt`;
+                    break;
+
+                case 6:
+                    string += `Sxgnt`;
+                    break;
+
+                case 7:
+                    string += `Spgnt`;
+                    break;
+
+                case 8:
+                    string += `Octgnt`;
+                    break;
+
+                case 9:
+                    string += `Nognt`;
+                    break;
             }
+
+
             return string;
         }
-        function getNumberShortened(n) {
-            if (n < 1000) {
-                return Math.round(n);
-            }
-        
-            if (n < 1_000_000 && n >= 1000) {
-                return (n / 1000).toFixed(2);
-            }
-        
-            const nth = getNthIllion(n);
-            const divisor = 10 ** ((nth + 1) * 3);
 
-            return (n / divisor).toFixed(2);
+
+
+        function getNumberShortened(n) {
+            n = toDecimal(n);
+
+            if (n.lt(1000)) {
+                return Math.round(n.toNumber());
+            }
+
+            if (n.lt(1_000_000)) {
+                return (n.toNumber() / 1000).toFixed(2);
+            }
+
+            const nth = getNthIllion(n);
+            const divisor = new Decimal(10).pow((nth + 1) * 3);
+
+            return n.div(divisor).toNumber().toFixed(2);
         }
-        if(isNaN(getNumberShortened(n))){
-            return `Infinity`;
+
+
+
+        if (!n || !n.sign || !isFinite(n.mantissa)) {
+            return "Infinity";
         }
+
+
         return `${getNumberShortened(n)}${getNumberShortener(n)}`;
     }
-    function getHyperE(n){
-        if(n < 1e6){
-            return n;
-        }
-        const zerosAmnt = Math.floor(Math.log10(n));
-        const number = n / (10**zerosAmnt);
-        const fixed = number.toFixed(2);
 
-        if(zerosAmnt >= 303) return ``;
+
+
+    function getHyperE(n) {
+        n = toDecimal(n);
+    
+        if (n.lt(1e6)) {
+            return n.toNumber();
+        }
+    
+        const zerosAmnt = n.exponent;
+        const number = n.mantissa;
+        const fixed = number.toFixed(2);
+    
+        if (zerosAmnt >= 303) return ``;
+    
         return `${fixed}e${zerosAmnt}`;
     }
-    function updateUI() {
+    
+    function updateUI(){
+
+
         // FIX FROM CONSOLE
+    
         const defaultPrices = {
-            // common
-            appleCount: 10,
-            bananaCount: 15,
-            orangeCount: 20,
-            yougurtCount: 100,
-            mangoCount: 200,
-            breadCount: 500,
-            frozenAppleSlicesCount: 1000,
-            rawBananaCount: 1500,
-            frozenOrangeCount: 2500,
-            frozenYougurtCount: 5000,
-            frozenMangoSlicesCount: 10000,
-            toastCount: 20000,
-            raisinToastCount: 100000,
-            raisinCount: 5000000,
-        
-            // rare
-            chocolateCount: 100*10**6,       // 100M
-            darkChocolateCount: 5e10,        // 100B
-            pizzaCount: 750*10**9,           // 750B
-            cookieCount: 5*10**12,           // 5T
-            chickenCount: 15*10**15,         // 15Qa
-            pastaCount: 50*10**18,           // 50Qi
-            burgerCount: 250*10**21,         // 250Sx
-            donutCount: 10**24,              // 1Sp
-            pancakeCount: 10*10**27,         // 10Oc
-            iceCreamCount: 75*10**30,        // 75No
-            cheesecakeCount: 1*10**33,       // 1Dec
-        
-            // uncanny
-            bluecapMushroomsCount: 10**36,     // 1UnDec
-            ashenPearsCount: 10**39,           // 1DoDec
-            twighlightHoneycombsCount: 10**43, // 10TDec
-            petersPickledPeppersCount: 100*10**45, // 100QaDec
-            twistedTurnipCount: 2*10**48,      // 2QiDec
-            shadowedMelonCount: 2*10**52,      // 20SxDec
-            crimsonVeinedPlumCount: 5*10**57,  // 500SpDec
-            monsterCount: 10**58,              // 1OctDec
-            whatCount: 1e61,                   // NoDec
-
-            // legendary
-            grannyAndGrampaPigCount: 1e59,      // 1NoDec
-            weLiveWeLoveWeDieCount: 1e63,       // 1Vg
-            dogeCount: 1e67,                    // 10UnVg
-            rickButRolledCount: 1e71,           // 100DoVg
-            pepeCount: 2e74,                    // 200TVg
-            friedRnestCount: 2e78,              // 2QaVg
-            appaCount: 5e81,                    // 500QiVg
-            undefinedItemCount: 1e85,           // 10SpVg
-            overlyDefinedItemCount: 1e90,       // 1NoVg
-
-            // supernatural
-            bettysBitterButterCount: 1e93,   // 1Trg
-            cosmicCheeseCount: 1e99,         // 1DoTrg
-            livingSoccerBallCount: 1e105,    // 1QaTrg
-            mathCount: 1e111,                // 1SxTrg
-            piCount: 1e117,                  // 1NoTrg
-            meetCount: 1e123,                // 1DoQdrg
-
-            // mythological
-            benCount: 1e126,                     // 1QaQdrg
-            greenGiantCount: 1e129,              // 10OctQdrg
-            theFirstSpinjitsuMasterCount: 1e153, // 1Qqg
-            trueRnestCount: 1e159,               // 100DoQqg
-            transendantBenCount: 1e168,          // 1QiQqg
-
-            // exotic                         
-            sushiCount: 1e183,                   // 1Sxg
-            caviarCount: 1e192,                  // 1TSxg
-            butterChickenCount: 1e201,           // 1SxSxg
+            // your existing defaultPrices object stays here unchanged
         };
-        
+    
+    
         Object.assign(prices, defaultPrices);
+    
     
         repairStock();
         repairGameState();
-        
-        gameState.cashCount = Math.floor(gameState.cashCount);
-        gameState.workerAmount = Math.round(gameState.workerAmount);
-
-        // USERNAME
+    
+    
+        // FIX DECIMALS
+    
+        gameState.cashCount = toDecimal(gameState.cashCount);
+    
+        gameState.workerAmount = Math.round(
+            Number(gameState.workerAmount)
+        );
+        // ---------------- USERNAME ----------------
 
         const usernameDisplay = document.getElementById(`usernameDisplay`);
         if(usernameDisplay){
-            if(gameState.username.slice(-1).toLowerCase() === `s` || gameState.username.slice(-1).toLowerCase() === `S`){
-                usernameDisplay.textContent = `${gameState.username}'s Market`;
+            const username = gameState.username || "Anonymous";
+            if(username.slice(-1).toLowerCase() === `s`){
+                usernameDisplay.textContent =
+                    `${username}' Market`;
             }
             else{
-                usernameDisplay.textContent = `${gameState.username}'s Market`
+                usernameDisplay.textContent =
+                    `${username}'s Market`;
             }
         }
 
-        // CASH
+
+
+        // ---------------- CASH ----------------
+
         const cash = document.getElementById(`cash`);
-        if (cash) {
-            cash.textContent = `${cashName}(${cashSymbol}): ${getFormattedNumber(gameState.cashCount)}${gameState.cashCount > 1e6 ?
-                `(` + String(getHyperE(gameState.cashCount)) + `)`:``}${cashSymbol}`;
-            const string = cash.textContent;
-            const cstring = string.replaceAll(`()`, ``);
-            cash.textContent = cstring;
-        }
-    
-        // PRESTIGES
-        const prestige = document.getElementById(`prestiges`);
-        if(prestige) prestige.textContent = `Prestiges: ${gameState.prestiges}`;
-    
-        const cashfornext = document.getElementById(`cashLevel`);
-        if(cashfornext) cashfornext.textContent = `You need ${getFormattedNumber(getCashLevel(gameState.prestiges))} for the next prestige`; 
-    
-        // MULTIPLIER
-        const mult = document.getElementById(`multiplier`);
-        const multmax = (gameState.prestiges * 4) + 10;
-        if(gameState.multiplier > multmax) gameState.multiplier = multmax;
-        if(gameState.multiplier < 0) gameState.multiplier = 0;
-        if (mult) mult.textContent = `Multiplier: ${gameState.multiplier.toFixed(3)}`;
-    
-        // PAY %
-        const pay = 
-        document.getElementById(`payPercent`);
-        if(gameState.payPercent < 30) gameState.payPercent = 30;
-        if (pay) pay.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
-        
-        // MULTIPLIER AND PAY PERCENT NEW AMOUNT GAIN
+        if(cash){
+            const cashValue = toDecimal(gameState.cashCount);
+            cash.textContent =
+                `${cashName}(${cashSymbol}): ${
+                    getFormattedNumber(cashValue)
+                }${
+                    cashValue.gt(1e6)
+                    ?
+                    `(${getHyperE(cashValue)})`
+                    :
+                    ``
+                }${cashSymbol}`;
 
-        const newpaypercentdisplay = document.getElementById(`newPayPercentDisplay`);
-        const newmultiplierdisplay = document.getElementById(`newMultiplierDisplay`);
-        const gainBase = 10 ** (2 * gameState.prestiges + 5);
-        const requirement = 10** (gameState.prestiges + 5)
-
-        if(gameState.cashCount < requirement){
-            newpaypercentdisplay.textContent = `...`;
-            newmultiplierdisplay.textContent = `Not Enough`;
+            cash.textContent =
+                cash.textContent.replaceAll(`()`, ``);
         }
-        else{
-            const gainBase = 10**(2*gameState.prestiges+5);
-                    const requirement = 10**(gameState.prestiges+5);
-    
-            let multiplierGain = Math.max(Math.log10(gameState.cashCount / gainBase) + 1, 0);
-            
-            if(multiplierGain < gainBase && multiplierGain > requirement){
-                multiplierGain = ((gameState.cashCount-requirement)/(gainBase-requirement));
+
+
+
+        // ---------------- PRESTIGES ----------------
+
+        const prestige =
+            document.getElementById(`prestiges`);
+        if(prestige){
+
+            prestige.textContent =
+                `Prestiges: ${gameState.prestiges}`;
+        }
+        const cashfornext =
+            document.getElementById(`cashLevel`);
+        if(cashfornext){
+            cashfornext.textContent =
+                `You need ${
+                    getFormattedNumber(
+                        getCashLevel(gameState.prestiges)
+                    )
+                } for the next prestige`;
+        }
+        // ---------------- MULTIPLIER ----------------
+        const mult =
+            document.getElementById(`multiplier`);
+        const multmax =
+            (gameState.prestiges * 4) + 10;
+        if(gameState.multiplier > multmax){
+            gameState.multiplier = multmax;
+        }
+        if(gameState.multiplier < 0){
+            gameState.multiplier = 0;
+        }
+        if(mult){
+            mult.textContent =
+                `Multiplier: ${
+                    Number(gameState.multiplier)
+                    .toFixed(3)
+                }`;
+        }
+        // ---------------- PAY PERCENT ----------------
+        const pay =
+            document.getElementById(`payPercent`);
+        if(gameState.payPercent < 30){
+
+            gameState.payPercent = 30;
+
+        }
+        if(pay){
+            pay.textContent =
+                `Pay Percent: ${
+                    Number(gameState.payPercent)
+                    .toFixed(1)
+                }%`;
+        }
+
+        // ---------------- NEW MULTIPLIER / PAY DISPLAY ----------------
+
+
+        const newpaypercentdisplay =
+            document.getElementById(`newPayPercentDisplay`);
+
+        const newmultiplierdisplay =
+            document.getElementById(`newMultiplierDisplay`);
+
+        const gainBase =
+            new Decimal(10).pow(
+                2 * gameState.prestiges + 5
+            );
+
+        const requirement =
+            new Decimal(10).pow(
+                gameState.prestiges + 5
+            );
+
+        const cashValue =
+            toDecimal(gameState.cashCount);
+
+        if (cashValue.lt(requirement)) {
+
+            if (newpaypercentdisplay) {
+                newpaypercentdisplay.textContent = `...`;
             }
 
+            if (newmultiplierdisplay) {
+                newmultiplierdisplay.textContent = `Not Enough`;
+            }
+
+        }
+        else {
+
+            
+            let multiplierGain =
+                new Decimal(
+                    Math.max(
+                        cashValue
+                            .div(gainBase)
+                            .log(10) + 1,
+                        0
+                    )
+                );
+
+            if (
+                multiplierGain.lt(gainBase) &&
+                multiplierGain.gt(requirement)
+            ) {
+
+                multiplierGain =
+                    cashValue
+                        .minus(requirement)
+                        .div(
+                            gainBase
+                                .minus(requirement)
+                        );
+            }
+
+            
             const payPercentLoss =
-                Math.log10(gameState.cashCount / gainBase + 1) * 2;
+                new Decimal(
+                    cashValue
+                        .div(gainBase)
+                        .plus(1)
+                        .log(10) * 2
+                );
 
             const newMultiplier =
-                Math.min(gameState.multiplier + multiplierGain, multmax);
+                Decimal.min(
+                    new Decimal(gameState.multiplier)
+                        .plus(multiplierGain),
+                    new Decimal(multmax)
+                );
 
             const newPayPercent =
-                Math.max(gameState.payPercent - payPercentLoss, 30);
+                Decimal.max(
+                    new Decimal(gameState.payPercent)
+                        .minus(payPercentLoss),
+                    new Decimal(30)
+                );
 
-            newmultiplierdisplay.textContent =
-                `Your new multiplier will be ${Math.min(newMultiplier + 0.1, multmax)}`;
+            if (newmultiplierdisplay) {
+                newmultiplierdisplay.textContent =
+                    `Your new multiplier will be ${
+                        Decimal.min(
+                            newMultiplier.plus(0.1),
+                            new Decimal(multmax)
+                        ).toFixed(3)
+                    }`;
+            }
 
-            newpaypercentdisplay.textContent =
-                `Your new pay percent will be ${newPayPercent.toFixed(1)}%`;
+            if (newpaypercentdisplay) {
+                newpaypercentdisplay.textContent =
+                    `Your new pay percent will be ${
+                        newPayPercent.toFixed(1)
+                    }%`;
+            }
+        }
+        // ---------------- MULTIPLIER MAX ----------------
+
+        const multiplierMaxDisplay =
+            document.getElementById(`multipliermaxdisplay`);
+        if(multiplierMaxDisplay){
+
+            multiplierMaxDisplay.textContent =
+                `Your multiplier max is ${multmax}`;
+
+        }
+        const prestigeMultDisplay =
+            document.getElementById(`prestigemultdisplay`);
+
+        if(prestigeMultDisplay){
+
+            prestigeMultDisplay.textContent =
+                `Your prestige multiplier is ${
+                    (gameState.prestiges / 2) + 1
+                }`;
+
         }
 
-        // MULTIPLIER MAX
+        const perkneed =
+            document.getElementById(`perkneed`);
 
-        document.getElementById(`multipliermaxdisplay`).textContent = `Your multiplier max is ${multmax}`;
-        document.getElementById(`prestigemultdisplay`).textContent = `Your prestige multiplier is ${(gameState.prestiges/2) + 1}`;
-        const perkneed = 10**(gameState.prestiges + 5);
-        document.getElementById(`perkneed`).textContent = `You Need ${getFormattedNumber(perkneed)} To Add To Perks`;
+        const perkRequirement =
+            new Decimal(10)
+            .pow(
+                gameState.prestiges + 5
+            );
 
-        // COSTS
-        const costdisplays = document.querySelectorAll(`.cost`)
-        const keys = Object.keys(prices);
+        if(perkneed){
+            perkneed.textContent =
+                `You Need ${
+                    getFormattedNumber(perkRequirement)
+                } To Add To Perks`;
+        }
+            // ---------------- COSTS ----------------
+
+            const costdisplays =
+            document.querySelectorAll(`.cost`);
+        const keys =
+            Object.keys(prices);
 
         keys.forEach((key, i) => {
-            if (costdisplays[i]) {
-                const price = prices[key] * (gameState.payPercent / 100)
-                const display = getFormattedNumber(price);
+            if(costdisplays[i]){
+                const price =
+                    toDecimal(prices[key])
+                    .times(
+                        new Decimal(gameState.payPercent)
+                        .div(100)
+                    );
                 costdisplays[i].textContent =
-                    `${display}${price > 1e6 ?
-                         `(` + String(getHyperE(price)) + `)`:``}${cashSymbol}`;
-                const string = costdisplays[i].textContent;
-                const cstring = string.replaceAll(`()`, ``);
-                costdisplays[i].textContent = cstring;
-                
+                    `${getFormattedNumber(price)}${
+                        price.gt(1e6)
+                        ?
+                        `(${getHyperE(price)})`
+                        :
+                        ``
+                    }${cashSymbol}`;
+                costdisplays[i].textContent =
+                    costdisplays[i]
+                    .textContent
+                    .replaceAll(`()`, ``);
             }
         });
-
-        // ITEMS
-        for (const key in gameState) {
-            if (!key.endsWith(`Count`)) continue;
-            if (key === `cashCount`) continue;
-    
-            const el = document.getElementById(
-                `${key.replace(/Count$/, ``)}Display`
-            );
-    
-            if (el) {
+        // ---------------- ITEMS ----------------
+        for(const key in gameState){
+            if(!key.endsWith(`Count`)) continue;
+            if(key === `cashCount`) continue;
+            const el =
+                document.getElementById(
+                    `${key.replace(/Count$/, ``)}Display`
+                );
+            if(el){
                 el.textContent =
-                    `${key.replace(/Count$/, ``)}: ${gameState[key]}`;
+                    `${key.replace(/Count$/, ``)}: ${
+                        gameState[key]
+                    }`;
             }
         }
-    
-        // STOCK
-        for (const key in stock) {
-            const el = document.getElementById(`${key.replace(/Count$/, ``)}Stock`);
-            if (el) el.textContent = `Stock: ${stock[key]}`;
-        }
-    
-        // CRYPTO UI
-        const btc = document.getElementById(`BitcoinDisplay`);
-        if (btc) btc.textContent = `1 BITCOIN: ${getFormattedNumber(gameState.BitcoinVal)}`;
-    
-        const ltc = document.getElementById(`LitecoinDisplay`);
-        if (ltc) ltc.textContent = `1 LITECOIN: ${gameState.LitecoinVal}`;
-    
-        const doge = document.getElementById(`DogecoinDisplay`);
-        if (doge) doge.textContent = `1 DOGECOIN: ${getFormattedNumber(gameState.DogecoinVal)}`;
-    }
-    
-    // ----------------- DISPLAY RARITIES & MENU -----------------\
+        // ---------------- STOCK ----------------
 
-    function displayRaritiesAndMenuPages(){
+        for(const key in stock){
+            const el =
+                document.getElementById(
+                    `${key.replace(/Count$/, ``)}Stock`
+                );
+            if(el){
+                el.textContent =
+                    `Stock: ${stock[key]}`;
+            }
+        }
+
+        // ---------------- CRYPTO UI ----------------
+
+        const btc =
+            document.getElementById(`BitcoinDisplay`);
+        if(btc){
+            btc.textContent =
+                `1 BITCOIN: ${
+                    getFormattedNumber(
+                        gameState.BitcoinVal
+                    )
+                }`;
+        }
+        const ltc =
+            document.getElementById(`LitecoinDisplay`);
+        if(ltc){
+            ltc.textContent =
+                `1 LITECOIN: ${
+                    getFormattedNumber(
+                        gameState.LitecoinVal
+                    )
+                }`;
+        }
+        const doge =
+            document.getElementById(`DogecoinDisplay`);
+        if(doge){
+            doge.textContent =
+                `1 DOGECOIN: ${
+                    getFormattedNumber(
+                        gameState.DogecoinVal
+                    )
+                }`;
+        }
+
+    }
+    // ----------------- DISPLAY RARITIES & MENU -----------------
+
+    function displayRaritiesAndMenuPages() {
+
         // MENU
-        const menuBtn = document.getElementById(`menuBtn`);
-        const menu = document.getElementById(`menu`);
-        
-        if (menuBtn) {
-            menuBtn.addEventListener(`click`, () => {
-                if(menu.style.display == `none`){
-                    menu.style.display = `flex`;
-                    menuBtn.textContent = `>`;
+
+        const menuBtn = document.getElementById("menuBtn");
+        const menu = document.getElementById("menu");
+
+        if (menuBtn && menu) {
+            menuBtn.addEventListener("click", () => {
+
+                if (menu.style.display === "none") {
+                    menu.style.display = "flex";
+                    menuBtn.textContent = ">";
                 }
-                else{
-                    menu.style.display = `none`;
-                    menuBtn.textContent = `<`;
+                else {
+                    menu.style.display = "none";
+                    menuBtn.textContent = "<";
                 }
             });
         }
-        function makeWindow(openId, closeId, windowId){
+
+        function makeWindow(openId, closeId, windowId) {
+
             const openBtn = document.getElementById(openId);
             const closeBtn = document.getElementById(closeId);
             const window = document.getElementById(windowId);
-            if (openBtn) {
-                openBtn.addEventListener(`click`, () => {
-                    if(getComputedStyle(window).display === `none`) window.style.display = `flex`;
+
+            if (openBtn && window) {
+                openBtn.addEventListener("click", () => {
+                    if (getComputedStyle(window).display === "none") {
+                        window.style.display = "flex";
+                    }
                 });
             }
-            closeBtn?.addEventListener(`click`, () => {
-                window.style.display = `none`;
-            });
+
+            if (closeBtn && window) {
+                closeBtn.addEventListener("click", () => {
+                    window.style.display = "none";
+                });
+            }
         }
+        makeWindow("perkOpen", "removePerkScreen", "addToPerks");
+        makeWindow("openPrestigeScreen", "removePrestigeScreen", "prestigeScreen");
+        makeWindow("openSettings", "removeSettings", "settings");
+        makeWindow("openLeaderboard", "removeLeaderboard", "leaderboardWindow");
+        makeWindow("restartGameBtn", "removeRestart", "restart");
+        makeWindow("workerBtn", "removeWorkers", "workers");
+        makeWindow("openCodes", "removeCodes", "codes");
 
-        makeWindow(`perkOpen`, `removePerkScreen`, `addToPerks`);
-        makeWindow(`openPrestigeScreen`, `removePrestigeScreen`, `prestigeScreen`);
-        makeWindow(`openSettings`, `removeSettings`, `settings`);
-        makeWindow(`openLeaderboard`, `removeLeaderboard`, `leaderboardWindow`);
-        makeWindow(`restartGameBtn`, `removeRestart`, `restart`);
-        makeWindow(`workerBtn`, `removeWorkers`, `workers`);
-        makeWindow(`openCodes`, `removeCodes`, `codes`)
 
-
-        function setUpSection(btnId, rarityId, need){
+        function setUpSection(btnId, rarityId, need) {
             const btn = document.getElementById(btnId);
             const fruits = document.getElementById(rarityId);
-
-            if (btn) {
-                btn.addEventListener(`click`, () => {
-                    if(gameState.prestiges >= need){
-                        if(fruits.style.display == `none`) fruits.style.display = `block`;
-                        else fruits.style.display = `none`;
+            if (btn && fruits) {
+                btn.addEventListener("click", () => {
+                    if (gameState.prestiges >= need) {
+                        if (fruits.style.display === "none") {
+                            fruits.style.display = "block";
+                        }
+                        else {
+                            fruits.style.display = "none";
+                        }
                     }
-                    else{
-                        alert(`You need ${need} prestiges to enter here`)
+                    else {
+
+                        alert(`You need ${need} prestiges to enter here`);
+
                     }
                 });
             }
         }
-        
-        setUpSection(`commonFoodBtn`, `commonFoods`, 0);
-        setUpSection(`rareFoodsBtn`, `rareFoods`, 1);
-        setUpSection(`uncannyFoodsBtn`, `uncannyFoods`, 3);
-        setUpSection(`legendaryFoodsBtn`, `legendaryFoods`, 5);
-        setUpSection(`supernaturalFoodsBtn`, `supernaturalFoods`, 8);
-        setUpSection(`mythologicalFoodsBtn`, `mythologicalFoods`, 12);
-        setUpSection(`exoticFoodsBtn`, `exoticFoods`, 20);
-        setUpSection(`dumbStuffBtn`, `dumbStuff`, 15);
+
+
+        setUpSection("commonFoodBtn", "commonFoods", 0);
+        setUpSection("rareFoodsBtn", "rareFoods", 1);
+        setUpSection("uncannyFoodsBtn", "uncannyFoods", 3);
+        setUpSection("legendaryFoodsBtn", "legendaryFoods", 5);
+        setUpSection("supernaturalFoodsBtn", "supernaturalFoods", 8);
+        setUpSection("mythologicalFoodsBtn", "mythologicalFoods", 12);
+        setUpSection("exoticFoodsBtn", "exoticFoods", 20);
+        setUpSection("dumbStuffBtn", "dumbStuff", 15);
+
     }
+
+
 
     // ------------------- DUMB STUFF -----------------------
 
     const prestigesTo14 = document.getElementById("prestigesTo14");
-    if(prestigesTo14){
-        prestigesTo14.addEventListener('click', async function(){
-            const accepted = await confirm("Are you sure you want to set your prestiges to 14?");
-            if(accepted){
-                document.getElementById("dumbStuff").style.display = 'none';
+
+    if (prestigesTo14) {
+        prestigesTo14.addEventListener("click", async function () {
+            const accepted =
+                await confirm("Are you sure you want to set your prestiges to 14?");
+
+            if (accepted) {
+                document.getElementById("dumbStuff").style.display = "none";
                 gameState.prestiges = 14;
+                updateUI();
             }
         });
     }
-
-    const resetWorkerProgress = document.getElementById("resetWorkerProgress");
-    if(resetWorkerProgress){
-        resetWorkerProgress.addEventListener('click', async function(){
-            const accepted = await confirm("Are you sure you want to reset your worker progress");
-            if(accepted){
-                document.getElementById("dumbStuff").style.display = 'none';
+    const resetWorkerProgress =
+        document.getElementById("resetWorkerProgress");
+    if (resetWorkerProgress) {
+        resetWorkerProgress.addEventListener("click", async function () {
+            const accepted =
+                await confirm("Are you sure you want to reset your worker progress?");
+            if (accepted) {
+                document.getElementById("dumbStuff").style.display = "none";
                 gameState.workerProfit = 0;
                 gameState.workerAmount = 0;
                 updateUI();
                 displayWorkerUI();
             }
         });
+
     }
 
-    const resetCash = document.getElementById("resetCash");
-    if(resetCash){
-        resetCash.addEventListener('click', async function(){
-            const accepted = await confirm("Are you sure you want to reset your cash?");
-            if(accepted){
-                document.getElementById("dumbStuff").style.display = 'none';
-                gameState.cashCount = cashResetValue;
+    const resetCash =
+        document.getElementById("resetCash");
+
+    if (resetCash) {
+
+        resetCash.addEventListener("click", async function () {
+
+            const accepted =
+                await confirm("Are you sure you want to reset your cash?");
+
+            if (accepted) {
+
+                document.getElementById("dumbStuff").style.display = "none";
+
+                // Decimal fix
+                gameState.cashCount = new Decimal(cashResetValue);
+
+                updateUI();
+
             }
+
         });
+
     }
 
-    const annoyYou = document.getElementById("annoyYou");
+    const annoyYou =
+        document.getElementById("annoyYou");
 
-    if(annoyYou){
-        annoyYou.addEventListener('click', async function(){
-            const accepted = await confirm("Are you sure you want to be annoyed irritably for a minute straight?(doesn't change values of your progress)");
-            if(accepted){
-                document.getElementById("dumbStuff").style.display = 'none';
+    if (annoyYou) {
+
+        annoyYou.addEventListener("click", async function () {
+
+            const accepted =
+                await confirm("Are you sure you want to be annoyed irritably for a minute straight? (This doesn't affect your progress)");
+
+            if (accepted) {
+
+                document.getElementById("dumbStuff").style.display = "none";
+
                 getAnnoyed(60);
-            }
-        })
-    }
 
-    function getAnnoyed(seconds){
-        document.body.style.fontSize = '5em';
-        document.body.style.filter = 'invert(100%)';
+            }
+
+        });
+
+    }
+    function getAnnoyed(seconds) {
+
+        document.body.style.fontSize = "5em";
+        document.body.style.filter = "invert(100%)";
+
         setTimeout(() => {
-            document.body.style.fontSize = '1em';
-            document.body.style.filter = 'none';
-        }, seconds*1000)
+
+            document.body.style.fontSize = "1em";
+            document.body.style.filter = "none";
+
+        }, seconds * 1000);
+
     }
 
     // ------------------ CODES -----------------------
 
     const redeem = document.getElementById("redeem");
     const input = document.getElementById("codeInput");
-    const codes = ['Trans3ndantB3n',
-                   `TruRn3st`,
-                   `MonkeIsTheBest@TheMarket`,
-                   `MonkeHasInfinite${cashName}`,
-                   `TemedireIsCool`, 
-                   `ColbeFindsHacks`,
-                   `JudeIsDABest`,
-                   `DylanSaysHelloHello`,
-                   `LukaIsLucky`,
-                   `TobyBegsMe`,
-                   `DavidExists`];
-    const rewards = [
-        () => {
-            gameState.cashCount += 1e99;
-            gameState.transendantBenCount += 1;
-            alert(`You gained ${getFormattedNumber(1e99)}(${getHyperE(1e99)}) and a transendant ben`);
-        },
-        () => {
-            gameState.multiplier = Math.min(10+(gameState.prestiges*4), gameState.multiplier + 10);
-            gameState.trueRnestCount += 1;
-            alert(`Your multiplier is now ${gameState.multiplier} and a True Rnest`);
-        },
-        () => {
-            gameState.greenGiantCount += 1;
-            alert(`You got a green giant`);
-        },
-        () => {
-            gameState.cosmicCheeseCount += 1;
-            alert(`You got a cosmic cheese`);
-        },
-        () => {
-            gameState.prestiges += 1;
-            alert(`You got the a prestige!`);
-        },
-        () => {
-            gameState.cashCount = 9.9999e99;
-            alert(`You now have ${getFormattedNumber(9.9999e99)}(${getHyperE(9.9999e99)})`)
-        },
-        () => {
-            gameState.cashCount += 10**(gameState.prestiges * 10 + 10);
-            alert(`You gained ${getFormattedNumber(10**(gameState.prestiges * 10 + 10))}${cashSymbol}`);
-        },
-        () => {
-            gameState.prestiges += 1;
-            alert(`You got a prestige`);
-        },
-        () => {
-            gameState.Dogecoin += 1e50;
-            alert(`You got ${getFormattedNumber(1e50)} Dogecoin`);
-            updateCryptoOwnedUI();
-        },
-        () => {
-            gameState.Bitcoin += 1e75;
-            alert(`You got ${getFormattedNumber(1e75)} Bitcoin`);
-            updateCryptoOwnedUI();
-        },
-        () => {
-            gameState.Litecoin += 1e125;
-            alert(`You got ${getFormattedNumber(1e125)} Litecoin`)
-            updateCryptoOwnedUI();
-        },
+
+    const codes = [
+        "Trans3ndantB3n",
+        "TruRn3st",
+        `MonkeIsTheBest@TheMarket`,
+        `MonkeHasInfinite${cashName}`,
+        "TemedireIsCool",
+        "ColbeFindsHacks",
+        "JudeIsDABest",
+        "DylanSaysHelloHello",
+        "LukaIsLucky",
+        "TobyBegsMe",
+        "DavidExists",
+        "JackHasALife",
+        "EvanAnnoysYou",
+        "LewisGotASlap"
     ];
 
-    redeem.addEventListener("click", () => {
-        const playerInput = input.value.trim();
-    
-        const index = codes.indexOf(playerInput);
-    
-        if (index === -1) {
-            alert("Invalid Code");
-            return;
+    const rewards = [
+
+        // Trans3ndantB3n
+        () => {
+
+            const reward = new Decimal("1e99");
+
+            gameState.cashCount =
+                gameState.cashCount.plus(reward);
+
+            gameState.transendantBenCount++;
+
+            alert(
+                `You gained ${getFormattedNumber(reward)}(${getHyperE(reward)}) and a Transendant Ben`
+            );
+
+        },
+
+        // TruRn3st
+        () => {
+
+            gameState.multiplier = Math.max(
+                gameState.multiplier + 10,
+                10 + (gameState.prestiges * 4)
+            );
+
+            gameState.trueRnestCount++;
+
+            alert(
+                `Your multiplier is now ${gameState.multiplier} and a True Rnest`
+            );
+
+        },
+
+        // Green Giant
+        () => {
+
+            gameState.greenGiantCount++;
+
+            alert("You got a Green Giant");
+
+        },
+
+        // Cosmic Cheese
+        () => {
+
+            gameState.cosmicCheeseCount++;
+
+            alert("You got a Cosmic Cheese");
+
+        },
+
+        // Prestige
+        () => {
+
+            gameState.prestiges++;
+
+            alert("You got a Prestige!");
+
+        },
+
+        // Huge Cash
+        () => {
+
+            gameState.cashCount =
+                new Decimal("9.9999e99");
+
+            alert(
+                `You now have ${getFormattedNumber(gameState.cashCount)}(${getHyperE(gameState.cashCount)})`
+            );
+
+        },
+
+        // Prestige-scaled cash
+        () => {
+
+            const reward =
+                new Decimal(10)
+                    .pow(gameState.prestiges * 10 + 10);
+
+            gameState.cashCount =
+                gameState.cashCount.plus(reward);
+
+            alert(
+                `You gained ${getFormattedNumber(reward)}${cashSymbol}`
+            );
+
+        },
+
+        // Prestige
+        () => {
+
+            gameState.prestiges++;
+
+            alert("You got a Prestige");
+
+        },
+
+        // Dogecoin
+        () => {
+
+            const reward = new Decimal("1e50");
+
+            gameState.Dogecoin =
+                gameState.Dogecoin.plus(reward);
+
+            alert(
+                `You got ${getFormattedNumber(reward)} Dogecoin`
+            );
+
+            updateCryptoOwnedUI();
+
+        },
+
+        // Bitcoin
+        () => {
+
+            const reward = new Decimal("1e75");
+
+            gameState.Bitcoin =
+                gameState.Bitcoin.plus(reward);
+
+            alert(
+                `You got ${getFormattedNumber(reward)} Bitcoin`
+            );
+
+            updateCryptoOwnedUI();
+
+        },
+
+        // Litecoin
+        () => {
+
+            const reward = new Decimal("1e125");
+
+            gameState.Litecoin =
+                gameState.Litecoin.plus(reward);
+
+            alert(
+                `You got ${getFormattedNumber(reward)} Litecoin`
+            );
+
+            updateCryptoOwnedUI();
+
+        },
+
+        // Granny & Grampa Pig
+        () => {
+
+            gameState.grannyAndGrampaPigCount += 20;
+
+            alert("You got 20 Granny and Grampa Pigs");
+
+        },
+
+        // Annoy
+        () => {
+
+            getAnnoyed(60);
+
+            alert("GET ANNOYED!");
+
+        },
+
+        // Betty's Bitter Butter
+        () => {
+
+            gameState.bettysBitterButterCount += 100;
+
+            alert("You got 100 Betty's Bitter Butter's");
+
         }
-        else if (gameState[`code${index}redeemed`]) {
+
+    ];
+
+    if (redeem && input) {
+
+        redeem.addEventListener("click", () => {
+
+            const playerInput =
+                input.value.trim();
+
+            const index =
+                codes.indexOf(playerInput);
+
+            if (index === -1) {
+
+                alert("Invalid Code");
+                return;
+
+            }
+
+            if (gameState[`code${index}redeemed`]) {
+
+                alert("You've already redeemed this code.");
+                return;
+
+            }
+
             gameState[`code${index}redeemed`] = true;
-            alert("You've already redeemed this code.");
-            return;
-        }
-        else{
-            gameState[`code${index}redeemed`] = true;
-        
+
             rewards[index]();
-        
+
             saveGame();
-        
+
             alert("CODE REDEEMED");
-        }
-    });
+
+            input.value = "";
+
+        });
+
+    }
 
     // ------------------- USERNAMES AND LEADERBOARDS -------------------
 
-    const submitBtn = document.getElementById(`submitUsernameBtn`);
+    const submitBtn = document.getElementById("submitUsernameBtn");
 
     async function submitUsername() {
-        const username = document.getElementById(`userInput`).value.trim();
-    
+
+        const username =
+            document.getElementById("userInput")?.value.trim();
+
         if (!username) return;
-    
-        gameState.username = username.replaceAll(` `, `_`);
-        gameState.username = gameState.username.trim();
-        gameState.username = gameState.username.slice(0, 12);
-    
+
+        gameState.username = username
+            .replaceAll(" ", "_")
+            .trim()
+            .slice(0, 12);
+
         saveGame();
         loadLeaderboard();
+
     }
 
-    if(submitBtn) submitBtn.addEventListener(`click`, submitUsername);
+    if (submitBtn) {
+        submitBtn.addEventListener("click", submitUsername);
+    }
+
+
+
+    // ------------------- UPLOAD SCORE -------------------
 
     async function uploadScore() {
+
         const { error } = await supabase
-            .from(`leaderboard`)
+            .from("leaderboard")
             .upsert(
                 {
                     id: playerId,
                     username: gameState.username,
-                    cash: gameState.cashCount,
+
+                    // Decimal fix
+                    cash: gameState.cashCount.toString(),
+
                     prestiges: gameState.prestiges,
                     updated_at: new Date()
                 },
                 {
-                    onConflict: `id`
+                    onConflict: "id"
                 }
             );
-    
+
         if (error) {
             console.error(error);
         }
+
     }
+
+
+
+    // ------------------- LOAD LEADERBOARD -------------------
 
     async function loadLeaderboard() {
 
-        const { data: ranked } = await supabase
-            .from("leaderboard")
-            .select("*")
-            .order("prestiges", { ascending: false })
-            .order("cash", { ascending: false });
-
-        for (let i = 0; i < ranked.length; i++) {
+        const { data: ranked, error: rankError } =
             await supabase
                 .from("leaderboard")
-                .update({ place: i + 1 })
-                .eq("id", ranked[i].id);
+                .select("*")
+                .order("prestiges", { ascending: false })
+                .order("cash", { ascending: false });
+
+        if (rankError) {
+            console.error(rankError);
+            return;
         }
 
-        const { data, error } = await supabase
-            .from("leaderboard")
-            .select("*")
-            .lte("place", 10)
-            .order("place");
-        
-        console.log(data);
-        console.log(error);
+        for (let i = 0; i < ranked.length; i++) {
 
-        const board = document.getElementById(`leaderboard`);
-    
-        board.innerHTML = ``;
-    
-        data.forEach(async function(player, index){ 
-            
+            await supabase
+                .from("leaderboard")
+                .update({
+                    place: i + 1
+                })
+                .eq("id", ranked[i].id);
+
+        }
+
+
+        const { data, error } =
+            await supabase
+                .from("leaderboard")
+                .select("*")
+                .lte("place", 10)
+                .order("place");
+
+        if (error) {
+            console.error(error);
+            return;
+        }
+
+
+        const board =
+            document.getElementById("leaderboard");
+
+        if (!board) return;
+
+        board.innerHTML = "";
+
+
+        data.forEach((player, index) => {
+
             board.innerHTML += `
-                <div class='leaderboardRow' id='row${index + 1}'>
-                    <div class='place'>
+                <div class="leaderboardRow" id="row${index + 1}">
+                    <div class="place">
                         #${index + 1}
                     </div>
                 </div>
             `;
-            const row = document.getElementById(`row${index+1}`);
-            row.innerHTML += `<div>${(player.username)}</div>`;
-            row.innerHTML += `<div>${(String(player.prestiges))}</div>`
-            row.innerHTML += `<div>${(String(getFormattedNumber(player.cash)))}</div>`;
 
-            if(index === 0){
-                row.style.border = `2px solid rgb(219, 164, 0)`;
+
+            const row =
+                document.getElementById(`row${index + 1}`);
+
+
+            // Decimal fix
+            const cash =
+                new Decimal(player.cash || 0);
+
+
+            row.innerHTML += `<div>${player.username}</div>`;
+            row.innerHTML += `<div>${player.prestiges}</div>`;
+            row.innerHTML += `<div>${getFormattedNumber(cash)}</div>`;
+
+
+            if (index === 0) {
+
+                row.style.border =
+                    "2px solid rgb(219, 164, 0)";
+
             }
-            else if(index === 1){
-                row.style.border = `2px solid rgb(128, 128, 128)`;
+            else if (index === 1) {
+
+                row.style.border =
+                    "2px solid rgb(128, 128, 128)";
+
             }
-            else if(index === 2){
-                row.style.border = `2px solid rgb(143, 52, 0)`;
+            else if (index === 2) {
+
+                row.style.border =
+                    "2px solid rgb(143, 52, 0)";
+
             }
+
         });
+
     }
 
     // ----------------- PERKS/PRESTIGES -----------------
-    
+
     function resetAllGameState() {
-        gameState.cashCount = cashResetValue;
+        
+        gameState.cashCount = new Decimal(cashResetValue);
+        
+        console.log("after:", gameState.cashCount.toString());
+
+
+        gameState.cashCount = new Decimal(cashResetValue);
+
         for (const key in gameState) {
+
             if (
-                key.endsWith(`Count`) &&
-                key !== `cashCount`
+                key.endsWith("Count") &&
+                key !== "cashCount"
             ) {
                 gameState[key] = 0;
             }
+
         }
-        gameState.Bitcoin = 0;
-        gameState.Litecoin = 0;
-        gameState.Dogecoin = 0;
-        gameState.BitcoinVal = 100000;
-        gameState.LitecoinVal = 100;
-        gameState.DogecoinVal = 10000000000;
+
+        gameState.Bitcoin = new Decimal(0);
+        gameState.Litecoin = new Decimal(0);
+        gameState.Dogecoin = new Decimal(0);
+
+        gameState.BitcoinVal = new Decimal(100000);
+        gameState.LitecoinVal = new Decimal(100);
+        gameState.DogecoinVal = new Decimal(10000000000);
+
         gameState.multiplier = 0;
         gameState.payPercent = 100;
-        
+
     }
-    function resetAllItems(){
+
+
+
+    function resetAllItems() {
+
         for (const key in gameState) {
+
             if (
-                key.endsWith(`Count`) &&
-                key !== `cashCount`
+                key.endsWith("Count") &&
+                key !== "cashCount"
             ) {
+
                 gameState[key] = 0;
+
             }
+
         }
+
     }
-    
-    function increasePerks(){
-        const gainBase = 10**(2*gameState.prestiges+5);
-        const requirement = 10**(gameState.prestiges+5);
 
-        let multiplierGain = Math.max(Math.log10(gameState.cashCount / gainBase) + 1, 0);
-        
-        if(multiplierGain < gainBase && multiplierGain > requirement){
-            multiplierGain = ((gameState.cashCount-requirement)/(gainBase-requirement));
+
+
+    function increasePerks() {
+
+        const gainBase =
+            new Decimal(10).pow(2 * gameState.prestiges + 5);
+
+        const requirement =
+            new Decimal(10).pow(gameState.prestiges + 5);
+
+
+
+        let multiplierGain =
+            Decimal.max(
+                gameState.cashCount
+                    .div(gainBase)
+                    .log(10)
+                    .plus(1),
+                0
+            );
+
+
+
+        if (
+            multiplierGain.lt(gainBase) &&
+            multiplierGain.gt(requirement)
+        ) {
+
+            multiplierGain =
+                gameState.cashCount
+                    .minus(requirement)
+                    .div(
+                        gainBase.minus(requirement)
+                    );
+
         }
 
-        gameState.multiplier += Math.min(multiplierGain + 0.1, 10+(gameState.prestiges*4));
-        const multiplier = document.getElementById(`multiplier`);
-        multiplier.textContent = `Multiplier: ${gameState.multiplier.toFixed(3) + 1}`;
 
-        const payPercentLoss = Math.log10(gameState.cashCount / gainBase + 1) * 2;
+
+        gameState.multiplier += Math.min(
+            multiplierGain.toNumber() + 0.1,
+            10 + (gameState.prestiges * 4)
+        );
+
+
+
+        const multiplier =
+            document.getElementById("multiplier");
+
+        if (multiplier) {
+
+            multiplier.textContent =
+                `Multiplier: ${gameState.multiplier.toFixed(3)}`;
+
+        }
+
+
+
+        const payPercentLoss =
+            gameState.cashCount
+                .div(gainBase)
+                .plus(1)
+                .log(10)
+                .times(2)
+                .toNumber();
+
+
 
         gameState.payPercent -= payPercentLoss;
-        const payPercent = document.getElementById(`payPercent`);
-        payPercent.textContent = `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
 
-        gameState.cashCount = cashResetValue;
+
+
+        const payPercent =
+            document.getElementById("payPercent");
+
+        if (payPercent) {
+
+            payPercent.textContent =
+                `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
+
+        }
+
+
+
+        gameState.cashCount =
+            new Decimal(cashResetValue);
+
+
+
         resetAllItems();
-        gameState.workerProfit = 10 ** (Math.floor(Math.log10(gameState.workerProfit) / 6));
+
+
+
+        gameState.workerProfit =
+            new Decimal(10).pow(
+                Math.floor(
+                    gameState.workerProfit
+                        .log(10)
+                        .toNumber() / 6
+                )
+            );
+
+
+
         restock();
+
         saveGame();
+
         uploadScore();
+
         displayWorkerUI();
+
     }
+
+
 
     async function perkIncrease() {
-        const accepted = await confirm("Are you sure you want to add to perks?");
-        if(accepted){
-            if(gameState.cashCount >= 10**(gameState.prestiges + 5)){
-                if(gameState.multiplier < 10+(gameState.prestiges*4) || gameState.payPercent > 30){
+
+        const accepted =
+            await confirm(
+                "Are you sure you want to add to perks?"
+            );
+
+        if (!accepted) return;
+
+
+
+        const requirement =
+            new Decimal(10).pow(
+                gameState.prestiges + 5
+            );
+
+
+
+        if (gameState.cashCount.gte(requirement)) {
+
+            if (
+                gameState.multiplier < 10 + (gameState.prestiges * 4) ||
+                gameState.payPercent > 30
+            ) {
+
+                increasePerks();
+
+            }
+            else {
+
+                const acceptAgain =
+                    await confirm(
+                        "You already have max multiplier and pay percent. Continue anyway? You'll gain nothing and only lose money."
+                    );
+
+                if (acceptAgain) {
+
                     increasePerks();
-                }
-                else{
-                    const acceptAgain = await confirm(`You already have max multiplier and pay percent? Are you still sure? You'll gain nothing and only lose money`);
-                    if(acceptAgain){
-                        increasePerks();
-                    }
 
                 }
+
             }
-            else{
-                alert(`You do not have enough ${cashName} to add to perks.`);
-            }
-        } 
-    }
-    
-    function getCashLevel(prestige){
-        return 10 ** (11 * prestige + 9);
-    }
-    async function prestige(){
-        const accepted = await confirm("Are you sure you want to prestige?");
-        if(accepted){
-            const cashLevel = getCashLevel(gameState.prestiges);
-            if(gameState.cashCount < cashLevel){
-                alert(`You do not enough ${cashName} to prestige`);
-                return;
-            }
-            gameState.prestiges += 1;
-            resetAllGameState();
-            gameState.workerProfit = 0;
-            gameState.workerAmount = (gameState.workerAmount/10)*3;
-            restock();
-            timeLeft = config.normalTime;
-            saveGame();
-            uploadScore();
-            displayWorkerUI();
+
         }
+        else {
+
+            alert(
+                `You do not have enough ${cashName} to add to perks.`
+            );
+
+        }
+
     }
 
-        if(document.getElementById(`perkIncreaseBtn`)){
-            document.getElementById(`perkIncreaseBtn`).addEventListener(`click`, perkIncrease);
+
+
+    function getCashLevel(prestige) {
+
+        return new Decimal(10).pow(
+            11 * prestige + 9
+        );
+
+    }
+
+
+
+    async function prestige() {
+
+        const accepted =
+            await confirm(
+                "Are you sure you want to prestige?"
+            );
+
+        if (!accepted) return;
+
+
+
+        const cashLevel =
+            getCashLevel(gameState.prestiges);
+
+
+
+        if (gameState.cashCount.lt(cashLevel)) {
+
+            alert(
+                `You do not have enough ${cashName} to prestige`
+            );
+
+            return;
+
         }
-        if(document.getElementById(`prestigeBtn`)){
-        document.getElementById(`prestigeBtn`).addEventListener(`click`, prestige);
-        }
+
+
+
+        gameState.prestiges++;
+
+
+
+        resetAllGameState();
+
+
+
+        gameState.workerProfit =
+            new Decimal(0);
+
+        gameState.workerAmount =
+            (gameState.workerAmount / 10) * 3;
+
+
+
+        restock();
+
+        timeLeft = config.normalTime;
+
+
+
+        saveGame();
+
+        uploadScore();
+
+        displayWorkerUI();
+
+    }
+
+
+
+    const perkIncreaseBtn =
+        document.getElementById("perkIncreaseBtn");
+
+    if (perkIncreaseBtn) {
+
+        perkIncreaseBtn.addEventListener(
+            "click",
+            perkIncrease
+        );
+
+    }
+
+
+
+    const prestigeBtn =
+        document.getElementById("prestigeBtn");
+
+    if (prestigeBtn) {
+
+        prestigeBtn.addEventListener(
+            "click",
+            prestige
+        );
+
+    }
     // ------------ RESTART ------------
 
-    function confirm(message){
+    function confirm(message) {
+
         return new Promise(resolve => {
+
             clearInterval(countdownInterval);
+
             const overlay = document.createElement("div");
             overlay.id = "confirmOverlay";
 
             const confirm = document.createElement("div");
-            confirm.id = 'confirm';
+            confirm.id = "confirm";
             confirm.classList.add("confirm");
 
             const text = document.createElement("div");
             text.textContent = message;
 
             const btnContainer = document.createElement("div");
-            btnContainer.classList.add("allowanddeny")
+            btnContainer.classList.add("allowanddeny");
 
             const allow = document.createElement("button");
             allow.classList.add("btn");
             allow.classList.add("allowBtn");
-            allow.textContent = 'allow';
-            allow.addEventListener('click', () => {
+            allow.textContent = "allow";
+
+            allow.addEventListener("click", () => {
+
                 confirm.remove();
                 overlay.remove();
+
                 alert("Confirmed");
+
                 setCountDown();
+
                 resolve(true);
+
             });
 
             const deny = document.createElement("button");
             deny.classList.add("btn");
             deny.classList.add("denyBtn");
-            deny.textContent = 'deny';
-            deny.addEventListener('click', () => {
+            deny.textContent = "deny";
+
+            deny.addEventListener("click", () => {
+
                 confirm.remove();
                 overlay.remove();
+
                 setCountDown();
-                alert("rejected");
+
+                alert("Rejected");
+
                 resolve(false);
+
             });
 
             document.body.appendChild(overlay);
-            document.body.appendChild(confirm)
+            document.body.appendChild(confirm);
+
             confirm.appendChild(text);
             confirm.appendChild(document.createElement("br"));
             confirm.appendChild(btnContainer);
+
             btnContainer.appendChild(allow);
             btnContainer.appendChild(deny);
+
         });
+
     }
 
-    async function restartGame() {
-        const accepted = await confirm(
-            `Are you sure you want to restart? This will erase all progress.`
-        );
-        if (accepted) {
-            clearInterval(cryptoInterval);
-            clearInterval(uiInterval);
-            clearInterval(countdownInterval);
-            clearInterval(window.cashLoop);
-        
-            cryptoInterval = null;
-            uiInterval = null;
-            countdownInterval = null;
-            window.cashLoop = null;        
-            resetAllGameState();
-            gameState.prestiges = 0;
-            gameState.workerProfit = 0;
-            gameState.workerAmount = 0;
-            restock();
-            timeLeft = config.normalTime;
-            
-            localStorage.clear();
-        
-            saveGame();
-            uploadScore();
-            displayWorkerUI();
 
-            window.location.reload();
-        }
+
+    async function restartGame() {
+
+        const accepted = await confirm(
+            "Are you sure you want to restart? This will erase all progress."
+        );
+
+        if (!accepted) return;
+
+        clearInterval(cryptoInterval);
+        clearInterval(uiInterval);
+        clearInterval(countdownInterval);
+        clearInterval(window.cashLoop);
+
+        cryptoInterval = null;
+        uiInterval = null;
+        countdownInterval = null;
+        window.cashLoop = null;
+
+        resetAllGameState();
+
+        gameState.prestiges = 0;
+
+        gameState.workerProfit = new Decimal(0);
+        gameState.workerAmount = 0;
+
+        gameState.worldTwoUnlocked = false;
+
+        restock();
+
+        timeLeft = config.normalTime;
+
+        localStorage.clear();
+
+        saveGame();
+        uploadScore();
+        displayWorkerUI();
+
+        window.location.reload();
+
+    }
+
+
+
+    // ----------- CHAPTER TWO -------------
+    const world2need = 40;
+    const chapterTwoBtn =
+        document.getElementById("chapterTwoBtn");
+
+    if (chapterTwoBtn) {
+
+        chapterTwoBtn.addEventListener("click", () => {
+
+            if (gameState.worldTwoUnlocked) {
+
+                window.location = "game2.html";
+                return;
+
+            }
+
+            if (gameState.prestiges >= world2need) {
+
+                gameState.worldTwoUnlocked = true;
+
+                saveGame();
+
+                window.location =
+                    "chapterTwoCutsene.html";
+
+            }
+            else {
+
+                alert(
+                    "You are not rich enough, you need to work harder..."
+                );
+
+            }
+
+        });
+
     }
 
     // ---------------- INIT ----------------
-    
+
     function initiate() {
         loadGame();
         loadStock();
@@ -1901,59 +2748,104 @@
         loadLeaderboard();
         displayWorkerUI();
 
-        music.play();
-
-        setTimeout(() => music.play(), 500)
-
-        if(gameState.musicPlaying){
-            music.play();
+        if (gameState.musicPlaying) {
+            music.play().catch(() => {
+                console.log("Music waiting for user interaction.");
+            });
         }
-        const clickables = [...document.querySelectorAll(`.item`), ...document.querySelectorAll(`.btn`), document.getElementById(`removePerkScreen`), document.getElementById(`removePrestigeScreen`), document.getElementById(`removeSettings`)];
+        const clickables = [
+
+            ...document.querySelectorAll(".item"),
+            ...document.querySelectorAll(".btn"),
+
+            document.getElementById("removePerkScreen"),
+            document.getElementById("removePrestigeScreen"),
+            document.getElementById("removeSettings")
+
+        ].filter(Boolean);
+
+
+
         clickables.forEach(click => {
-            click.addEventListener(`click`, () => {
+
+            click.addEventListener("click", () => {
+
                 clicksound.currentTime = 0.59;
                 clicksound.play();
+
             });
+
         });
 
 
+
         window.restartGame = restartGame;
-        const restartBtn = document.getElementById(`restartGame`);
+
+        const restartBtn =
+            document.getElementById("restartGame");
 
         if (restartBtn) {
-            restartBtn.addEventListener(`click`, () => {
-                restartGame();
-            });
+
+            restartBtn.addEventListener(
+                "click",
+                restartGame
+            );
+
         }
 
+
+
         window.uploadScore = uploadScore;
+
         uploadScore();
-    
+
+
+
         setTimeout(() => {
+
             setupBuyButtons();
             setupSellButtons();
+
         }, 50);
 
+
+
+        // Decimal-compatible Litecoin rounding
         setInterval(() => {
-            gameState.LitecoinVal = Math.floor(gameState.LitecoinVal);
-        }, 100)
-    
+
+            gameState.LitecoinVal =
+                gameState.LitecoinVal.floor();
+
+        }, 100);
+
+
+
         setCountDown();
-        cryptoInterval = setInterval(updateCrypto, 250);
-    
-    
-        window.cashLoop = setInterval(updateUI, 500);
+
+        cryptoInterval =
+            setInterval(updateCrypto, 250);
+
+
+
+        window.cashLoop =
+            setInterval(updateUI, 500);
+
     }
-    
-    window.onload = initiate();   
+
+
+
+    // Don't call initiate immediately
+    window.onload = initiate;
+
+
 
     window.investBitcoin = investBitcoin;
     window.sellBitcoin = sellBitcoin;
-    
+
     window.investLitecoin = investLitecoin;
     window.sellLitecoin = sellLitecoin;
-    
+
     window.investDogecoin = investDogecoin;
     window.sellDogecoin = sellDogecoin;
-    
+
 })();
