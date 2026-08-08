@@ -26,7 +26,7 @@
     
     const cashName = `Penties`;
     const cashSymbol = `𝓟`;
-    const cashResetValue = new Decimal("10");
+    const cashResetValue = new Decimal("1e919");
     const music = new Audio("sounds/music.mp3");
 
     music.loop = true;
@@ -119,7 +119,7 @@
         caviarCount: new Decimal(0),
         butterChickenCount: new Decimal(0),
     
-        prestiges: 0,
+        prestiges: new Decimal(0),
     
         BitcoinVal: new Decimal(100000),
         LitecoinVal: new Decimal(100),
@@ -2139,6 +2139,10 @@
     // ------------------- UPLOAD SCORE -------------------
 
     async function uploadScore() {
+        // Don't upload if the leaderboard is disabled
+        if (localStorage.getItem("leaderboardEnabled") !== "true") {
+            return;
+        }
 
         const { error } = await supabase
             .from("leaderboard")
@@ -2146,10 +2150,7 @@
                 {
                     id: playerId,
                     username: gameState.username,
-
-                    // Decimal fix
                     cash: gameState.cashCount.toString(),
-
                     prestiges: gameState.prestiges,
                     updated_at: new Date()
                 },
@@ -2159,12 +2160,20 @@
             );
 
         if (error) {
-            console.error(error);
+            console.error("Failed to upload score:", error);
         }
-
     }
 
+    async function deleteLeaderboardEntry() {
+        const { error } = await supabase
+            .from("leaderboard")
+            .delete()
+            .eq("id", playerId);
 
+        if (error) {
+            console.error("Failed to delete leaderboard entry:", error);
+        }
+    }
 
     // ------------------- LOAD LEADERBOARD -------------------
 
@@ -2655,10 +2664,7 @@
 
     }
 
-
-
     async function restartGame() {
-
         const accepted = await confirm(
             "Are you sure you want to restart? This will erase all progress."
         );
@@ -2675,30 +2681,59 @@
         countdownInterval = null;
         window.cashLoop = null;
 
+        // Delete the OLD leaderboard row
+        await deleteLeaderboardEntry();
+
+        // Reset game
         resetAllGameState();
 
         gameState.prestiges = 0;
-
         gameState.workerProfit = new Decimal(0);
         gameState.workerAmount = 0;
-
         gameState.worldTwoUnlocked = false;
 
         restock();
 
         timeLeft = config.normalTime;
 
+        // Completely reset local save
         localStorage.clear();
 
-        saveGame();
-        uploadScore();
-        displayWorkerUI();
+        // Generate a new player ID
+        playerId = crypto.randomUUID();
+        localStorage.setItem("playerId", playerId);
+
+        // Keep leaderboard disabled after restart
+        localStorage.setItem("leaderboardEnabled", "false");
+
+        // Save the new game WITHOUT uploading it
+        localStorage.setItem(
+            "gameSave",
+            JSON.stringify(gameState)
+        );
+
+        localStorage.setItem(
+            "stock",
+            JSON.stringify(stock)
+        );
+
+        localStorage.setItem(
+            "timerSave",
+            timeLeft
+        );
+
+        localStorage.setItem(
+            "eventSave",
+            "false"
+        );
+
+        localStorage.setItem(
+            "stockResetDone",
+            "false"
+        );
 
         window.location.reload();
-
     }
-
-
 
     // ----------- CHAPTER TWO -------------
     const world2need = 40;
