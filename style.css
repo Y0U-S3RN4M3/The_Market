@@ -935,3 +935,76 @@ h1{
 
     z-index: 2;
 }
+
+.domainName {
+    color: white;
+}
+.domainName {
+    color: white;
+}
+
+#domainsContainer {
+    background-color: rgb(0, 0, 0, 0.5);
+    border-radius: 15px;
+    border-right: 2px solid white;
+
+    width: 100%;
+    box-sizing: border-box;
+    padding: 30px;
+}
+
+#domainMap {
+    display: grid;
+
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(180px, 1fr)
+    );
+
+    gap: 10px;
+    width: 100%;
+}
+
+.domain {
+    color: white;
+    box-sizing: border-box;
+    background-color:rgb(14, 14, 14);
+    padding: 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    text-align: center;
+    border-radius: 15px;
+    min-height: 150px;
+    border-right: 2px solid rgb(154, 154, 154);
+    border-left: 2px solid rgb(48, 48, 48);
+}
+
+.domain:hover {
+    background-color: rgb(0, 0, 0);
+    transform: scale(1.03);
+}
+
+.domainName {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.marketAmount {
+    color: white;
+    margin-top: 8px;
+    font-size: 0.9em;
+}
+.market {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    padding: 15px;
+    z-index: 999999;
+    box-sizing: border-box;
+}

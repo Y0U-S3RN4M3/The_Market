@@ -36,7 +36,7 @@ function text() {
         header.classList.add("cutseneText");
         document.body.appendChild(header);
 
-        const message = "World Two Unlocked!";
+        const message = "World Two Unlocked! Build your empire...";
         
         for (let i = 0; i < message.length; i++) {
             setTimeout(() => {
@@ -44,7 +44,6 @@ function text() {
             }, i * 75);
         }
         typing.play();
-        // Wait until the last letter has been typed
         setTimeout(() => {
             typing.pause();
             typing.currentTime = 0;
