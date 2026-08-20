@@ -466,15 +466,15 @@
             Object.assign(gameState, savedGame);
         }
     
-        // Convert all Decimal values back to Decimals
         const decimalKeys = [
             "cashCount",
             "workerProfit",
-    
+            "workerAmount",
+
             "Bitcoin",
             "Litecoin",
             "Dogecoin",
-    
+
             "BitcoinVal",
             "LitecoinVal",
             "DogecoinVal"
@@ -597,38 +597,83 @@
     const amountDisplay = document.getElementById("workerAmountDisplay");
     const profitDisplay = document.getElementById("workerProfitDisplay");
 
-    function displayWorkerUI(){
-        const price = Decimal.pow(10, gameState.workerAmount + 7);        amountBtn.textContent = `${getFormattedNumber(price)}(${getHyperE(price)})${cashSymbol}`;
-        const pricee = gameState.workerProfit.times(1000000);        profitBtn.textContent = `${getFormattedNumber(pricee)}(${getHyperE(pricee)})${cashSymbol}`;
-        amountDisplay.textContent = `Workers: ${gameState.workerAmount}`;
-        const profit = gameState.workerProfit.times(gameState.workerAmount);        
-        if(profit.gt(0)) profitDisplay.textContent = `${getFormattedNumber(profit)}(${getHyperE(profit)})${cashSymbol}/m`
-        else profitDisplay.textContent = `0${cashSymbol}/m`;
-    }
+    function displayWorkerUI() {
+        const amountPrice = Decimal.pow(10, gameState.workerAmount.plus(7));
+        const profitPrice = gameState.workerProfit.times(1e6);
 
-    if(amountBtn){
-        amountBtn.addEventListener('click', () => {
-            const price = Decimal.pow(10, gameState.workerAmount + 7);            
-            if (gameState.cashCount.lt(price)) alert(`Not enough ${cashName}`);
-            else{
-                gameState.workerAmount++;
-                gameState.cashCount = gameState.cashCount.minus(price);
+        if (amountBtn) {
+            amountBtn.textContent =
+                `${getFormattedNumber(amountPrice)}(${getHyperE(amountPrice)})${cashSymbol}`;
+        }
+
+        if (profitBtn) {
+            profitBtn.textContent =
+                `${getFormattedNumber(profitPrice)}(${getHyperE(profitPrice)})${cashSymbol}`;
+        }
+
+        if (amountDisplay) {
+            amountDisplay.textContent =
+                `Workers: ${getFormattedNumber(gameState.workerAmount)}`;
+        }
+
+        const profit = gameState.workerProfit.times(gameState.workerAmount);
+
+        if (profitDisplay) {
+            if (profit.gt(0)) {
+                profitDisplay.textContent =
+                    `${getFormattedNumber(profit)}(${getHyperE(profit)})${cashSymbol}/m`;
+            } else {
+                profitDisplay.textContent = `0${cashSymbol}/m`;
             }
-            displayWorkerUI();
-        })
+        }
     }
 
-    if(profitBtn){
-        profitBtn.addEventListener('click', () => {
-            const price = gameState.workerProfit.times(10);            
-            if (gameState.cashCount.lt(price)) alert(`Not enough ${cashName}`);
-            else{
-                gameState.workerProfit = gameState.workerProfit.times(1000000);                gameState.cashCount = gameState.cashCount.minus(price);
+    if (amountBtn) {
+        amountBtn.addEventListener("click", () => {
+            const price = Decimal.pow(10, gameState.workerAmount.plus(7));
+
+            if (gameState.cashCount.lt(price)) {
+                alert(`Not enough ${cashName}`);
+                return;
             }
+
+            gameState.workerAmount =
+                gameState.workerAmount.plus(1);
+
+            gameState.cashCount =
+                gameState.cashCount.minus(price);
+
             displayWorkerUI();
-        })
+            updateUI();
+            saveGame();
+        });
     }
 
+    if (profitBtn) {
+        profitBtn.addEventListener("click", () => {
+            console.log(gameState.workerProfit)
+            // Make sure workerProfit is a Decimal
+            gameState.workerProfit = new Decimal(gameState.workerProfit);
+
+            const price = gameState.workerProfit.times(1e8);
+
+            if (gameState.cashCount.lt(price)) {
+                alert(`Not enough ${cashName}`);
+                return;
+            }
+
+            // Pay for the upgrade
+            gameState.cashCount = gameState.cashCount.minus(price);
+
+            // Increase worker profit
+            gameState.workerProfit =
+                gameState.workerProfit.times(1e6);
+
+            displayWorkerUI();
+            updateUI();
+            saveGame();
+        });
+    }
     // ----------------- MUSIC -----------------
 
     const musicBtn = document.getElementById("musicBtn");
@@ -1370,9 +1415,7 @@
     
         gameState.cashCount = toDecimal(gameState.cashCount);
     
-        gameState.workerAmount = Math.round(
-            Number(gameState.workerAmount)
-        );
+        gameState.workerAmount = toDecimal(gameState.workerAmount).floor();
         // ---------------- USERNAME ----------------
 
         const usernameDisplay = document.getElementById(`usernameDisplay`);
@@ -1805,8 +1848,8 @@
                 await confirm("Are you sure you want to reset your worker progress?");
             if (accepted) {
                 document.getElementById("dumbStuff").style.display = "none";
-                gameState.workerProfit = 0;
-                gameState.workerAmount = 0;
+                gameState.workerProfit = new Decimal("1e7");
+                gameState.workerAmount = new Decimal(0);
                 updateUI();
                 displayWorkerUI();
             }
@@ -2799,7 +2842,9 @@
 
         ].filter(Boolean);
 
-
+        if (gameState.workerProfit.lte(0)) {
+            gameState.workerProfit = new Decimal("1e7");
+        }
 
         clickables.forEach(click => {
 
