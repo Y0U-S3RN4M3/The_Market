@@ -26,7 +26,7 @@
     
     const cashName = `Penties`;
     const cashSymbol = `𝓟`;
-    const cashResetValue = new Decimal("10");
+    const cashResetValue = new Decimal("10e919");
     const music = new Audio("sounds/music.mp3");
 
     music.loop = true;
@@ -599,7 +599,7 @@
 
     function displayWorkerUI() {
         const amountPrice = Decimal.pow(10, gameState.workerAmount.plus(7));
-        const profitPrice = gameState.workerProfit.times(1e6);
+        const profitPrice = gameState.workerProfit.times(1e4);
 
         if (amountBtn) {
             amountBtn.textContent =
