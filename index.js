@@ -655,7 +655,7 @@
             // Make sure workerProfit is a Decimal
             gameState.workerProfit = new Decimal(gameState.workerProfit);
 
-            const price = gameState.workerProfit.times(1e8);
+            const price = gameState.workerProfit.times(1e4);
 
             if (gameState.cashCount.lt(price)) {
                 alert(`Not enough ${cashName}`);
