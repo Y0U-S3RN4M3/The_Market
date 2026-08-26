@@ -26,7 +26,7 @@
     
     const cashName = `Penties`;
     const cashSymbol = `𝓟`;
-    const cashResetValue = new Decimal("10e919");
+    const cashResetValue = new Decimal("10");
     const music = new Audio("sounds/music.mp3");
 
     music.loop = true;
