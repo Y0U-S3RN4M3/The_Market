@@ -45,8 +45,8 @@
     
     let gameState = {
         cashCount: new Decimal(cashResetValue),
-        multiplier: new Decimal(0),
-        payPercent: new Decimal(100),
+        multiplier: 0,
+        payPercent: 100,
     
         // common
         appleCount: new Decimal(0),
@@ -148,34 +148,50 @@
     
     const defaultGameState = { ...gameState };
     
+
     function repairGameState() {
         for (const key in defaultGameState) {
-    
+
             // Recreate deleted properties
             if (!(key in gameState)) {
                 gameState[key] = defaultGameState[key];
             }
-    
-           // Prevent NaN and non-numbers
+
+            // ---------------- DECIMAL VALUES ----------------
             if (
-                typeof defaultGameState[key] === `number` &&
-                (
-                    typeof gameState[key] !== `number` ||
-                    isNaN(gameState[key])
-                )
+                gameState[key] instanceof Decimal ||
+                defaultGameState[key] instanceof Decimal
             ) {
-                gameState[key] = defaultGameState[key];
+                gameState[key] = toDecimal(gameState[key]);
+
+                // Prevent negative Decimal values
+                if (gameState[key].lt(0)) {
+                    gameState[key] = new Decimal(0);
+                }
+
+                continue;
             }
 
-            // Prevent negative values
-            if (
-                typeof defaultGameState[key] === `number` &&
-                gameState[key] < 0
-            ) {
-                gameState[key] = 0;
+            // ---------------- NORMAL NUMBERS ----------------
+            if (typeof defaultGameState[key] === "number") {
+
+                // Prevent NaN and non-numbers
+                if (
+                    typeof gameState[key] !== "number" ||
+                    isNaN(gameState[key])
+                ) {
+                    gameState[key] = defaultGameState[key];
+                }
+
+                // Prevent negative values
+                if (gameState[key] < 0) {
+                    gameState[key] = 0;
+                }
             }
         }
     }
+
+
     
     let prices = {
         // common
@@ -2370,131 +2386,13 @@
     }
 
 
-
     function increasePerks() {
 
+
         const gainBase =
-            new Decimal(10).pow(2 * gameState.prestiges + 5);
-
-        const requirement =
-            new Decimal(10).pow(gameState.prestiges + 5);
-
-
-
-        let multiplierGain =
-            Decimal.max(
-                gameState.cashCount
-                    .div(gainBase)
-                    .log(10)
-                    .plus(1),
-                0
-            );
-
-
-
-        if (
-            multiplierGain.lt(gainBase) &&
-            multiplierGain.gt(requirement)
-        ) {
-
-            multiplierGain =
-                gameState.cashCount
-                    .minus(requirement)
-                    .div(
-                        gainBase.minus(requirement)
-                    );
-
-        }
-
-
-
-        gameState.multiplier += Math.min(
-            multiplierGain.toNumber() + 0.1,
-            10 + (gameState.prestiges * 4)
-        );
-
-
-
-        const multiplier =
-            document.getElementById("multiplier");
-
-        if (multiplier) {
-
-            multiplier.textContent =
-                `Multiplier: ${gameState.multiplier.toFixed(3)}`;
-
-        }
-
-
-
-        const payPercentLoss =
-            gameState.cashCount
-                .div(gainBase)
-                .plus(1)
-                .log(10)
-                .times(2)
-                .toNumber();
-
-
-
-        gameState.payPercent -= payPercentLoss;
-
-
-
-        const payPercent =
-            document.getElementById("payPercent");
-
-        if (payPercent) {
-
-            payPercent.textContent =
-                `Pay Percent: ${gameState.payPercent.toFixed(1)}%`;
-
-        }
-
-
-
-        gameState.cashCount =
-            new Decimal(cashResetValue);
-
-
-
-        resetAllItems();
-
-
-
-        gameState.workerProfit =
             new Decimal(10).pow(
-                Math.floor(
-                    gameState.workerProfit
-                        .log(10)
-                        .toNumber() / 6
-                )
+                2 * gameState.prestiges + 5
             );
-
-
-
-        restock();
-
-        saveGame();
-
-        uploadScore();
-
-        displayWorkerUI();
-
-    }
-
-
-
-    async function perkIncrease() {
-
-        const accepted =
-            await confirm(
-                "Are you sure you want to add to perks?"
-            );
-
-        if (!accepted) return;
-
-
 
         const requirement =
             new Decimal(10).pow(
@@ -2502,42 +2400,109 @@
             );
 
 
+        let multiplierGain =
+            Math.max(
+                gameState.cashCount
+                    .div(gainBase)
+                    .log(10) / 10,
+                0
+            );
 
+
+        if (
+            gameState.cashCount.gt(requirement) &&
+            gameState.cashCount.lt(gainBase)
+        ) {
+
+
+            multiplierGain =
+                gameState.cashCount
+                    .minus(requirement)
+                    .div(
+                        gainBase.minus(requirement)
+                    )
+                    .toNumber();
+
+        }
+
+        const maxMultiplier =
+            new Decimal(
+                10 + (gameState.prestiges * 4)
+            );
+        
+        const totalGain = multiplierGain + 0.1;
+
+        gameState.multiplier = toDecimal(gameState.multiplier);
+
+        gameState.multiplier =
+            Decimal.min(
+                gameState.multiplier.plus(totalGain),
+                maxMultiplier
+            );
+
+        const payPercentLoss =
+            (
+                gameState.cashCount
+                    .div(gainBase)
+                    .plus(1)
+                    .log(10)
+                || 0
+            ) * 2;
+
+      
+
+        gameState.payPercent =
+            Math.max(
+                0,
+                gameState.payPercent - payPercentLoss
+            );
+    }
+
+
+
+
+    async function perkIncrease() {
+        const accepted =
+            await confirm(
+                "Are you sure you want to add to perks?"
+            );
+        if (!accepted) return;
+        const requirement =
+            new Decimal(10).pow(
+                gameState.prestiges + 5
+            );
         if (gameState.cashCount.gte(requirement)) {
-
             if (
                 gameState.multiplier < 10 + (gameState.prestiges * 4) ||
                 gameState.payPercent > 30
             ) {
-
                 increasePerks();
-
             }
             else {
-
                 const acceptAgain =
                     await confirm(
                         "You already have max multiplier and pay percent. Continue anyway? You'll gain nothing and only lose money."
                     );
-
                 if (acceptAgain) {
-
                     increasePerks();
-
                 }
-
             }
-
         }
         else {
-
             alert(
                 `You do not have enough ${cashName} to add to perks.`
             );
-
         }
-
     }
+
+    const perkBtn = document.getElementById("buyPerkButton"); // Replace with your actual HTML button ID
+    if (perkBtn) {
+        perkBtn.addEventListener("click", () => {
+            increasePerks(); 
+            console.log(gameState)
+        });
+    }
+
 
 
 
@@ -2911,6 +2876,8 @@
             setInterval(updateUI, 500);
 
     }
+
+    setInterval(() => console.log(gameState), 100)
 
 
 
