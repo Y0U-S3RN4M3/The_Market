@@ -26,7 +26,7 @@
     
     const cashName = `Penties`;
     const cashSymbol = `𝓟`;
-    const cashResetValue = new Decimal("10");
+    const cashResetValue = new Decimal("10e919");
     const music = new Audio("sounds/music.mp3");
 
     music.loop = true;
@@ -148,39 +148,50 @@
     
     const defaultGameState = { ...gameState };
     
-
     function repairGameState() {
+
+        // Recreate missing properties
         for (const key in defaultGameState) {
 
-            // Recreate deleted properties
             if (!(key in gameState)) {
                 gameState[key] = defaultGameState[key];
             }
+        }
 
-            // ---------------- DECIMAL VALUES ----------------
+        // ---------------- DECIMAL VALUES ----------------
+
+        gameState.cashCount =
+            toDecimal(gameState.cashCount);
+
+        gameState.multiplier =
+            toDecimal(gameState.multiplier);
+
+        gameState.workerAmount =
+            toDecimal(gameState.workerAmount).floor();
+
+
+        // ---------------- NORMAL NUMBERS ----------------
+
+        for (const key in defaultGameState) {
+
+            // Skip Decimal values
             if (
-                gameState[key] instanceof Decimal ||
-                defaultGameState[key] instanceof Decimal
+                key === "cashCount" ||
+                key === "multiplier" ||
+                key === "workerAmount"
             ) {
-                gameState[key] = toDecimal(gameState[key]);
-
-                // Prevent negative Decimal values
-                if (gameState[key].lt(0)) {
-                    gameState[key] = new Decimal(0);
-                }
-
                 continue;
             }
 
-            // ---------------- NORMAL NUMBERS ----------------
             if (typeof defaultGameState[key] === "number") {
 
-                // Prevent NaN and non-numbers
+                // Repair invalid numbers
                 if (
                     typeof gameState[key] !== "number" ||
                     isNaN(gameState[key])
                 ) {
-                    gameState[key] = defaultGameState[key];
+                    gameState[key] =
+                        defaultGameState[key];
                 }
 
                 // Prevent negative values
@@ -190,6 +201,8 @@
             }
         }
     }
+
+
 
 
     
@@ -2744,13 +2757,15 @@
     }
 
     // ----------- CHAPTER TWO -------------
-    const world2need = 40;
+
+    const chapter2need = 40;
     const chapterTwoBtn =
         document.getElementById("chapterTwoBtn");
 
     if (chapterTwoBtn) {
 
         chapterTwoBtn.addEventListener("click", () => {
+            saveGame();
 
             if (gameState.worldTwoUnlocked) {
 
@@ -2759,7 +2774,7 @@
 
             }
 
-            if (gameState.prestiges >= world2need) {
+            else if (gameState.prestiges >= chapter2need) {
 
                 gameState.worldTwoUnlocked = true;
 
