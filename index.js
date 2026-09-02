@@ -621,6 +621,8 @@
 
     // ---------------- WORKERS ----------------
 
+    const profitJump = 1e9;
+    const profitGain = 1e4;
     const amountBtn = document.getElementById("workerAmount");
     const profitBtn = document.getElementById("workerProfit");
     const amountDisplay = document.getElementById("workerAmountDisplay");
@@ -628,7 +630,7 @@
 
     function displayWorkerUI() {
         const amountPrice = Decimal.pow(10, gameState.workerAmount.plus(7));
-        const profitPrice = gameState.workerProfit.times(1e4);
+        const profitPrice = gameState.workerProfit.times(profitJump);
 
         if (amountBtn) {
             amountBtn.textContent =
@@ -684,7 +686,7 @@
             // Make sure workerProfit is a Decimal
             gameState.workerProfit = new Decimal(gameState.workerProfit);
 
-            const price = gameState.workerProfit.times(1e4);
+            const price = gameState.workerProfit.times(profitJump);
 
             if (gameState.cashCount.lt(price)) {
                 alert(`Not enough ${cashName}`);
@@ -696,7 +698,7 @@
 
             // Increase worker profit
             gameState.workerProfit =
-                gameState.workerProfit.times(1e6);
+                gameState.workerProfit.times(profitGain);
 
             displayWorkerUI();
             updateUI();
