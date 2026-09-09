@@ -44,7 +44,7 @@
     // ---------------- GAME STATE ----------------
     
     let gameState = {
-        cashCount: new Decimal(cashResetValue),
+        cash: new Decimal(cashResetValue),
         multiplier: 0,
         payPercent: 100,
     
@@ -144,8 +144,37 @@
         musicPlaying: true,
     
         worldTwoUnlocked: false,
-    };
+    };   
     
+
+    function exportFoodForEvent() {
+        const food = {};
+
+        console.log("GAMESTATE BEFORE EXPORT:", gameState);
+        console.log("GAMESTATE KEYS:", Object.keys(gameState));
+
+        for (const [key, value] of Object.entries(gameState)) {
+            if (key.endsWith("Count")) {
+                console.log("FOUND:", key, value);
+
+                if (value instanceof Decimal) {
+                    food[key] = value.toString();
+                } else {
+                    food[key] = new Decimal(value).toString();
+                }
+            }
+        }
+
+        localStorage.setItem("eventFood", JSON.stringify(food));
+
+        console.log("========== EXPORTED ==========");
+        console.log(food);
+        console.log(localStorage.getItem("eventFood"));
+    }
+    exportFoodForEvent();
+    console.log(gameState.appleCount);
+    console.log(`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`)
+    console.log(localStorage.getItem("eventFood"));
     const defaultGameState = { ...gameState };
     
     function repairGameState() {
@@ -160,8 +189,8 @@
 
         // ---------------- DECIMAL VALUES ----------------
 
-        gameState.cashCount =
-            toDecimal(gameState.cashCount);
+        gameState.cash =
+            toDecimal(gameState.cash);
 
         gameState.multiplier =
             toDecimal(gameState.multiplier);
@@ -537,6 +566,7 @@
         localStorage.setItem(`eventSave`, eventIsOn);
         timeLeft = config.eventTime;
         saveGame();
+        exportFoodForEvent();
         window.location.href = `event.html`;
         for(let key in stock){
             stock[key] = 100;
@@ -547,6 +577,11 @@
         eventIsOn = false;
         localStorage.setItem(`eventSave`, eventIsOn);
         timeLeft = config.normalTime;
+
+        for (const [key, value] of Object.entries(eventFood)) {
+            gameState[key] = new Decimal(value);
+        }
+
         saveGame();
         window.location.href = `game.html`;
         restock();
@@ -559,7 +594,7 @@
     function setCountDown() {
         countdownInterval = setInterval(() => {
             timeLeft--;
-            gameState.cashCount = gameState.cashCount.plus(
+            gameState.cash = gameState.cash.plus(
                 gameState.workerProfit
                     .times(gameState.workerAmount)
                     .div(60)
@@ -600,7 +635,11 @@
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
             const paddedseconds = String(seconds).padStart(2, `0`);
-            if (el) el.textContent = `You have ${minutes}m and ${paddedseconds}s left...`;
+            let alteredMinutes = `${minutes}m and `
+            if(minutes === 0){
+                alteredMinutes = ``;
+            }
+            if (el) el.textContent = `You have ${alteredMinutes}${paddedseconds}s left...`;
         }, 1000);
     }
 
@@ -663,7 +702,7 @@
         amountBtn.addEventListener("click", () => {
             const price = Decimal.pow(10, gameState.workerAmount.plus(7));
 
-            if (gameState.cashCount.lt(price)) {
+            if (gameState.cash.lt(price)) {
                 alert(`Not enough ${cashName}`);
                 return;
             }
@@ -671,8 +710,8 @@
             gameState.workerAmount =
                 gameState.workerAmount.plus(1);
 
-            gameState.cashCount =
-                gameState.cashCount.minus(price);
+            gameState.cash =
+                gameState.cash.minus(price);
 
             displayWorkerUI();
             updateUI();
@@ -688,13 +727,13 @@
 
             const price = gameState.workerProfit.times(profitJump);
 
-            if (gameState.cashCount.lt(price)) {
+            if (gameState.cash.lt(price)) {
                 alert(`Not enough ${cashName}`);
                 return;
             }
 
             // Pay for the upgrade
-            gameState.cashCount = gameState.cashCount.minus(price);
+            gameState.cash = gameState.cash.minus(price);
 
             // Increase worker profit
             gameState.workerProfit =
@@ -828,11 +867,11 @@
         const input = Number(document.getElementById(`cryptoInput`).value);
         if (!input || input <= 0) return;
     
-        if (gameState.cashCount.lt(input)) return alert(`Not enough ${cashName}`);
+        if (gameState.cash.lt(input)) return alert(`Not enough ${cashName}`);
     
         const amount = new Decimal(input).div(gameState.BitcoinVal);        
         alert(`You gained ${amount} Bitcoin`)
-        gameState.cashCount = gameState.cashCount.minus(input);
+        gameState.cash = gameState.cash.minus(input);
         gameState.Bitcoin = gameState.Bitcoin.plus(amount);
     
         saveGame();
@@ -844,7 +883,7 @@
         if (gameState.Bitcoin.lte(0)) return alert(`No Bitcoin`);
     
         const gain = gameState.Bitcoin.times(gameState.BitcoinVal);    
-        gameState.cashCount = gameState.cashCount.plus(gain);
+        gameState.cash = gameState.cash.plus(gain);
         gameState.Bitcoin = new Decimal(0);        
         alert(`You got ${gain}${cashSymbol}`);
         saveGame();
@@ -858,10 +897,10 @@
         const input = Number(document.getElementById(`cryptoInput`).value);
         if (!input || input <= 0) return;
     
-        if (gameState.cashCount.lt(input)) return alert(`Not enough ${cashName}`);
+        if (gameState.cash.lt(input)) return alert(`Not enough ${cashName}`);
     
         const amount = new Decimal(input).div(gameState.LitecoinVal);    
-        gameState.cashCount = gameState.cashCount.minus(input);
+        gameState.cash = gameState.cash.minus(input);
         gameState.Litecoin = gameState.Litecoin.plus(amount);
         
         alert(`You gained ${amount} Litecoin`);
@@ -874,7 +913,7 @@
         if (gameState.Litecoin.lte(0)) return alert(`No Litecoin`);
     
         const gain = gameState.Litecoin.times(gameState.LitecoinVal);    
-        gameState.cashCount = gameState.cashCount.plus(gain);
+        gameState.cash = gameState.cash.plus(gain);
         gameState.Litecoin = new Decimal(0);
         alert(`You got ${gain}${cashSymbol}`);
         saveGame();
@@ -887,10 +926,10 @@
         const input = Number(document.getElementById(`cryptoInput`).value);
         if (!input || input <= 0) return;
     
-        if (gameState.cashCount.lt(input)) return alert(`Not enough ${cashName}`);
+        if (gameState.cash.lt(input)) return alert(`Not enough ${cashName}`);
     
         const amount = new Decimal(input).div(gameState.DogecoinVal);    
-        gameState.cashCount = gameState.cashCount.minus(input);
+        gameState.cash = gameState.cash.minus(input);
         gameState.Dogecoin = gameState.Dogecoin.plus(amount);        
         alert(`You gained ${amount} Dogecoin`)
         saveGame();
@@ -902,7 +941,7 @@
         if (gameState.Dogecoin.lte(0)) return alert(`No Dogecoin`);
     
         const gain = gameState.Dogecoin.times(gameState.DogecoinVal);    
-        gameState.cashCount = gameState.cashCount.plus(gain);
+        gameState.cash = gameState.cash.plus(gain);
         gameState.Dogecoin = new Decimal(0);        
         alert(`You got ${gain}${cashSymbol}`);
         saveGame();
@@ -940,15 +979,15 @@
                     .times(gameState.payPercent)
                     .div(100);
             
-                gameState.cashCount = toDecimal(gameState.cashCount);
+                gameState.cash = toDecimal(gameState.cash);
             
                 gameState[key] = toDecimal(gameState[key]);
             
-                if (gameState.cashCount.gte(price) && stock[key] > 0) {
+                if (gameState.cash.gte(price) && stock[key] > 0) {
             
                     if (max) {
             
-                        let amountCanBuy = gameState.cashCount
+                        let amountCanBuy = gameState.cash
                             .div(price)
                             .floor()
                             .toNumber();
@@ -965,8 +1004,8 @@
                                 ? price.times(amountCanBuy).div(2)
                                 : price.times(amountCanBuy);
             
-                            gameState.cashCount =
-                                gameState.cashCount.minus(totalCost);
+                            gameState.cash =
+                                gameState.cash.minus(totalCost);
             
                             gameState[key] =
                                 gameState[key].plus(amountCanBuy);
@@ -979,8 +1018,8 @@
                                 ? price.times(amountCanBuy).div(2)
                                 : price.times(amountCanBuy);
             
-                            gameState.cashCount =
-                                gameState.cashCount.minus(totalCost);
+                            gameState.cash =
+                                gameState.cash.minus(totalCost);
             
                             gameState[key] =
                                 gameState[key].plus(amountCanBuy);
@@ -994,8 +1033,8 @@
                             ? price.div(2)
                             : price;
             
-                        gameState.cashCount =
-                            gameState.cashCount.minus(cost);
+                        gameState.cash =
+                            gameState.cash.minus(cost);
             
                         gameState[key] =
                             gameState[key].plus(1);
@@ -1116,7 +1155,7 @@
                     const tootal = total.times((gameState.prestiges / 2) + 1);
     
                     gameState[key] = gameState[key].minus(1);
-                    gameState.cashCount = gameState.cashCount.plus(tootal);
+                    gameState.cash = gameState.cash.plus(tootal);
     
                     if (tootal.gt(1e6)) {
                         alert(`You recieved ${getFormattedNumber(tootal)}(${getHyperE(tootal)})${cashSymbol}`);
@@ -1153,7 +1192,7 @@
                     const multiGain = gain.plus(gain.times(gameState.multiplier));
                     const prestiGain = multiGain.times((gameState.prestiges / 2) + 1);
     
-                    gameState.cashCount = gameState.cashCount.plus(prestiGain);
+                    gameState.cash = gameState.cash.plus(prestiGain);
                     gameState[key] = new Decimal(0);
     
                     if (prestiGain.gt(1e6)) {
@@ -1437,14 +1476,17 @@
     
         Object.assign(prices, defaultPrices);
     
-    
+        for(let key in gameState){
+            if(key.endsWith('Count')){
+                gameState[key] = new Decimal(gameState[key]).round();            }
+        }
         repairStock();
         repairGameState();
     
     
         // FIX DECIMALS
     
-        gameState.cashCount = toDecimal(gameState.cashCount);
+        gameState.cash = toDecimal(gameState.cash);
     
         gameState.workerAmount = toDecimal(gameState.workerAmount).floor();
         // ---------------- USERNAME ----------------
@@ -1468,7 +1510,7 @@
 
         const cash = document.getElementById(`cash`);
         if(cash){
-            const cashValue = toDecimal(gameState.cashCount);
+            const cashValue = toDecimal(gameState.cash);
             cash.textContent =
                 `${cashName}(${cashSymbol}): ${
                     getFormattedNumber(cashValue)
@@ -1559,7 +1601,7 @@
             );
 
         const cashValue =
-            toDecimal(gameState.cashCount);
+            toDecimal(gameState.cash);
 
         if (cashValue.lt(requirement)) {
 
@@ -1903,7 +1945,7 @@
                 document.getElementById("dumbStuff").style.display = "none";
 
                 // Decimal fix
-                gameState.cashCount = new Decimal(cashResetValue);
+                gameState.cash = new Decimal(cashResetValue);
 
                 updateUI();
 
@@ -1977,8 +2019,8 @@
 
             const reward = new Decimal("1e99");
 
-            gameState.cashCount =
-                gameState.cashCount.plus(reward);
+            gameState.cash =
+                gameState.cash.plus(reward);
 
             gameState.transendantBenCount++;
 
@@ -2034,11 +2076,11 @@
         // Huge Cash
         () => {
 
-            gameState.cashCount =
+            gameState.cash =
                 new Decimal("9.9999e99");
 
             alert(
-                `You now have ${getFormattedNumber(gameState.cashCount)}(${getHyperE(gameState.cashCount)})`
+                `You now have ${getFormattedNumber(gameState.cash)}(${getHyperE(gameState.cash)})`
             );
 
         },
@@ -2050,8 +2092,8 @@
                 new Decimal(10)
                     .pow(gameState.prestiges * 10 + 10);
 
-            gameState.cashCount =
-                gameState.cashCount.plus(reward);
+            gameState.cash =
+                gameState.cash.plus(reward);
 
             alert(
                 `You gained ${getFormattedNumber(reward)}${cashSymbol}`
@@ -2224,7 +2266,7 @@
                 {
                     id: playerId,
                     username: gameState.username,
-                    cash: gameState.cashCount.toString(),
+                    cash: gameState.cash.toString(),
                     prestiges: gameState.prestiges,
                     updated_at: new Date()
                 },
@@ -2350,12 +2392,12 @@
 
     function resetAllGameState() {
         
-        gameState.cashCount = new Decimal(cashResetValue);
+        gameState.cash = new Decimal(cashResetValue);
         
-        console.log("after:", gameState.cashCount.toString());
+        console.log("after:", gameState.cash.toString());
 
 
-        gameState.cashCount = new Decimal(cashResetValue);
+        gameState.cash = new Decimal(cashResetValue);
 
         for (const key in gameState) {
 
@@ -2417,7 +2459,7 @@
 
         let multiplierGain =
             Math.max(
-                gameState.cashCount
+                gameState.cash
                     .div(gainBase)
                     .log(10) / 10,
                 0
@@ -2425,13 +2467,13 @@
 
 
         if (
-            gameState.cashCount.gt(requirement) &&
-            gameState.cashCount.lt(gainBase)
+            gameState.cash.gt(requirement) &&
+            gameState.cash.lt(gainBase)
         ) {
 
 
             multiplierGain =
-                gameState.cashCount
+                gameState.cash
                     .minus(requirement)
                     .div(
                         gainBase.minus(requirement)
@@ -2457,7 +2499,7 @@
 
         const payPercentLoss =
             (
-                gameState.cashCount
+                gameState.cash
                     .div(gainBase)
                     .plus(1)
                     .log(10)
@@ -2486,7 +2528,7 @@
             new Decimal(10).pow(
                 gameState.prestiges + 5
             );
-        if (gameState.cashCount.gte(requirement)) {
+        if (gameState.cash.gte(requirement)) {
             if (
                 gameState.multiplier < 10 + (gameState.prestiges * 4) ||
                 gameState.payPercent > 30
@@ -2547,7 +2589,7 @@
 
 
 
-        if (gameState.cashCount.lt(cashLevel)) {
+        if (gameState.cash.lt(cashLevel)) {
 
             alert(
                 `You do not have enough ${cashName} to prestige`

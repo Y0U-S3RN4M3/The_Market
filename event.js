@@ -23,5 +23,5 @@ function stuffToDo(callback){
     
 }
 stuffToDo(() => {
-    window.location.href = 'game.html';
+    window.location.href = 'eventgame.html';
 });
