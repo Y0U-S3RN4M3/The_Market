@@ -2809,33 +2809,7 @@
     if (chapterTwoBtn) {
 
         chapterTwoBtn.addEventListener("click", () => {
-            saveGame();
-
-            if (gameState.worldTwoUnlocked) {
-
-                window.location = "game2.html";
-                return;
-
-            }
-
-            else if (gameState.prestiges >= chapter2need) {
-
-                gameState.worldTwoUnlocked = true;
-
-                saveGame();
-
-                window.location =
-                    "chapterTwoCutsene.html";
-
-            }
-            else {
-
-                alert(
-                    "You are not rich enough, you need to work harder..."
-                );
-
-            }
-
+           alert('Coming soon...')
         });
 
     }
