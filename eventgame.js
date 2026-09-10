@@ -187,28 +187,6 @@ function input(message, type) {
 
 
         // ====================================================
-        // DENY
-        // ====================================================
-
-        const deny = document.createElement("button");
-        deny.classList.add("btn", "denyBtn");
-        deny.textContent = "deny";
-
-        deny.addEventListener("click", () => {
-
-            confirmBox.remove();
-            overlay.remove();
-
-            // Restart countdown
-            if (typeof setCountDown === "function") {
-                setCountDown();
-            }
-
-            resolve(null);
-        });
-
-
-        // ====================================================
         // BUILD CONFIRM BOX
         // ====================================================
 
@@ -221,7 +199,6 @@ function input(message, type) {
         confirmBox.appendChild(btnContainer);
 
         btnContainer.appendChild(allow);
-        btnContainer.appendChild(deny);
     });
 }
 
@@ -384,6 +361,9 @@ startParticipation();
 async function runMinigames(){
 
     let risk = await chooseFoodRisk();
+
+    console.log("RISK:", risk);
+console.log("RISK KEYS:", Object.keys(risk));
 
     if (!risk || Object.keys(risk).length === 0) {
         alert("No food was risked.");
