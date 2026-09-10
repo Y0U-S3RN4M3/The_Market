@@ -62,6 +62,7 @@ function confirm(message) {
         const confirmBox = document.createElement("div");
         confirmBox.id = "confirm";
         confirmBox.classList.add("confirm");
+        confirmBox.style.zIndex = '9e72'
 
         const text = document.createElement("div");
         text.textContent = message;
@@ -366,8 +367,11 @@ async function runMinigames(){
 console.log("RISK KEYS:", Object.keys(risk));
 
     if (!risk || Object.keys(risk).length === 0) {
-        alert("No food was risked.");
-        return;
+        const confirmIt = await confirm('No Food is risked, If you play you will not profit');
+        if(!confirmIt){
+            alert("Please risk, this time I won't warn you...");
+            risk = await chooseFoodRisk();
+        }
     }
 
     // Take the risk out of eventFood
