@@ -550,8 +550,8 @@
     // ---------------- EVENT SYSTEM ----------------
     
     const config = {
-        eventTime: 5,
-        normalTime: 10,
+        eventTime: 60,
+        normalTime: 300,
     }
     
     
