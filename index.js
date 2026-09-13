@@ -613,7 +613,7 @@
                     localStorage.setItem(`stockResetDone`, `false`);
                 }
             }
-            else if(timeLeft <= 300 && !stockReset){
+            else if(timeLeft <= 150 && !stockReset){
                 stockReset = true;
                 localStorage.setItem(`stockResetDone`, `true`);
                 if(eventIsOn){
@@ -2821,8 +2821,32 @@
     if (chapterTwoBtn) {
 
         chapterTwoBtn.addEventListener("click", () => {
-                
-            alert('COMING SOON...');
+            saveGame();
+
+            if (gameState.worldTwoUnlocked) {
+
+                window.location = "game2.html";
+                return;
+
+            }
+
+            else if (gameState.prestiges >= chapter2need) {
+
+                gameState.worldTwoUnlocked = true;
+
+                saveGame();
+
+                window.location =
+                    "chapterTwoCutsene.html";
+
+            }
+            else {
+
+                alert(
+                    "You are not rich enough, you need to work harder..."
+                );
+
+            }
 
         });
 
