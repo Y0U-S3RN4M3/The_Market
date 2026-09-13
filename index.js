@@ -660,7 +660,7 @@
     // ---------------- WORKERS ----------------
 
     const profitJump = 1e9;
-    const profitGain = 1e4;
+    const profitGain = 1e6;
     const amountBtn = document.getElementById("workerAmount");
     const profitBtn = document.getElementById("workerProfit");
     const amountDisplay = document.getElementById("workerAmountDisplay");
