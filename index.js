@@ -171,7 +171,6 @@
         console.log(food);
         console.log(localStorage.getItem("eventFood"));
     }
-    exportFoodForEvent();
     console.log(gameState.appleCount);
     console.log(`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`)
     console.log(localStorage.getItem("eventFood"));
@@ -551,8 +550,8 @@
     // ---------------- EVENT SYSTEM ----------------
     
     const config = {
-        eventTime: 60,
-        normalTime: 600,
+        eventTime: 5,
+        normalTime: 10,
     }
     
     
@@ -1032,9 +1031,14 @@
                         const cost = eventIsOn
                             ? price.div(2)
                             : price;
+
+                        console.clear();
             
-                        gameState.cash =
-                            gameState.cash.minus(cost);
+                        console.log("CASH BEFORE:", gameState.cash.toString());
+
+                        gameState.cash = gameState.cash.sub(cost);
+
+                        console.log("CASH AFTER:", gameState.cash.toString());
             
                         gameState[key] =
                             gameState[key].plus(1);
@@ -1485,8 +1489,16 @@
     
     
         // FIX DECIMALS
-    
-        gameState.cash = toDecimal(gameState.cash);
+        if (Object.entries(gameState)
+            .filter(([key]) => key.endsWith("Count") && key !== "cashCount")
+            .every(([key, value]) => toDecimal(value).eq(0))) {
+
+            gameState.cash = toDecimal(gameState.cash);
+
+            if (gameState.cash.lt(10)) {
+                gameState.cash = new Decimal(10);
+            }
+        }
     
         gameState.workerAmount = toDecimal(gameState.workerAmount).floor();
         // ---------------- USERNAME ----------------
@@ -2809,7 +2821,33 @@
     if (chapterTwoBtn) {
 
         chapterTwoBtn.addEventListener("click", () => {
-           alert('Coming soon...')
+            saveGame();
+
+            if (gameState.worldTwoUnlocked) {
+
+                window.location = "game2.html";
+                return;
+
+            }
+
+            else if (gameState.prestiges >= chapter2need) {
+
+                gameState.worldTwoUnlocked = true;
+
+                saveGame();
+
+                window.location =
+                    "chapterTwoCutsene.html";
+
+            }
+            else {
+
+                alert(
+                    "You are not rich enough, you need to work harder..."
+                );
+
+            }
+
         });
 
     }

@@ -1,6 +1,6 @@
-
 function importFoodForEvent() {
     const savedFood = localStorage.getItem("eventFood");
+    const savedGame = localStorage.getItem("gameSave");
 
     if (!savedFood) {
         console.log("No event food found!");
@@ -10,8 +10,18 @@ function importFoodForEvent() {
     try {
         const importedFood = JSON.parse(savedFood);
 
+        // Convert all imported values to Decimal
         for (const [key, value] of Object.entries(importedFood)) {
             importedFood[key] = new Decimal(value);
+        }
+
+        // Get the player's REAL current cash
+        if (savedGame) {
+            const gameSave = JSON.parse(savedGame);
+
+            if (gameSave.cash !== undefined) {
+                importedFood.cashCount = new Decimal(gameSave.cash);
+            }
         }
 
         console.log("Food imported:", importedFood);
@@ -252,7 +262,7 @@ async function chooseFoodRisk() {
             const riskInput = document.createElement("input");
 
             riskInput.type = "number";
-            riskInput.min = "0";
+            riskInput.min = "1";
             riskInput.max = amount;
             riskInput.value = "0";
             riskInput.classList.add("riskInput");
@@ -382,8 +392,355 @@ console.log("RISK KEYS:", Object.keys(risk));
     console.log("Food after risk:", eventFood);
 
     // ===============================================
-    // FORGOTTEN PROTOCOL
+    // MINDFLIP
     // ===============================================
+    async function mindFlip(){
+        await confirm(`MINDFLIP INSTRUCTIONS:
+            IT'S A MEMORY GAME.
+            JUST BE CAUTIOUS AND DON'T CLICK WITHOUT THINKING
+            WHAT IS GAMLING REALLY COSTING YOU...`);
+        let tryThink = await input(
+            'How many tries do you think it will take to beat MindFlip?',
+            'number'
+        );
+        tryThink = Number(tryThink);      
+        return new Promise(resolve => {
+            document.body.innerHTML = `
+            <main>
+            <div id='alertDiv'></div>
+        <div class="game">
+            <div class="board is-loading">
+                <button id="alien" class="card">
+                    <div class="content">
+                        <span class="face">🙂</span>
+                        <div class="prop">
+                            <div class="ogre-mask">
+                                <span class="mask">👹</span>
+                                <span class="hand">🫰</span>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="ogre" class="card">
+                    <div class="content">
+                        <span class="face">🙂</span>
+                        <div class="prop">
+                            <div class="goblin-mask">
+                                <span class="hand">🫸</span>
+                                <span class="mask">👺</span>
+                                <span class="hand">🫷</span>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="robot" class="card">
+                    <div class="content">
+                        <span class="face">🙂</span>
+                        <div class="prop">
+                            <div class="ogre-mask">
+                                <span class="mask">👹</span>
+                                <span class="hand">🫰</span>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="clown" class="card">
+                    <div class="content">
+                        <span class="face">🙂</span>
+                        <div class="prop">
+                            <div class="goblin-mask">
+                                <span class="hand">🫸</span>
+                                <span class="mask">👺</span>
+                                <span class="hand">🫷</span>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="pumpkin" class="card">
+                    <div class="content">
+                        <span class="face">🙂</span>
+                        <div class="prop">
+                            <div class="ogre-mask">
+                                <span class="mask">👹</span>
+                                <span class="hand">🫰</span>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="frog" class="card">
+                    <div class="content">
+                        <span class="face">🙂</span>
+                        <div class="prop">
+                            <div class="goblin-mask">
+                                <span class="hand">🫸</span>
+                                <span class="mask">👺</span>
+                                <span class="hand">🫷</span>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="skull" class="card">
+                    <div class="content">
+                        <span class="face">🙂</span>
+                        <div class="prop">
+                            <div class="skull-mask">
+                                <span class="mask">💀</span>
+                                <span class="hand">👌</span>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="cow" class="card">
+                    <div class="content">
+                        <span class="face">🙂</span>
+                        <div class="prop">
+                            <div class="mustache-mask">
+                                <span class="mask">🥴</span>
+                                <span class="hand">🫳</span>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="disguise" class="card">
+                    <div class="content">
+                        <span class="face">🙂</span>
+                        <div class="prop">
+                            <div class="skull-mask">
+                                <span class="mask">💀</span>
+                                <span class="hand">👌</span>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="eye" class="card">
+                    <div class="content">
+                        <span class="face">🙂</span>
+                        <div class="prop">
+                            <div class="mustache-mask">
+                                <span class="mask">🥴</span>
+                                <span class="hand">🫳</span>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="dragon" class="card">
+                    <div class="content">
+                        <span class="face">🙂</span>
+                        <div class="prop">
+                            <div class="skull-mask">
+                                <span class="mask">💀</span>
+                                <span class="hand">👌</span>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="fox" class="card">
+                    <div class="content">
+                        <span class="face">🙂</span>
+                        <div class="prop">
+                            <div class="mustache-mask">
+                                <span class="mask">🥴</span>
+                                <span class="hand">🫳</span>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+            </div>
+            <div class="marquee">
+                <span class="marquee-text">Unmasked!</span>
+            </div>
+        </div>
+        <div class="interface">
+            <div style='color: white;' class="interface-data interface-data-tries">Tries: <span class="tries-value">0</span></div>
+        </div>
+    </main>
+            `
+            const board = document.querySelector(".board");
+            const cards = board.querySelectorAll(".card");
+            const triesValue = document.querySelector(".tries-value");
+            const marquee = document.querySelector(".marquee");
+            const marqueeText = document.querySelector(".marquee-text");
+            const faces = ["🫠", "🦬", "🧠", "🤖", "🤡", "👾"];
+            const cls = {
+                completed: "is-complete",
+                combo: "is-combo",
+                loading: "is-loading",
+                matched: "is-matched",
+                waiting: "is-waiting"
+            };
+            let selectedCard;
+            let triesCount = 0;
+            let matchCount = 0;
+            let comboCount = 0;
+            let bestCount;
+            let completeCount = faces.length;
+
+            const shuffle = (arr) => {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+
+                return arr;
+            };
+
+            const displayMarquee = (str, isCombo) => {
+                marquee.classList.toggle(cls.combo, isCombo);
+                marqueeText.textContent = str;
+                marquee.style.setProperty("display", "grid");
+            };
+
+            const toggleCardSelected = (card) => {
+                const isPressed = card.getAttribute("aria-pressed") === "true";
+                card.setAttribute("aria-pressed", isPressed ? "false" : "true");
+            };
+
+            const setMatchedProps = (el) => {
+                el.setAttribute("disabled", "");
+                el.classList.add(cls.matched);
+            };
+
+            const updateTries = (value) => {
+                triesCount = value;
+                triesValue.textContent = value;
+            };
+
+            const checkMatch = (card) => {
+                const cardFace = card.getAttribute("data-face");
+                const selectedCardFace = selectedCard.getAttribute("data-face");
+
+                board.classList.add(cls.waiting);
+
+               if (cardFace === selectedCardFace) {
+                setMatchedProps(card);
+                setMatchedProps(selectedCard);
+                matchCount++;
+                comboCount++;
+
+                if (comboCount > 1) {
+                    displayMarquee(`${comboCount}×!`, true);
+                }
+
+                setTimeout(() => {
+                    card.removeAttribute("aria-pressed");
+                    selectedCard.removeAttribute("aria-pressed");
+                    selectedCard = null;
+                    board.classList.remove(cls.waiting);
+
+                    // CHECK FOR WIN AFTER THE PAIR HAS FINISHED
+                    checkComplete();
+
+                }, 500);
+            } else {
+                    comboCount = 0;
+
+                    setTimeout(() => {
+                        toggleCardSelected(card);
+                        toggleCardSelected(selectedCard);
+                        selectedCard = null;
+                        board.classList.remove(cls.waiting);
+                    }, 1000);
+                }
+
+                updateTries(triesCount + 1);
+            };
+
+            const checkComplete = () => {
+                if (matchCount !== completeCount) {
+                    return;
+                }
+
+                displayMarquee("Unmasked!", false);
+
+                setTimeout(() => {
+                    board.classList.add(cls.completed);
+                }, 1000);
+
+                const cashMultiplier = new Decimal(1000).div(tryThink);
+                const foodMultiplier = new Decimal(35).div(tryThink);
+                alert(`YOU GOT THE CODE IN ${triesCount} TRIES`);
+
+                if (triesCount <= tryThink) {
+                    alert(`YOU BEAT ${tryThink} TRIES`);
+
+                    for (const food of Object.keys(risk)) {
+                        const multiplier = food === "cash"
+                            ? cashMultiplier
+                            : foodMultiplier;
+
+                        eventFood[food] = eventFood[food].add(
+                            risk[food].mul(multiplier)
+                        );
+                    }
+
+                    console.log("Event Food:", eventFood);
+                }
+                else {
+                    alert(`YOU LOST TO YOURSELF!`);
+                    alert(`YOU LOSE YOUR RISK!`);
+
+                    console.log("Event Food:", eventFood);
+                }
+                resolve();
+                return;
+            };
+
+            const setupGame = () => {
+                const fragment = document.createDocumentFragment();
+                const shuffledFaces = shuffle(faces.concat(faces));
+                const shuffledCards = shuffle([...cards]);
+
+                shuffledCards.forEach((card, index) => {
+                    const face = shuffledFaces[index];
+
+                    card.setAttribute("data-face", face);
+                    card.style.setProperty("--i", index + 1);
+                    card.querySelector(".face").innerHTML = face;
+                    fragment.append(card);
+                });
+
+                board.classList.add(cls.loading);
+                board.replaceChildren(fragment);
+                setTimeout(() => {
+                    board.classList.remove(cls.loading);
+                }, 1000);
+            };
+
+            cards.forEach((card) =>
+                card.addEventListener("click", () => {
+
+                    // If this is already the selected card,
+                    // don't toggle it back
+                    if (card === selectedCard) {
+                        return;
+                    }
+
+                    toggleCardSelected(card);
+
+                    if (!selectedCard) {
+                        selectedCard = card;
+                        return;
+                    }
+
+                    checkMatch(card);
+                    checkComplete();
+                })
+            );
+
+            marquee.addEventListener("animationend", (e) => {
+                if (e.animationName !== "marquee-reveal") {
+                    return;
+                }
+                marquee.style.setProperty("display", "none");
+            });
+
+            setupGame();
+        });
+    }
+
+    // ==============================
+    // FORGOTTEN PROTOCOL
+    // ==============================
 
     async function runForgottenProtocol(){
         const tutorial = await confirm(`FORGOTTEN PROTOCOL INSTRUCTIONS: 
@@ -608,7 +965,7 @@ GOOD LUCK, AND WHAT IS GAMBLING REALLY COSTING YOU...😔😔😔`)
                     alert(`YOU BEAT ${tryThink} TRIES`);
 
                     for (const food of Object.keys(risk)) {
-                        const multiplier = food === "cashCount"
+                        const multiplier = food === "cash"
                             ? cashMultiplier
                             : foodMultiplier;
 
@@ -711,7 +1068,15 @@ GOOD LUCK, AND WHAT IS GAMBLING REALLY COSTING YOU...😔😔😔`)
         });
         });
     }
-    await runForgottenProtocol();
+    const randomNum = Math.random();
+    console.log(randomNum);
+    if(randomNum >= 0.5){
+        document.body.innerHTML = `<div id='alertDiv'></div>`;
+        await mindFlip();
+    } else {
+        document.body.innerHTML = `<div id='alertDiv'></div>`;
+        await runForgottenProtocol();
+    }
 
     console.log("MINIGAME FINISHED");
     console.log("FINAL EVENT FOOD:", eventFood);
